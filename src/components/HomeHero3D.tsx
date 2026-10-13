@@ -51,7 +51,7 @@ export default function HomeHero3D({
         }
       }}
     >
-      <Viewer3D modelo={modelo ?? ""} formato={formato ?? "obj"} titulo={titulo} />
+      <Viewer3D modelo={modelo ?? ""} formato={formato ?? "obj"} titulo={titulo} distancia={3.1} />
     </div>
   );
 }

@@ -75,8 +75,28 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 }
 
 .heroe-3d {
-  display: block;
-  width: min(80vw, 640px);
+  position: absolute;
+  inset: 0;
+}
+
+.heroe-3d .visor {
+  height: 100%;
+}
+
+.home-sub,
+.home-titulo,
+.home-cta {
+  position: relative;
+  z-index: 1;
+}
+
+.home-sub {
+  margin-bottom: auto;
+}
+
+.home-sub,
+.home-titulo {
+  pointer-events: none;
 }
 
 .visor {

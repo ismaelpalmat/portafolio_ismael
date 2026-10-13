@@ -45,12 +45,14 @@ export default function Viewer3D({
   modelo,
   formato,
   titulo,
-  cuadrado
+  cuadrado,
+  distancia = 4.2
 }: {
   modelo: string;
   formato: "obj" | "stl";
   titulo: string;
   cuadrado?: boolean;
+  distancia?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -96,7 +98,7 @@ export default function Viewer3D({
     }
     let theta = 0.6;
     let phi = 1.1;
-    let radio = 4.2;
+    let radio = distancia;
     let arrastrando = false;
     let ultimoX = 0;
     let ultimoY = 0;
@@ -177,7 +179,7 @@ export default function Viewer3D({
       renderer.dispose();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato]);
+  }, [modelo, formato, distancia]);
 
   return (
     <div
