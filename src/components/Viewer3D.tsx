@@ -156,6 +156,14 @@ export default function Viewer3D({
     const ro = new ResizeObserver(resize);
     ro.observe(el);
     resize();
+    let ambiente: ReturnType<typeof setInterval> | undefined;
+    if (glitchZoom) {
+      ambiente = setInterval(() => {
+        if (!document.hidden) {
+          glitch();
+        }
+      }, 4200);
+    }
     const tick = () => {
       if (!vivo) {
         return;
@@ -178,6 +186,9 @@ export default function Viewer3D({
       vivo = false;
       if (temporizador) {
         clearTimeout(temporizador);
+      }
+      if (ambiente) {
+        clearInterval(ambiente);
       }
       ro.disconnect();
       el.removeEventListener("pointerdown", abajo);
