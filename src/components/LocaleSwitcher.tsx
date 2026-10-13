@@ -16,7 +16,7 @@ export default function LocaleSwitcher({ locale }: { locale: Locale }) {
   }
 
   return (
-    <div role="group" aria-label="Idioma / Language">
+    <div className="interruptor" role="group" aria-label="Idioma / Language">
       {(["es", "en"] as const).map((l) => (
         <button
           key={l}

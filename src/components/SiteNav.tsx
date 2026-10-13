@@ -17,11 +17,13 @@ export default async function SiteNav({ locale }: { locale: Locale }) {
   return (
     <header className="menu-blur">
       <nav>
-        {enlaces.map((e) => (
+        <div className="nav-enlaces">
+          {enlaces.map((e) => (
           <Link key={e.href} href={e.href}>
             {e.etiqueta}
           </Link>
         ))}
+        </div>
         <LocaleSwitcher locale={locale} />
       </nav>
     </header>
