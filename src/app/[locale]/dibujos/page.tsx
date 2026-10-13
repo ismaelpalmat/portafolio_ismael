@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import GrupoPorPeriodo from "@/components/GrupoPorPeriodo";
 import { obrasPorTipo } from "@/content/obras";
+import Pie from "@/components/Pie";
 import type { Locale } from "@/content/tipos";
 
 export default async function DibujosPage({
@@ -12,9 +13,12 @@ export default async function DibujosPage({
   setRequestLocale(locale);
   const t = await getTranslations("indices");
   return (
-    <section className="indice">
+    <>
+      <section className="indice">
       <h1 className="indice-titulo">{t("dibujos")}</h1>
       <GrupoPorPeriodo locale={locale as Locale} obras={obrasPorTipo("dibujo")} />
-    </section>
+      </section>
+      <Pie />
+    </>
   );
 }

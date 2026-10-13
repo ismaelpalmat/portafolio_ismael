@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CONTACTO } from "@/content/contacto";
+import Pie from "@/components/Pie";
 import type { Locale } from "@/content/tipos";
 
 export default async function ContactoPage({
@@ -12,7 +13,8 @@ export default async function ContactoPage({
   const t = await getTranslations("contacto");
   const l = locale as Locale;
   return (
-    <section className="indice">
+    <>
+      <section className="indice">
       <h1 className="indice-titulo">{t("titulo")}</h1>
       <section>
         <h2 className="grupo-titulo">{t("galeria")}</h2>
@@ -42,6 +44,8 @@ export default async function ContactoPage({
           <a href={`mailto:${CONTACTO.estudio.email}`}>{CONTACTO.estudio.email}</a>
         </p>
       </section>
-    </section>
+      </section>
+      <Pie />
+    </>
   );
 }

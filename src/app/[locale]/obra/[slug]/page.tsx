@@ -5,6 +5,7 @@ import Carrusel from "@/components/Carrusel";
 import FichaDatos from "@/components/FichaDatos";
 import FichaTresD from "@/components/FichaTresD";
 import { obraPorSlug, todasLasObras, vecinasDelMismoTipo } from "@/content/obras";
+import Pie from "@/components/Pie";
 import type { Locale } from "@/content/tipos";
 
 export function generateStaticParams() {
@@ -32,7 +33,8 @@ export default async function ObraPage({
   const l = locale as Locale;
   const { anterior, siguiente } = vecinasDelMismoTipo(slug);
   return (
-    <section className="ficha">
+    <>
+      <section className="ficha">
       {obra.tipo === "3d" ? (
         <FichaTresD modelo={obra.modelo} formato={obra.formato} titulo={obra.titulo[l]} />
       ) : (
@@ -45,6 +47,8 @@ export default async function ObraPage({
       )}
       <FichaDatos obra={obra} locale={l} />
       <AnteriorSiguiente locale={l} anterior={anterior} siguiente={siguiente} />
-    </section>
+      </section>
+      <Pie />
+    </>
   );
 }

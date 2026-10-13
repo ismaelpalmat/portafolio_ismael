@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import HomeHero3D from "@/components/HomeHero3D";
 import Spotlights from "@/components/Spotlights";
 import { obraDestacada } from "@/content/obras";
+import Pie from "@/components/Pie";
 import type { Locale } from "@/content/tipos";
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -12,7 +13,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const obra = obraDestacada();
   const l = locale as Locale;
   return (
-    <section className="home-oscura">
+    <div className="home-viewport">
+      <section className="home-oscura">
       <p className="home-sub">{t("subtitulo")}</p>
       <Spotlights />
       <HomeHero3D locale={l} slug={obra.slug} titulo={obra.titulo[l]} />
@@ -20,6 +22,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Link href={`/${locale}/obra/${obra.slug}`} className="home-cta">
         {t("cta")}
       </Link>
-    </section>
+      </section>
+      <Pie />
+    </div>
   );
 }
