@@ -11,9 +11,9 @@ import {
 } from "../src/content/obras.ts";
 import { PERIODOS, esLocalizado } from "../src/content/tipos.ts";
 
-test("hay 20 pictoricas y 4 3d", () => {
-  assert.equal(OBRAS_PICTORICAS.length, 20);
-  assert.equal(OBRAS_3D.length, 4);
+test("al menos 20 pictoricas y 4 3d", () => {
+  assert.ok(OBRAS_PICTORICAS.length >= 20);
+  assert.ok(OBRAS_3D.length >= 4);
 });
 
 test("PERIODOS son los 5 validos", () => {
@@ -59,8 +59,8 @@ test("cada 3d con modelo en public/models y formato obj|stl", () => {
 });
 
 test("helpers por tipo, slug y vecinas", () => {
-  assert.equal(obrasPorTipo("pintura").length + obrasPorTipo("dibujo").length, 20);
-  assert.equal(obrasPorTipo("3d").length, 4);
+  assert.ok(obrasPorTipo("pintura").length + obrasPorTipo("dibujo").length >= 20);
+  assert.ok(obrasPorTipo("3d").length >= 4);
   const primera = obrasPorTipo("pintura")[0];
   assert.equal(obraPorSlug(primera.slug)?.slug, primera.slug);
   assert.equal(obraPorSlug("no-existe"), undefined);

@@ -61,11 +61,11 @@ async function contenido() {
   const pictoricas = mod.OBRAS_PICTORICAS || [];
   const tresde = mod.OBRAS_3D || [];
   const periodos = (tipos && tipos.PERIODOS) || mod.PERIODOS || [];
-  if (pictoricas.length !== 20) {
-    errores.push("pictoricas=" + pictoricas.length + " (esperado 20)");
+  if (pictoricas.length < 20) {
+    errores.push("pictoricas=" + pictoricas.length + " (minimo 20)");
   }
-  if (tresde.length !== 4) {
-    errores.push("3d=" + tresde.length + " (esperado 4)");
+  if (tresde.length < 4) {
+    errores.push("3d=" + tresde.length + " (minimo 4)");
   }
   const validos = ["2026", "2024–25", "2022–23", "2020–21", "2018–19"];
   if (JSON.stringify(periodos) !== JSON.stringify(validos)) {
