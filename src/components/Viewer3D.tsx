@@ -102,10 +102,12 @@ export default function Viewer3D({
     let phi = 1.1;
     let radio = distancia;
     let arrastrando = false;
+    let moviendo = false;
     let ultimoX = 0;
     let ultimoY = 0;
     const abajo = (e: PointerEvent) => {
       arrastrando = true;
+      moviendo = false;
       ultimoX = e.clientX;
       ultimoY = e.clientY;
       el.setPointerCapture(e.pointerId);
@@ -113,6 +115,12 @@ export default function Viewer3D({
     const mover = (e: PointerEvent) => {
       if (!arrastrando) {
         return;
+      }
+      if (!moviendo) {
+        moviendo = true;
+        if (glitchZoom) {
+          glitch();
+        }
       }
       theta -= (e.clientX - ultimoX) * 0.006;
       phi = Math.min(Math.PI - 0.15, Math.max(0.15, phi - (e.clientY - ultimoY) * 0.006));
@@ -156,14 +164,6 @@ export default function Viewer3D({
     const ro = new ResizeObserver(resize);
     ro.observe(el);
     resize();
-    let ambiente: ReturnType<typeof setInterval> | undefined;
-    if (glitchZoom) {
-      ambiente = setInterval(() => {
-        if (!document.hidden) {
-          glitch();
-        }
-      }, 4200);
-    }
     const tick = () => {
       if (!vivo) {
         return;
@@ -186,9 +186,6 @@ export default function Viewer3D({
       vivo = false;
       if (temporizador) {
         clearTimeout(temporizador);
-      }
-      if (ambiente) {
-        clearInterval(ambiente);
       }
       ro.disconnect();
       el.removeEventListener("pointerdown", abajo);
