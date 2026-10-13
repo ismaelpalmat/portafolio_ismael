@@ -9,7 +9,8 @@ const Viewer3D = dynamic(() => import("./Viewer3D"), { ssr: false });
 
 const MODELOS: Array<{ modelo: string; formato: "obj" | "glb"; distancia: number }> = [
   { modelo: "", formato: "obj", distancia: 3.1 },
-  { modelo: "/models/mech_char_2.glb", formato: "glb", distancia: 2.4 }
+  { modelo: "/models/mech_char_2.glb", formato: "glb", distancia: 2.4 },
+  { modelo: "/models/mech_char_pose1.glb", formato: "glb", distancia: 2.4 }
 ];
 
 export default function HomeHero3D({
@@ -28,7 +29,9 @@ export default function HomeHero3D({
       return 0;
     }
     try {
-      return window.localStorage.getItem("vitrina-hero") === "1" ? 0 : 1;
+      const g = Number(window.localStorage.getItem("vitrina-hero"));
+      const visto = Number.isInteger(g) ? g : -1;
+      return (visto + 1) % MODELOS.length;
     } catch {
       return 0;
     }
