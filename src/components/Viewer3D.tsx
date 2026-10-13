@@ -224,7 +224,7 @@ export default function Viewer3D({
       renderer.dispose();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia]);
+  }, [modelo, formato, distancia, glitchZoom]);
 
   return (
     <div

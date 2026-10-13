@@ -23,23 +23,24 @@ export default function HomeHero3D({
 }) {
   const router = useRouter();
   const origen = useRef<{ x: number; y: number } | null>(null);
-  const [opcion, setOpcion] = useState(0);
+  const [opcion] = useState(() => {
+    if (typeof window === "undefined") {
+      return 0;
+    }
+    try {
+      return window.localStorage.getItem("vitrina-hero") === "1" ? 0 : 1;
+    } catch {
+      return 0;
+    }
+  });
   const destino = `/${locale}/obra/${slug}`;
   useEffect(() => {
-    let visto = -1;
     try {
-      const g = window.localStorage.getItem("vitrina-hero");
-      visto = g === "1" ? 1 : 0;
+      window.localStorage.setItem("vitrina-hero", String(opcion));
     } catch {
-      visto = 0;
+      // sin almacenamiento: se queda en procedural
     }
-    const siguiente = visto === 0 ? 1 : 0;
-    setOpcion(siguiente);
-    try {
-      window.localStorage.setItem("vitrina-hero", String(siguiente));
-    } catch {
-    }
-  }, []);
+  }, [opcion]);
   return (
     <div
       className="heroe-3d"
