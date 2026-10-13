@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CONTACTO } from "@/content/contacto";
 import Pie from "@/components/Pie";
+import Spotlights from "@/components/Spotlights";
 import type { Locale } from "@/content/tipos";
 
 export default async function ContactoPage({
@@ -14,6 +15,7 @@ export default async function ContactoPage({
   const l = locale as Locale;
   return (
     <>
+      <Spotlights />
       <section className="indice">
       <h1 className="indice-titulo">{t("titulo")}</h1>
       <section>

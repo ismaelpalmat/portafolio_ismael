@@ -6,6 +6,7 @@ import FichaDatos from "@/components/FichaDatos";
 import FichaTresD from "@/components/FichaTresD";
 import { obraPorSlug, todasLasObras, vecinasDelMismoTipo } from "@/content/obras";
 import Pie from "@/components/Pie";
+import Spotlights from "@/components/Spotlights";
 import type { Locale } from "@/content/tipos";
 
 export function generateStaticParams() {
@@ -34,6 +35,7 @@ export default async function ObraPage({
   const { anterior, siguiente } = vecinasDelMismoTipo(slug);
   return (
     <>
+      <Spotlights />
       <section className="ficha">
       {obra.tipo === "3d" ? (
         <FichaTresD modelo={obra.modelo} formato={obra.formato} titulo={obra.titulo[l]} />

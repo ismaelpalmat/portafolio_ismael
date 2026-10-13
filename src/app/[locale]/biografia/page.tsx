@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BIOGRAFIA } from "@/content/biografia";
 import Pie from "@/components/Pie";
+import Spotlights from "@/components/Spotlights";
 import type { Locale } from "@/content/tipos";
 
 export default async function BiografiaPage({
@@ -19,6 +20,7 @@ export default async function BiografiaPage({
   ];
   return (
     <>
+      <Spotlights />
       <section className="indice">
       <h1 className="indice-titulo">{t("titulo")}</h1>
       <p>
