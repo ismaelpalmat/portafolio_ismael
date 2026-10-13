@@ -230,6 +230,42 @@ function indices() {
   return errores;
 }
 
+function ficha() {
+  const carrusel = join(ROOT, "src", "components", "Carrusel.tsx");
+  if (!existsSync(carrusel)) {
+    return ["falta Carrusel"];
+  }
+  const errores = [];
+  const txt = readFileSync(carrusel, "utf8");
+  const piezas = ["\u2039", "\u203A", "Escape", "ArrowLeft", "ArrowRight", "length", "fixed inset-0 bg-black"];
+  for (const s of piezas) {
+    if (!txt.includes(s)) {
+      errores.push("Carrusel sin " + s);
+    }
+  }
+  const p = join(ROOT, "src", "app", "[locale]", "obra", "[slug]", "page.tsx");
+  if (!existsSync(p)) {
+    errores.push("falta ficha obra/[slug]");
+  } else {
+    const t = readFileSync(p, "utf8");
+    if (!t.includes("generateStaticParams")) {
+      errores.push("ficha sin generateStaticParams");
+    }
+    if (!t.includes("notFound")) {
+      errores.push("ficha sin notFound");
+    }
+    if (!t.includes("vecinasDelMismoTipo")) {
+      errores.push("ficha sin nav mismo tipo");
+    }
+  }
+  for (const f of ["FichaDatos.tsx", "AnteriorSiguiente.tsx"]) {
+    if (!existsSync(join(ROOT, "src", "components", f))) {
+      errores.push("falta " + f);
+    }
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -243,7 +279,8 @@ export async function verify() {
     .concat(diccionarios())
     .concat(rutaTresde())
     .concat(await homeTresD())
-    .concat(indices());
+    .concat(indices())
+    .concat(ficha());
   return { ok: errores.length === 0, errores };
 }
 
