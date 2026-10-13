@@ -153,6 +153,52 @@ function rutaTresde() {
   return errores;
 }
 
+async function homeTresD() {
+  const pagina = join(ROOT, "src", "app", "[locale]", "page.tsx");
+  if (!existsSync(pagina)) {
+    return ["falta home src/app/[locale]/page.tsx"];
+  }
+  const txt = readFileSync(pagina, "utf8");
+  let slug = "";
+  try {
+    const mod = await import("../src/content/obras.ts");
+    slug = mod.obraDestacada().slug;
+  } catch (e) {
+    return ["no se pudo leer obra destacada"];
+  }
+  const errores = [];
+  if (!txt.includes("obraDestacada") || !txt.includes("/obra/")) {
+    errores.push("home no enlaza a la destacada obra/" + slug);
+  }
+  const hero = join(ROOT, "src", "components", "HomeHero3D.tsx");
+  const viewer = join(ROOT, "src", "components", "Viewer3D.tsx");
+  if (!existsSync(hero) || !existsSync(viewer)) {
+    errores.push("falta HomeHero3D o Viewer3D");
+  } else {
+    const h = readFileSync(hero, "utf8");
+    const w = readFileSync(viewer, "utf8");
+    const dynamics = (h.match(/ssr:\s*false/g) || []).length;
+    const canvas = (w.match(/<canvas/g) || []).length;
+    if (dynamics !== 1) {
+      errores.push("home debe tener exactamente 1 dynamic ssr:false");
+    }
+    if (canvas > 1) {
+      errores.push("Viewer3D con mas de 1 canvas");
+    }
+    if (!w.includes("SpotLight")) {
+      errores.push("Viewer3D sin SpotLight");
+    }
+    if (!w.includes("use client")) {
+      errores.push("Viewer3D debe ser client");
+    }
+  }
+  const cfg = readFileSync(join(ROOT, "next.config.mjs"), "utf8");
+  if (/output\\s*:\\s*["ecto]export["ecto]/.test(cfg)) {
+    errores.push("next.config con output:export prohibido");
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -164,7 +210,8 @@ export async function verify() {
     )
     .concat(await contenido())
     .concat(diccionarios())
-    .concat(rutaTresde());
+    .concat(rutaTresde())
+    .concat(await homeTresD());
   return { ok: errores.length === 0, errores };
 }
 

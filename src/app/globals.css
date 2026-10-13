@@ -1,1 +1,88 @@
 @import "tailwindcss";
+
+.home-oscura {
+  position: relative;
+  background: #0a0a0f;
+  color: #f2f4f8;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .home-oscura {
+    height: 100dvh;
+  }
+}
+
+.home-sub {
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.home-titulo {
+  font-size: 1.75rem;
+  letter-spacing: 0.08em;
+}
+
+.home-cta {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.heroe-3d {
+  display: block;
+  width: min(80vw, 640px);
+}
+
+.visor {
+  width: 100%;
+  height: min(52dvh, 480px);
+}
+
+.visor canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.visor.cuadrado {
+  aspect-ratio: 1;
+  height: auto;
+  max-width: 560px;
+}
+
+.focos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.foco {
+  position: absolute;
+  top: -10%;
+  width: 34vmin;
+  height: 120%;
+  filter: blur(60px);
+  opacity: 0.35;
+}
+
+.foco-izq {
+  left: 4%;
+  background: linear-gradient(180deg, #6ea8ff, transparent 70%);
+  transform: rotate(12deg);
+}
+
+.foco-der {
+  right: 4%;
+  background: linear-gradient(180deg, #ffc890, transparent 70%);
+  transform: rotate(-12deg);
+}
