@@ -19,15 +19,12 @@ export default function Carrusel({
   );
 
   useEffect(() => {
-    if (!ampliada) {
-      return;
-    }
     const teclas = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") {
         ir(-1);
       } else if (e.key === "ArrowRight") {
         ir(1);
-      } else if (e.key === "Escape") {
+      } else if (e.key === "Escape" && ampliada) {
         setAmpliada(false);
       }
     };

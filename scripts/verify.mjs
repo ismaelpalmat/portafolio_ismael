@@ -179,6 +179,9 @@ async function homeTresD() {
     const w = readFileSync(viewer, "utf8");
     const dynamics = (h.match(/ssr:\s*false/g) || []).length;
     const canvas = (w.match(/<canvas/g) || []).length;
+    if (h.includes("<Link")) {
+      errores.push("HomeHero3D con canvas dentro de Link (orbitar navega)");
+    }
     if (dynamics !== 1) {
       errores.push("home debe tener exactamente 1 dynamic ssr:false");
     }
@@ -193,7 +196,7 @@ async function homeTresD() {
     }
   }
   const cfg = readFileSync(join(ROOT, "next.config.mjs"), "utf8");
-  if (/output\\s*:\\s*["ecto]export["ecto]/.test(cfg)) {
+  if (/output\s*:\s*["']export["']/.test(cfg)) {
     errores.push("next.config con output:export prohibido");
   }
   return errores;
@@ -257,6 +260,9 @@ function ficha() {
     if (!t.includes("vecinasDelMismoTipo")) {
       errores.push("ficha sin nav mismo tipo");
     }
+  }
+  if (/if\s*\(\s*!ampliada\s*\)\s*\{\s*return/.test(txt)) {
+    errores.push("Carrusel con teclado solo en overlay");
   }
   for (const f of ["FichaDatos.tsx", "AnteriorSiguiente.tsx"]) {
     if (!existsSync(join(ROOT, "src", "components", f))) {
@@ -374,6 +380,22 @@ function estaticas() {
   return errores;
 }
 
+function langSync() {
+  const lx = join(ROOT, "src", "components", "LangSync.tsx");
+  if (!existsSync(lx)) {
+    return ["falta LangSync (lang fijo es en /en)"];
+  }
+  const txt = readFileSync(lx, "utf8");
+  if (!txt.includes("documentElement")) {
+    return ["LangSync sin documentElement"];
+  }
+  const layout = readFileSync(join(ROOT, "src", "app", "[locale]", "layout.tsx"), "utf8");
+  if (!layout.includes("LangSync")) {
+    return ["layout sin LangSync"];
+  }
+  return [];
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -392,7 +414,8 @@ export async function verify() {
     .concat(visor3d())
     .concat(await bioContacto())
     .concat(repoLimpio())
-    .concat(estaticas());
+    .concat(estaticas())
+    .concat(langSync());
   return { ok: errores.length === 0, errores };
 }
 
