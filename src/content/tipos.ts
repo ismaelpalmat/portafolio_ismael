@@ -36,7 +36,7 @@ export interface Obra3D {
   dimensiones: string;
   descripcion: LocalizedText;
   modelo: string;
-  formato: "obj" | "stl";
+  formato: "obj" | "stl" | "glb";
   imagenes: number;
   destacada?: boolean;
 }

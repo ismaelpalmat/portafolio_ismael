@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export async function cargarModelo(
   url: string,
-  formato: "obj" | "stl"
+  formato: "obj" | "stl" | "glb"
 ): Promise<THREE.Object3D | null> {
   try {
     const res = await fetch(url);
@@ -17,6 +18,11 @@ export async function cargarModelo(
     if (formato === "obj") {
       const texto = await res.text();
       return new OBJLoader().parse(texto);
+    }
+    if (formato === "glb") {
+      const gbuf = await res.arrayBuffer();
+      const gltf = await new GLTFLoader().parseAsync(gbuf, "");
+      return gltf.scene;
     }
     const buf = await res.arrayBuffer();
     const geo = new STLLoader().parse(buf);
@@ -50,7 +56,7 @@ export default function Viewer3D({
   glitchZoom = false
 }: {
   modelo: string;
-  formato: "obj" | "stl";
+  formato: "obj" | "stl" | "glb";
   titulo: string;
   cuadrado?: boolean;
   distancia?: number;

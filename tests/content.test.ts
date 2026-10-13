@@ -53,7 +53,7 @@ test("exactamente 1 destacada y obraDestacada la devuelve", () => {
 test("cada 3d con modelo en public/models y formato obj|stl", () => {
   for (const o of OBRAS_3D) {
     assert.ok(o.modelo.startsWith("/models/"), "modelo fuera de /models/ en " + o.slug);
-    assert.ok(o.formato === "obj" || o.formato === "stl", "formato invalido en " + o.slug);
+    assert.ok(o.formato === "obj" || o.formato === "stl" || o.formato === "glb", "formato invalido en " + o.slug);
     assert.ok(o.modelo.endsWith("." + o.formato), "extension no coincide en " + o.slug);
   }
 });

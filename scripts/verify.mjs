@@ -94,7 +94,7 @@ async function contenido() {
     if (typeof o.modelo !== "string" || !o.modelo.startsWith("/models/")) {
       errores.push("modelo fuera de /models/ en " + o.slug);
     }
-    if (o.formato !== "obj" && o.formato !== "stl") {
+    if (o.formato !== "obj" && o.formato !== "stl" && o.formato !== "glb") {
       errores.push("formato invalido en " + o.slug);
     } else if (!o.modelo.endsWith("." + o.formato)) {
       errores.push("extension no coincide en " + o.slug);

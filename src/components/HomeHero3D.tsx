@@ -18,7 +18,7 @@ export default function HomeHero3D({
   slug: string;
   titulo: string;
   modelo?: string;
-  formato?: "obj" | "stl";
+  formato?: "obj" | "stl" | "glb";
 }) {
   const router = useRouter();
   const origen = useRef<{ x: number; y: number } | null>(null);

@@ -10,7 +10,7 @@ export default function FichaTresD({
   titulo
 }: {
   modelo: string;
-  formato: "obj" | "stl";
+  formato: "obj" | "stl" | "glb";
   titulo: string;
 }) {
   return <Viewer3D modelo={modelo} formato={formato} titulo={titulo} cuadrado />;
