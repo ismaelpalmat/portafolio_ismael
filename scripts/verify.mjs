@@ -293,6 +293,47 @@ function visor3d() {
   return errores;
 }
 
+async function bioContacto() {
+  const errores = [];
+  const bio = join(ROOT, "src", "app", "[locale]", "biografia", "page.tsx");
+  const con = join(ROOT, "src", "app", "[locale]", "contacto", "page.tsx");
+  if (!existsSync(bio)) {
+    errores.push("falta pagina biografia");
+  }
+  if (!existsSync(con)) {
+    errores.push("falta pagina contacto");
+  } else if (readFileSync(con, "utf8").includes("<form")) {
+    errores.push("contacto con formulario");
+  }
+  try {
+    const b = await import("../src/content/biografia.ts");
+    const bio_datos = b.BIOGRAFIA;
+    if (!bio_datos || bio_datos.individuales.length !== 3 || bio_datos.colectivas.length !== 4 || bio_datos.reconocimientos.length !== 2) {
+      errores.push("biografia incompleta (3+4+2)");
+    }
+    for (const item of bio_datos.individuales.concat(bio_datos.colectivas, bio_datos.reconocimientos, [bio_datos.resumen])) {
+      if (!item || typeof item.es !== "string" || item.es.trim() === "" || typeof item.en !== "string" || item.en.trim() === "") {
+        errores.push("simetria es/en rota en biografia");
+        break;
+      }
+    }
+    const c = await import("../src/content/contacto.ts");
+    const con_datos = c.CONTACTO;
+    if (!con_datos || !con_datos.galeria.email || !con_datos.estudio.email) {
+      errores.push("contacto incompleto");
+    }
+    for (const d of [con_datos.galeria.direccion, con_datos.estudio.direccion]) {
+      if (!d || typeof d.es !== "string" || d.es.trim() === "" || typeof d.en !== "string" || d.en.trim() === "") {
+        errores.push("simetria es/en rota en contacto");
+        break;
+      }
+    }
+  } catch (e) {
+    errores.push("no se pudo importar bio/contacto");
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -308,7 +349,8 @@ export async function verify() {
     .concat(await homeTresD())
     .concat(indices())
     .concat(ficha())
-    .concat(visor3d());
+    .concat(visor3d())
+    .concat(await bioContacto());
   return { ok: errores.length === 0, errores };
 }
 

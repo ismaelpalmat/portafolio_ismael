@@ -26,6 +26,7 @@
   },
   "bio": {
     "titulo": "Biografía",
+    "resumen": "Resumen",
     "individuales": "Individuales",
     "colectivas": "Colectivas",
     "reconocimientos": "Reconocimientos"
@@ -33,6 +34,9 @@
   "contacto": {
     "titulo": "Contacto",
     "galeria": "Galería",
-    "estudio": "Estudio"
+    "estudio": "Estudio",
+    "email": "Correo",
+    "direccion": "Dirección",
+    "telefono": "Teléfono"
   }
 }

@@ -26,6 +26,7 @@
   },
   "bio": {
     "titulo": "Biography",
+    "resumen": "Profile",
     "individuales": "Solo shows",
     "colectivas": "Group shows",
     "reconocimientos": "Awards"
@@ -33,6 +34,9 @@
   "contacto": {
     "titulo": "Contact",
     "galeria": "Gallery",
-    "estudio": "Studio"
+    "estudio": "Studio",
+    "email": "Email",
+    "direccion": "Address",
+    "telefono": "Phone"
   }
 }

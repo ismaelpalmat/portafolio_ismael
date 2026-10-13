@@ -54,3 +54,33 @@ test("sin palabras prohibidas en diccionarios", () => {
     assert.ok(typeof ven === "string" && !PROHIBIDAS.test(ven), "prohibida en." + ruta);
   }
 });
+
+test("claves bio y contacto completas y simetricas", () => {
+  const espero = [
+    "bio.titulo",
+    "bio.resumen",
+    "bio.individuales",
+    "bio.colectivas",
+    "bio.reconocimientos",
+    "contacto.titulo",
+    "contacto.galeria",
+    "contacto.estudio",
+    "contacto.email",
+    "contacto.direccion",
+    "contacto.telefono"
+  ];
+  const hay = claves(es);
+  for (const k of espero) {
+    assert.ok(hay.includes(k), "falta clave " + k);
+    assert.ok(typeof valor(en, k) === "string" && (valor(en, k) as string).trim() !== "", "en vacio " + k);
+  }
+});
+
+test("contacto sin formulario", () => {
+  const c = readFileSync(join(ROOT, "src/content/contacto.ts"), "utf8");
+  const p = readFileSync(join(ROOT, "src/app/[locale]/contacto/page.tsx"), "utf8");
+  for (const s of ["<form", "submit", "<input", "<textarea"]) {
+    assert.ok(!c.includes(s), "formulario en contacto.ts: " + s);
+    assert.ok(!p.includes(s), "formulario en contacto page: " + s);
+  }
+});
