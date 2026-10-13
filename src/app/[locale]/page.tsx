@@ -17,7 +17,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <section className="home-oscura">
       <p className="home-sub">{t("subtitulo")}</p>
       <Spotlights />
-      <HomeHero3D locale={l} slug={obra.slug} titulo={obra.titulo[l]} modelo="/models/mech_char_2.glb" formato="glb" />
+      <HomeHero3D locale={l} slug={obra.slug} titulo={obra.titulo[l]} />
       <h1 className="home-titulo glitch" data-text={obra.titulo[l]}>{obra.titulo[l]}</h1>
       <Link href={`/${locale}/obra/${obra.slug}`} className="home-cta">
         {t("cta")}
