@@ -98,8 +98,9 @@ export default function Viewer3D({
         const centro = new THREE.Vector3();
         caja.getCenter(centro);
         const max = Math.max(tam.x, tam.y, tam.z) || 1;
-        obj.position.set(-centro.x, -centro.y, -centro.z);
-        obj.scale.setScalar(2.2 / max);
+        const esc = 2.2 / max;
+        obj.scale.setScalar(esc);
+        obj.position.set(-centro.x * esc, -centro.y * esc, -centro.z * esc);
         grupo.remove(reserva);
         grupo.add(obj);
       });
