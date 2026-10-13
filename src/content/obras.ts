@@ -1,0 +1,412 @@
+import type { Obra, Obra3D, ObraPictorica, TipoObra } from "./tipos.ts";
+
+export const OBRAS_PICTORICAS: ObraPictorica[] = [
+  {
+    slug: "marea-alta-2026",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "pintura",
+    titulo: { es: "Marea alta", en: "High tide" },
+    tecnica: { es: "Óleo sobre lienzo", en: "Oil on linen" },
+    materiales: { es: "Óleo, lienzo de lino", en: "Oil, linen canvas" },
+    dimensiones: "130 × 97 cm",
+    descripcion: {
+      es: "Superficies de agua en movimiento lento.",
+      en: "Slow-moving water surfaces.",
+    },
+    imagenes: 3,
+    destacada: true,
+  },
+  {
+    slug: "noche-electrica-2026",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "pintura",
+    titulo: { es: "Noche eléctrica", en: "Electric night" },
+    tecnica: { es: "Acrílico sobre lienzo", en: "Acrylic on canvas" },
+    materiales: { es: "Acrílico, lienzo", en: "Acrylic, canvas" },
+    dimensiones: "100 × 100 cm",
+    descripcion: {
+      es: "Luces de la ciudad vistas desde lejos.",
+      en: "City lights seen from far away.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "trazo-continuo-2026",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "dibujo",
+    titulo: { es: "Trazo continuo", en: "Continuous line" },
+    tecnica: { es: "Grafito sobre papel", en: "Graphite on paper" },
+    materiales: { es: "Grafito, papel", en: "Graphite, paper" },
+    dimensiones: "70 × 50 cm",
+    descripcion: {
+      es: "Una sola línea que recorre la hoja.",
+      en: "A single line running across the sheet.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "mapa-de-viento-2026",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "dibujo",
+    titulo: { es: "Mapa de viento", en: "Wind map" },
+    tecnica: { es: "Tinta sobre papel", en: "Ink on paper" },
+    materiales: { es: "Tinta, papel", en: "Ink, paper" },
+    dimensiones: "70 × 50 cm",
+    descripcion: {
+      es: "Direcciones del viento dibujadas de memoria.",
+      en: "Wind directions drawn from memory.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "jardin-nocturno-2024",
+    periodo: "2024–25",
+    anio: 2024,
+    tipo: "pintura",
+    titulo: { es: "Jardín nocturno", en: "Night garden" },
+    tecnica: { es: "Óleo sobre lienzo", en: "Oil on canvas" },
+    materiales: { es: "Óleo, lienzo", en: "Oil, canvas" },
+    dimensiones: "120 × 90 cm",
+    descripcion: {
+      es: "Plantas del patio bajo la luna.",
+      en: "Courtyard plants under the moon.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "cosecha-2025",
+    periodo: "2024–25",
+    anio: 2025,
+    tipo: "pintura",
+    titulo: { es: "Cosecha", en: "Harvest" },
+    tecnica: { es: "Acrílico sobre madera", en: "Acrylic on wood" },
+    materiales: { es: "Acrílico, tabla de madera", en: "Acrylic, wood panel" },
+    dimensiones: "90 × 70 cm",
+    descripcion: {
+      es: "Frutas y manos en temporada.",
+      en: "Seasonal fruit and hands.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "raiz-y-alambre-2024",
+    periodo: "2024–25",
+    anio: 2024,
+    tipo: "dibujo",
+    titulo: { es: "Raíz y alambre", en: "Root and wire" },
+    tecnica: { es: "Grafito sobre papel", en: "Graphite on paper" },
+    materiales: { es: "Grafito, papel", en: "Graphite, paper" },
+    dimensiones: "65 × 50 cm",
+    descripcion: {
+      es: "Raíces entrelazadas con alambre.",
+      en: "Roots tangled with wire.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "cuaderno-de-niebla-2025",
+    periodo: "2024–25",
+    anio: 2025,
+    tipo: "dibujo",
+    titulo: { es: "Cuaderno de niebla", en: "Fog notebook" },
+    tecnica: { es: "Tinta sobre papel", en: "Ink on paper" },
+    materiales: { es: "Tinta, papel", en: "Ink, paper" },
+    dimensiones: "50 × 35 cm",
+    descripcion: {
+      es: "Apuntes de mañanas con niebla.",
+      en: "Notes from foggy mornings.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "casa-de-sal-2022",
+    periodo: "2022–23",
+    anio: 2022,
+    tipo: "pintura",
+    titulo: { es: "Casa de sal", en: "Salt house" },
+    tecnica: { es: "Óleo sobre lienzo", en: "Oil on canvas" },
+    materiales: { es: "Óleo, lienzo", en: "Oil, canvas" },
+    dimensiones: "110 × 80 cm",
+    descripcion: {
+      es: "Una casa blanca junto al mar.",
+      en: "A white house by the sea.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "frontera-dulce-2023",
+    periodo: "2022–23",
+    anio: 2023,
+    tipo: "pintura",
+    titulo: { es: "Frontera dulce", en: "Sweet border" },
+    tecnica: { es: "Acrílico sobre lienzo", en: "Acrylic on canvas" },
+    materiales: { es: "Acrílico, lienzo", en: "Acrylic, canvas" },
+    dimensiones: "100 × 80 cm",
+    descripcion: {
+      es: "Dos colores que se tocan sin mezclarse.",
+      en: "Two colors touching without mixing.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "mano-que-siembra-2022",
+    periodo: "2022–23",
+    anio: 2022,
+    tipo: "dibujo",
+    titulo: { es: "Mano que siembra", en: "Sowing hand" },
+    tecnica: { es: "Grafito sobre papel", en: "Graphite on paper" },
+    materiales: { es: "Grafito, papel", en: "Graphite, paper" },
+    dimensiones: "60 × 45 cm",
+    descripcion: {
+      es: "Estudio de una mano con semillas.",
+      en: "Study of a hand holding seeds.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "perfil-del-rio-2023",
+    periodo: "2022–23",
+    anio: 2023,
+    tipo: "dibujo",
+    titulo: { es: "Perfil del río", en: "River profile" },
+    tecnica: { es: "Tinta sobre papel", en: "Ink on paper" },
+    materiales: { es: "Tinta, papel", en: "Ink, paper" },
+    dimensiones: "60 × 45 cm",
+    descripcion: {
+      es: "El cauce dibujado en una caminata.",
+      en: "The riverbed drawn on a walk.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "ventana-cerrada-2020",
+    periodo: "2020–21",
+    anio: 2020,
+    tipo: "pintura",
+    titulo: { es: "Ventana cerrada", en: "Closed window" },
+    tecnica: { es: "Óleo sobre lienzo", en: "Oil on canvas" },
+    materiales: { es: "Óleo, lienzo", en: "Oil, canvas" },
+    dimensiones: "90 × 70 cm",
+    descripcion: {
+      es: "Interiores durante el encierro.",
+      en: "Interiors during lockdown.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "pan-y-mesa-2021",
+    periodo: "2020–21",
+    anio: 2021,
+    tipo: "pintura",
+    titulo: { es: "Pan y mesa", en: "Bread and table" },
+    tecnica: { es: "Óleo sobre madera", en: "Oil on wood" },
+    materiales: { es: "Óleo, tabla de madera", en: "Oil, wood panel" },
+    dimensiones: "60 × 50 cm",
+    descripcion: {
+      es: "Naturaleza muerta con pan.",
+      en: "Still life with bread.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "silla-vacia-2020",
+    periodo: "2020–21",
+    anio: 2020,
+    tipo: "dibujo",
+    titulo: { es: "Silla vacía", en: "Empty chair" },
+    tecnica: { es: "Grafito sobre papel", en: "Graphite on paper" },
+    materiales: { es: "Grafito, papel", en: "Graphite, paper" },
+    dimensiones: "50 × 35 cm",
+    descripcion: {
+      es: "La silla donde nadie se sentó.",
+      en: "The chair where no one sat.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "diario-de-patio-2021",
+    periodo: "2020–21",
+    anio: 2021,
+    tipo: "dibujo",
+    titulo: { es: "Diario de patio", en: "Courtyard diary" },
+    tecnica: { es: "Tinta sobre papel", en: "Ink on paper" },
+    materiales: { es: "Tinta, papel", en: "Ink, paper" },
+    dimensiones: "50 × 35 cm",
+    descripcion: {
+      es: "Dibujos diarios del mismo patio.",
+      en: "Daily drawings of the same courtyard.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "retrato-de-mi-padre-2018",
+    periodo: "2018–19",
+    anio: 2018,
+    tipo: "pintura",
+    titulo: { es: "Retrato de mi padre", en: "Portrait of my father" },
+    tecnica: { es: "Óleo sobre lienzo", en: "Oil on canvas" },
+    materiales: { es: "Óleo, lienzo", en: "Oil, canvas" },
+    dimensiones: "80 × 60 cm",
+    descripcion: {
+      es: "Retrato pintado en sesiones largas.",
+      en: "Portrait painted in long sittings.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "fiesta-del-barrio-2019",
+    periodo: "2018–19",
+    anio: 2019,
+    tipo: "pintura",
+    titulo: { es: "Fiesta del barrio", en: "Neighborhood party" },
+    tecnica: { es: "Acrílico sobre lienzo", en: "Acrylic on canvas" },
+    materiales: { es: "Acrílico, lienzo", en: "Acrylic, canvas" },
+    dimensiones: "120 × 90 cm",
+    descripcion: {
+      es: "Música y baile en la calle.",
+      en: "Music and dance in the street.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "bodegon-con-limones-2018",
+    periodo: "2018–19",
+    anio: 2018,
+    tipo: "dibujo",
+    titulo: { es: "Bodegón con limones", en: "Still life with lemons" },
+    tecnica: { es: "Grafito sobre papel", en: "Graphite on paper" },
+    materiales: { es: "Grafito, papel", en: "Graphite, paper" },
+    dimensiones: "45 × 35 cm",
+    descripcion: {
+      es: "Limones sobre un paño.",
+      en: "Lemons on a cloth.",
+    },
+    imagenes: 3,
+  },
+  {
+    slug: "calle-larga-2019",
+    periodo: "2018–19",
+    anio: 2019,
+    tipo: "dibujo",
+    titulo: { es: "Calle larga", en: "Long street" },
+    tecnica: { es: "Tinta sobre papel", en: "Ink on paper" },
+    materiales: { es: "Tinta, papel", en: "Ink, paper" },
+    dimensiones: "45 × 35 cm",
+    descripcion: {
+      es: "La calle vista desde la esquina.",
+      en: "The street seen from the corner.",
+    },
+    imagenes: 3,
+  },
+];
+
+export const OBRAS_3D: Obra3D[] = [
+  {
+    slug: "toroide-de-lluvia-2026",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "3d",
+    titulo: { es: "Toroide de lluvia", en: "Rain torus" },
+    tecnica: { es: "Escultura digital", en: "Digital sculpture" },
+    materiales: { es: "Malla poligonal, resina", en: "Polygon mesh, resin" },
+    dimensiones: "40 × 30 × 25 cm",
+    descripcion: {
+      es: "Un anillo que recoge agua de lluvia.",
+      en: "A ring that gathers rainwater.",
+    },
+    modelo: "/models/toroide-de-lluvia-2026.obj",
+    formato: "obj",
+    imagenes: 1,
+  },
+  {
+    slug: "semilla-hueca-2025",
+    periodo: "2024–25",
+    anio: 2025,
+    tipo: "3d",
+    titulo: { es: "Semilla hueca", en: "Hollow seed" },
+    tecnica: { es: "Escultura digital", en: "Digital sculpture" },
+    materiales: { es: "Malla poligonal, resina", en: "Polygon mesh, resin" },
+    dimensiones: "35 × 25 × 25 cm",
+    descripcion: {
+      es: "Semilla abierta por dentro.",
+      en: "A seed open from within.",
+    },
+    modelo: "/models/semilla-hueca-2025.stl",
+    formato: "stl",
+    imagenes: 1,
+  },
+  {
+    slug: "arco-de-sal-2023",
+    periodo: "2022–23",
+    anio: 2023,
+    tipo: "3d",
+    titulo: { es: "Arco de sal", en: "Salt arch" },
+    tecnica: { es: "Escultura digital", en: "Digital sculpture" },
+    materiales: { es: "Malla poligonal, resina", en: "Polygon mesh, resin" },
+    dimensiones: "50 × 20 × 20 cm",
+    descripcion: {
+      es: "Arco inspirado en dunas blancas.",
+      en: "Arch inspired by white dunes.",
+    },
+    modelo: "/models/arco-de-sal-2023.obj",
+    formato: "obj",
+    imagenes: 1,
+  },
+  {
+    slug: "nido-de-alambre-2021",
+    periodo: "2020–21",
+    anio: 2021,
+    tipo: "3d",
+    titulo: { es: "Nido de alambre", en: "Wire nest" },
+    tecnica: { es: "Escultura digital", en: "Digital sculpture" },
+    materiales: { es: "Malla poligonal, resina", en: "Polygon mesh, resin" },
+    dimensiones: "30 × 30 × 20 cm",
+    descripcion: {
+      es: "Nido tejido con hilo de metal.",
+      en: "Nest woven with metal thread.",
+    },
+    modelo: "/models/nido-de-alambre-2021.stl",
+    formato: "stl",
+    imagenes: 1,
+  },
+];
+
+export function todasLasObras(): Obra[] {
+  return [...OBRAS_PICTORICAS, ...OBRAS_3D];
+}
+
+export function obraPorSlug(slug: string): Obra | undefined {
+  return todasLasObras().find((o) => o.slug === slug);
+}
+
+export function obrasPorTipo(tipo: TipoObra): Obra[] {
+  return todasLasObras().filter((o) => o.tipo === tipo);
+}
+
+export function vecinasDelMismoTipo(slug: string): {
+  anterior: Obra | null;
+  siguiente: Obra | null;
+} {
+  const actual = obraPorSlug(slug);
+  if (!actual) {
+    return { anterior: null, siguiente: null };
+  }
+  const lista = obrasPorTipo(actual.tipo);
+  const i = lista.findIndex((o) => o.slug === slug);
+  return {
+    anterior: i > 0 ? lista[i - 1] : null,
+    siguiente: i < lista.length - 1 ? lista[i + 1] : null,
+  };
+}
+
+export function obraDestacada(): Obra {
+  const d = todasLasObras().find((o) => o.destacada);
+  if (!d) {
+    throw new Error("falta obra destacada");
+  }
+  return d;
+}
