@@ -199,6 +199,37 @@ async function homeTresD() {
   return errores;
 }
 
+function indices() {
+  const errores = [];
+  const paginas = [["pinturas", "pintura"], ["dibujos", "dibujo"], ["tresde", "3d"]];
+  for (const par of paginas) {
+    const ruta = par[0];
+    const tipo = par[1];
+    const p = join(ROOT, "src", "app", "[locale]", ruta, "page.tsx");
+    if (!existsSync(p)) {
+      errores.push("falta indice " + ruta);
+      continue;
+    }
+    const txt = readFileSync(p, "utf8");
+    if (/three|<canvas/.test(txt)) {
+      errores.push("indice " + ruta + " con three/canvas (prohibido en listas)");
+    }
+    if (!txt.includes("GrupoPorPeriodo") || !txt.includes("obrasPorTipo")) {
+      errores.push("indice " + ruta + " no agrupa por periodos");
+    }
+    if (!txt.includes(tipo)) {
+      errores.push("indice " + ruta + " no filtra tipo " + tipo);
+    }
+  }
+  const grupo = join(ROOT, "src", "components", "GrupoPorPeriodo.tsx");
+  if (!existsSync(grupo)) {
+    errores.push("falta GrupoPorPeriodo");
+  } else if (!readFileSync(grupo, "utf8").includes("PERIODOS")) {
+    errores.push("GrupoPorPeriodo no itera PERIODOS");
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -211,7 +242,8 @@ export async function verify() {
     .concat(await contenido())
     .concat(diccionarios())
     .concat(rutaTresde())
-    .concat(await homeTresD());
+    .concat(await homeTresD())
+    .concat(indices());
   return { ok: errores.length === 0, errores };
 }
 
