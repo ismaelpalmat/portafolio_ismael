@@ -67,13 +67,13 @@ export default function Viewer3D({
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     el.appendChild(renderer.domElement);
-    const izq = new THREE.SpotLight(0xbfd9ff, 60, 30, Math.PI / 5, 0.4);
+    const izq = new THREE.SpotLight(0xbfd9ff, 35, 30, Math.PI / 3.5, 0.9);
     izq.position.set(-4, 2, 3);
-    const der = new THREE.SpotLight(0xffd9b0, 60, 30, Math.PI / 5, 0.4);
+    const der = new THREE.SpotLight(0xffd9b0, 35, 30, Math.PI / 3.5, 0.9);
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
     const grupo = new THREE.Group();
     scene.add(grupo);
     const reserva = mallaProcedural();

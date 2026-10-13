@@ -127,8 +127,8 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
   top: -10%;
   width: 34vmin;
   height: 120%;
-  filter: blur(60px);
-  opacity: 0.35;
+  filter: blur(90px);
+  opacity: 0.22;
 }
 
 .foco-izq {
