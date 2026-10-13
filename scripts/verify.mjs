@@ -334,6 +334,46 @@ async function bioContacto() {
   return errores;
 }
 
+function repoLimpio() {
+  const errores = [];
+  const fuera = ["node_modules", ".next", ".git", "docs", ".superpowers", "tests", "scripts", "package-lock.json", ".obsidian"];
+  const archivos = walk(ROOT).filter((f) => {
+    const rel = f.slice(ROOT.length + 1).split("\\").join("/");
+    for (const x of fuera) {
+      if (rel === x || rel.startsWith(x + "/")) {
+        return false;
+      }
+    }
+    return f.endsWith(".ts") || f.endsWith(".tsx") || f.endsWith(".json") || f.endsWith(".mjs") || f.endsWith(".css");
+  });
+  for (const f of archivos) {
+    const txt = readFileSync(f, "utf8");
+    if (/media|textos/i.test(txt.split("@media").join("@"))) {
+      errores.push("media/textos en repo: " + f);
+    }
+  }
+  return errores;
+}
+
+function estaticas() {
+  const errores = [];
+  const layout = readFileSync(join(ROOT, "src", "app", "[locale]", "layout.tsx"), "utf8");
+  const ficha = readFileSync(join(ROOT, "src", "app", "[locale]", "obra", "[slug]", "page.tsx"), "utf8");
+  if (!layout.includes("generateStaticParams")) {
+    errores.push("layout sin generateStaticParams");
+  }
+  if (!ficha.includes("generateStaticParams")) {
+    errores.push("ficha sin generateStaticParams");
+  }
+  const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf8"));
+  for (const s of ["verify", "typecheck", "lint", "build", "dev"]) {
+    if (!pkg.scripts || !pkg.scripts[s]) {
+      errores.push("falta script " + s);
+    }
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -350,7 +390,9 @@ export async function verify() {
     .concat(indices())
     .concat(ficha())
     .concat(visor3d())
-    .concat(await bioContacto());
+    .concat(await bioContacto())
+    .concat(repoLimpio())
+    .concat(estaticas());
   return { ok: errores.length === 0, errores };
 }
 
