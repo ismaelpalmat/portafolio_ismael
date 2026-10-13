@@ -194,7 +194,7 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
   .glitch::before, .glitch::after { animation: none; }
 }
 
-.marca { font-family: var(--font-titulo); font-weight: 600; letter-spacing: 0.14em; font-size: 0.95rem; color: #fff; text-decoration: none; white-space: nowrap; margin-right: 2.5rem; }
+.marca { font-family: var(--font-titulo); letter-spacing: 0.14em; font-size: 1.1rem; color: #fff; text-decoration: none; white-space: nowrap; margin-right: 4rem; }
 
 .marca { position: relative; }
 
