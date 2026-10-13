@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "inicio": "Inicio",
+    "pinturas": "Pinturas",
+    "dibujos": "Dibujos",
+    "tresde": "3D",
+    "biografia": "Biografía",
+    "contacto": "Contacto"
+  },
+  "home": {
+    "subtitulo": "Obra reciente",
+    "cta": "Ver obra"
+  },
+  "indices": {
+    "pinturas": "Pinturas",
+    "dibujos": "Dibujos",
+    "tresde": "3D"
+  },
+  "ficha": {
+    "anio": "Año",
+    "tecnica": "Técnica",
+    "materiales": "Materiales",
+    "dimensiones": "Dimensiones",
+    "anterior": "Anterior",
+    "siguiente": "Siguiente"
+  },
+  "bio": {
+    "titulo": "Biografía",
+    "individuales": "Individuales",
+    "colectivas": "Colectivas",
+    "reconocimientos": "Reconocimientos"
+  },
+  "contacto": {
+    "titulo": "Contacto",
+    "galeria": "Galería",
+    "estudio": "Estudio"
+  }
+}

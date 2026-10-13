@@ -103,6 +103,56 @@ async function contenido() {
   return errores;
 }
 
+function llaves(obj, pref) {
+  const acc = pref || [];
+  let out = [];
+  for (const k of Object.keys(obj)) {
+    const v = obj[k];
+    if (v !== null && typeof v === "object") {
+      out = out.concat(llaves(v, acc.concat(k)));
+    } else {
+      out.push(acc.concat(k).join("."));
+    }
+  }
+  return out;
+}
+
+function diccionarios() {
+  const base = join(ROOT, "src", "i18n", "messages");
+  let es;
+  let en;
+  try {
+    es = JSON.parse(readFileSync(join(base, "es.json"), "utf8"));
+    en = JSON.parse(readFileSync(join(base, "en.json"), "utf8"));
+  } catch (e) {
+    return ["no se pudieron leer diccionarios"];
+  }
+  const kes = llaves(es).sort();
+  const ken = llaves(en).sort();
+  if (JSON.stringify(kes) !== JSON.stringify(ken)) {
+    return ["claves es/en distintas"];
+  }
+  return [];
+}
+
+function rutaTresde() {
+  const errores = [];
+  const src = join(ROOT, "src");
+  if (!existsSync(src)) {
+    return ["falta src/"];
+  }
+  for (const f of walk(src)) {
+    if (!f.endsWith(".ts") && !f.endsWith(".tsx")) {
+      continue;
+    }
+    const txt = readFileSync(f, "utf8");
+    if (/\/3d["'/]/.test(txt)) {
+      errores.push("ruta /3d prohibida (usar /tresde) en " + f);
+    }
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -112,7 +162,9 @@ export async function verify() {
         "palabra comercial",
       ),
     )
-    .concat(await contenido());
+    .concat(await contenido())
+    .concat(diccionarios())
+    .concat(rutaTresde());
   return { ok: errores.length === 0, errores };
 }
 

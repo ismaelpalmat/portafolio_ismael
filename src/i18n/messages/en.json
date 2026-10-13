@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "inicio": "Home",
+    "pinturas": "Paintings",
+    "dibujos": "Drawings",
+    "tresde": "3D",
+    "biografia": "Biography",
+    "contacto": "Contact"
+  },
+  "home": {
+    "subtitulo": "Recent work",
+    "cta": "View work"
+  },
+  "indices": {
+    "pinturas": "Paintings",
+    "dibujos": "Drawings",
+    "tresde": "3D"
+  },
+  "ficha": {
+    "anio": "Year",
+    "tecnica": "Technique",
+    "materiales": "Materials",
+    "dimensiones": "Dimensions",
+    "anterior": "Previous",
+    "siguiente": "Next"
+  },
+  "bio": {
+    "titulo": "Biography",
+    "individuales": "Solo shows",
+    "colectivas": "Group shows",
+    "reconocimientos": "Awards"
+  },
+  "contacto": {
+    "titulo": "Contact",
+    "galeria": "Gallery",
+    "estudio": "Studio"
+  }
+}
