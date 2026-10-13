@@ -17,7 +17,7 @@ export default async function SiteNav({ locale }: { locale: Locale }) {
   return (
     <header className="menu-blur">
       <nav>
-        <Link href={base} className="marca">Ismael Palma Téllez</Link>
+        <Link href={base} className="marca">Ismael Palma Téllez<span className="marca-foto" aria-hidden="true" /></Link>
         <div className="nav-enlaces">
           {enlaces.map((e) => (
           <Link key={e.href} href={e.href}>

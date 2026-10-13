@@ -195,3 +195,11 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 }
 
 .marca { font-family: var(--font-titulo); font-weight: 600; letter-spacing: 0.14em; font-size: 0.95rem; color: #fff; text-decoration: none; white-space: nowrap; margin-right: 2.5rem; }
+
+.marca { position: relative; }
+
+.marca-foto { display: none; position: absolute; top: calc(100% + 0.75rem); left: 0; width: 112px; height: 112px; background: linear-gradient(160deg, #3a3f4a, #14161c 70%); filter: grayscale(1) contrast(1.4) brightness(1.05); border: 1px solid rgba(255, 255, 255, 0.25); z-index: 60; }
+
+.marca-foto::after { content: ""; position: absolute; inset: 0; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.6'/></svg>"); opacity: 0.55; mix-blend-mode: overlay; }
+
+.marca:hover .marca-foto, .marca:focus-visible .marca-foto { display: block; }
