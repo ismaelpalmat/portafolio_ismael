@@ -38,5 +38,8 @@
     "email": "Email",
     "direccion": "Address",
     "telefono": "Phone"
+  },
+  "footer": {
+    "derechos": "All rights reserved"
   }
 }

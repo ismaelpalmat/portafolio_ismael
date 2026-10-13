@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import type { Locale } from "@/content/tipos";
@@ -23,13 +23,15 @@ export default async function LocaleLayout({
   }
   setRequestLocale(locale);
   const messages = await getMessages();
+  const t = await getTranslations("footer");
+  const anio = new Date().getFullYear();
   return (
     <NextIntlClientProvider messages={messages}>
       <LangSync locale={locale as Locale} />
       <SiteNav locale={locale as Locale} />
       <main className="aire-menu-imagen">{children}</main>
-      <footer>
-        <p>Ismael Palma Téllez</p>
+      <footer className="pie">
+        <p>© {anio} Ismael Palma Téllez · {t("derechos")}</p>
       </footer>
     </NextIntlClientProvider>
   );
