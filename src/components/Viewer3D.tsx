@@ -126,13 +126,13 @@ export default function Viewer3D({
     let temporizador: ReturnType<typeof setTimeout> | undefined;
     const glitch = () => {
       glitchHasta = performance.now() + 200;
-      el.classList.remove("glitch");
+      el.classList.remove("zoom-glitch");
       void el.offsetWidth;
-      el.classList.add("glitch");
+      el.classList.add("zoom-glitch");
       if (temporizador) {
         clearTimeout(temporizador);
       }
-      temporizador = setTimeout(() => el.classList.remove("glitch"), 220);
+      temporizador = setTimeout(() => el.classList.remove("zoom-glitch"), 220);
     };
     const rueda = (e: WheelEvent) => {
       e.preventDefault();
