@@ -194,7 +194,7 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
   .glitch::before, .glitch::after { animation: none; }
 }
 
-.marca { font-family: var(--font-titulo); letter-spacing: 0.14em; font-size: 1.1rem; color: #fff; text-decoration: none; white-space: nowrap; margin-right: 4rem; }
+.marca { font-family: var(--font-titulo); letter-spacing: 0.14em; font-size: 1.1rem; color: #fff; text-decoration: none; white-space: nowrap; }
 
 .marca { position: relative; }
 
@@ -205,7 +205,7 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 .marca:hover .marca-foto, .marca:focus-visible .marca-foto { display: block; }
 
 @media (min-width: 768px) {
-  .menu-blur nav { position: relative; }
-  .marca { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); margin-right: 0; }
-  .menu-blur a.marca:hover { transform: translateY(-50%); }
+  .marca { flex: 1; }
+  .nav-enlaces { flex: 0 1 auto; }
+  .interruptor { flex: 1; justify-content: flex-end; margin-left: 0; padding-left: 0; }
 }
