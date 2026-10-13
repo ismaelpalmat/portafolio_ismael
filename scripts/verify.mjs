@@ -266,6 +266,33 @@ function ficha() {
   return errores;
 }
 
+function visor3d() {
+  const errores = [];
+  const p = join(ROOT, "src", "components", "Viewer3D.tsx");
+  if (!existsSync(p)) {
+    return ["falta Viewer3D"];
+  }
+  const txt = readFileSync(p, "utf8");
+  for (const s of ["OBJLoader", "STLLoader", "cargarModelo"]) {
+    if (!txt.includes(s)) {
+      errores.push("Viewer3D sin " + s);
+    }
+  }
+  const f = join(ROOT, "src", "components", "FichaTresD.tsx");
+  if (!existsSync(f)) {
+    errores.push("falta FichaTresD");
+  } else {
+    const t = readFileSync(f, "utf8");
+    if (!/ssr:\s*false/.test(t)) {
+      errores.push("FichaTresD sin ssr:false");
+    }
+    if (!t.includes("cuadrado")) {
+      errores.push("FichaTresD sin cuadrado");
+    }
+  }
+  return errores;
+}
+
 export async function verify() {
   const errores = rootHtmlLeftovers()
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
@@ -280,7 +307,8 @@ export async function verify() {
     .concat(rutaTresde())
     .concat(await homeTresD())
     .concat(indices())
-    .concat(ficha());
+    .concat(ficha())
+    .concat(visor3d());
   return { ok: errores.length === 0, errores };
 }
 
