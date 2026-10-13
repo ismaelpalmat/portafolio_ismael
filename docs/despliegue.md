@@ -7,7 +7,8 @@ tags: [docs, despliegue]
 
 - Remoto: `portafolio_ismael` en GitHub (reemplaza al viejo `portafolio1`).
 - Producción: rama `main`. Rama `vitrina-3d` ya integrada (se puede borrar).
-- Vercel: importar el repo, framework Next.js por defecto, desplegar `main`. Cada push genera preview.
+- GitHub Pages: workflow `.github/workflows/pages.yml` construye con `NEXT_BASE_PATH=/portafolio_ismael` y publica `out/`. Activar una vez en el repo: Settings → Pages → Source: GitHub Actions. URL: `https://ismaelpalmat.github.io/portafolio_ismael/`. Cada push a `main` redespliega.
+- Vercel (alternativo): importar el repo sin variables de base path; el export estático sirve igual.
 
 ## Publicar un cambio
 

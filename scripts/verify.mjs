@@ -196,8 +196,8 @@ async function homeTresD() {
     }
   }
   const cfg = readFileSync(join(ROOT, "next.config.mjs"), "utf8");
-  if (/output\s*:\s*["']export["']/.test(cfg)) {
-    errores.push("next.config con output:export prohibido");
+  if (!/output\s*:\s*["']export["']/.test(cfg)) {
+    errores.push("next.config sin output:export (requerido por Pages)");
   }
   return errores;
 }
@@ -342,7 +342,7 @@ async function bioContacto() {
 
 function repoLimpio() {
   const errores = [];
-  const fuera = ["node_modules", ".next", ".git", "docs", ".superpowers", "tests", "scripts", "package-lock.json", ".obsidian"];
+  const fuera = ["node_modules", ".next", "out", ".git", "docs", ".superpowers", "tests", "scripts", "package-lock.json", ".obsidian"];
   const archivos = walk(ROOT).filter((f) => {
     const rel = f.slice(ROOT.length + 1).split("\\").join("/");
     for (const x of fuera) {

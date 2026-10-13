@@ -11,7 +11,7 @@ export async function cargarModelo(
   formato: "obj" | "stl" | "glb"
 ): Promise<THREE.Object3D | null> {
   try {
-    const res = await fetch(url);
+    const res = await fetch((process.env.NEXT_PUBLIC_BASE_PATH ?? "") + url);
     if (!res.ok) {
       return null;
     }
