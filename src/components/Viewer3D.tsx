@@ -67,9 +67,9 @@ export default function Viewer3D({
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     el.appendChild(renderer.domElement);
-    const izq = new THREE.SpotLight(0xbfd9ff, 35, 30, Math.PI / 3.5, 0.9);
+    const izq = new THREE.SpotLight(0xbfe3c6, 35, 30, Math.PI / 3.5, 0.9);
     izq.position.set(-4, 2, 3);
-    const der = new THREE.SpotLight(0xffd9b0, 35, 30, Math.PI / 3.5, 0.9);
+    const der = new THREE.SpotLight(0xcabdea, 35, 30, Math.PI / 3.5, 0.9);
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
