@@ -131,9 +131,18 @@ export default function Viewer3D({
       arrastrando = false;
     };
     let glitchHasta = 0;
+    const GLITCHES: Array<[number, number]> = [[40, -30], [120, 200], [280, 90], [180, 320]];
+    let ultimoGlitch = -1;
     let temporizador: ReturnType<typeof setTimeout> | undefined;
     const glitch = () => {
       glitchHasta = performance.now() + 200;
+      let i = Math.floor(Math.random() * GLITCHES.length);
+      if (i === ultimoGlitch) {
+        i = (i + 1) % GLITCHES.length;
+      }
+      ultimoGlitch = i;
+      el.style.setProperty("--g1", GLITCHES[i][0] + "deg");
+      el.style.setProperty("--g2", GLITCHES[i][1] + "deg");
       el.classList.remove("zoom-glitch");
       void el.offsetWidth;
       el.classList.add("zoom-glitch");

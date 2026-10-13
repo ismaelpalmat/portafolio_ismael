@@ -161,8 +161,8 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 
 @keyframes glitch-zoom {
   0% { transform: translate(0); filter: none; }
-  25% { transform: translate(-6px, 3px) skewX(2deg); filter: hue-rotate(40deg) saturate(1.8); }
-  50% { transform: translate(5px, -2px); filter: hue-rotate(-30deg) contrast(1.2); }
+  25% { transform: translate(-6px, 3px) skewX(2deg); filter: hue-rotate(var(--g1, 40deg)) saturate(1.8); }
+  50% { transform: translate(5px, -2px); filter: hue-rotate(var(--g2, -30deg)) contrast(1.2); }
   75% { transform: translate(-3px, 1px) skewX(-2deg); filter: saturate(2); }
   100% { transform: translate(0); filter: none; }
 }
