@@ -203,3 +203,9 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 .marca-foto::after { content: ""; position: absolute; inset: 0; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.6'/></svg>"); opacity: 0.55; mix-blend-mode: overlay; }
 
 .marca:hover .marca-foto, .marca:focus-visible .marca-foto { display: block; }
+
+@media (min-width: 768px) {
+  .menu-blur nav { position: relative; }
+  .marca { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); margin-right: 0; }
+  .menu-blur a.marca:hover { transform: translateY(-50%); }
+}
