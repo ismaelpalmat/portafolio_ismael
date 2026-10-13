@@ -15,7 +15,7 @@ export default async function SiteNav({ locale }: { locale: Locale }) {
     { href: `${base}/contacto`, etiqueta: t("contacto") }
   ];
   return (
-    <header>
+    <header className="menu-blur">
       <nav>
         {enlaces.map((e) => (
           <Link key={e.href} href={e.href}>

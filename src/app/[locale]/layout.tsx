@@ -25,7 +25,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <SiteNav locale={locale as Locale} />
-      <main>{children}</main>
+      <main className="aire-menu-imagen">{children}</main>
       <footer>
         <p>Ismael Palma Téllez</p>
       </footer>

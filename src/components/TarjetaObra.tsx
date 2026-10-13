@@ -14,7 +14,7 @@ export default function TarjetaObra({
   anio: number;
 }) {
   return (
-    <Link href={`/${locale}/obra/${slug}`} className="tarjeta">
+    <Link href={`/${locale}/obra/${slug}`} className="tarjeta tarjeta-hover">
       <PlaceholderArt etiqueta={slug} titulo={titulo} />
       <span className="tarjeta-titulo">{titulo}</span>
       <span className="tarjeta-anio">{anio}</span>
