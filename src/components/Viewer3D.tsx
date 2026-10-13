@@ -46,13 +46,15 @@ export default function Viewer3D({
   formato,
   titulo,
   cuadrado,
-  distancia = 4.2
+  distancia = 4.2,
+  glitchZoom = false
 }: {
   modelo: string;
   formato: "obj" | "stl";
   titulo: string;
   cuadrado?: boolean;
   distancia?: number;
+  glitchZoom?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -120,9 +122,24 @@ export default function Viewer3D({
     const soltar = () => {
       arrastrando = false;
     };
+    let glitchHasta = 0;
+    let temporizador: ReturnType<typeof setTimeout> | undefined;
+    const glitch = () => {
+      glitchHasta = performance.now() + 200;
+      el.classList.remove("glitch");
+      void el.offsetWidth;
+      el.classList.add("glitch");
+      if (temporizador) {
+        clearTimeout(temporizador);
+      }
+      temporizador = setTimeout(() => el.classList.remove("glitch"), 220);
+    };
     const rueda = (e: WheelEvent) => {
       e.preventDefault();
       radio = Math.min(8, Math.max(2.2, radio * (1 + e.deltaY * 0.001)));
+      if (glitchZoom) {
+        glitch();
+      }
     };
     el.addEventListener("pointerdown", abajo);
     el.addEventListener("pointermove", mover);
@@ -146,10 +163,11 @@ export default function Viewer3D({
       if (!arrastrando) {
         theta += 0.008;
       }
+      const jit = performance.now() < glitchHasta ? (Math.random() - 0.5) * 0.06 : 0;
       camera.position.set(
-        radio * Math.sin(phi) * Math.sin(theta),
-        radio * Math.cos(phi),
-        radio * Math.sin(phi) * Math.cos(theta)
+        radio * Math.sin(phi) * Math.sin(theta + jit),
+        radio * Math.cos(phi + jit * 0.5),
+        radio * Math.sin(phi) * Math.cos(theta + jit)
       );
       camera.lookAt(0, 0, 0);
       renderer.render(scene, camera);
@@ -158,6 +176,9 @@ export default function Viewer3D({
     tick();
     return () => {
       vivo = false;
+      if (temporizador) {
+        clearTimeout(temporizador);
+      }
       ro.disconnect();
       el.removeEventListener("pointerdown", abajo);
       el.removeEventListener("pointermove", mover);
