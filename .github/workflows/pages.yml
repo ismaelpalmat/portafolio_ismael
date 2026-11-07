@@ -18,8 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_BASE_PATH: /portafolio_ismael
-      NEXT_PUBLIC_BASE_PATH: /portafolio_ismael
+      NEXT_BASE_PATH: ""
+      NEXT_PUBLIC_BASE_PATH: ""
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
