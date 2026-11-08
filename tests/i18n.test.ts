@@ -61,6 +61,7 @@ test("claves bio y contacto completas y simetricas", () => {
     "bio.resumen",
     "bio.individuales",
     "bio.colectivas",
+    "bio.residencias",
     "bio.reconocimientos",
     "contacto.titulo",
     "contacto.email",

@@ -5,6 +5,7 @@ export interface Biografia {
   resumen: LocalizedText;
   individuales: LocalizedText[];
   colectivas: LocalizedText[];
+  residencias: LocalizedText[];
   reconocimientos: LocalizedText[];
 }
 
@@ -24,6 +25,9 @@ export const BIOGRAFIA: Biografia = {
   colectivas: [
     texto("2018 — Trampa para Pájaros, Sala Juan Egenau"),
     texto("2015 — Encuentros Sonoros, Sala Juan Egenau")
+  ],
+  residencias: [
+    texto("2023 — Residencia Submarina, FAST, Quintay")
   ],
   reconocimientos: []
 };

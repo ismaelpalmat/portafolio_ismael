@@ -314,10 +314,10 @@ async function bioContacto() {
   try {
     const b = await import("../src/content/biografia.ts");
     const bio_datos = b.BIOGRAFIA;
-    if (!bio_datos || !Array.isArray(bio_datos.individuales) || !Array.isArray(bio_datos.colectivas) || !Array.isArray(bio_datos.reconocimientos)) {
+    if (!bio_datos || !Array.isArray(bio_datos.individuales) || !Array.isArray(bio_datos.colectivas) || !Array.isArray(bio_datos.residencias) || !Array.isArray(bio_datos.reconocimientos)) {
       errores.push("biografia incompleta");
     }
-    for (const item of bio_datos.individuales.concat(bio_datos.colectivas, bio_datos.reconocimientos, [bio_datos.resumen])) {
+    for (const item of bio_datos.individuales.concat(bio_datos.colectivas, bio_datos.residencias, bio_datos.reconocimientos, [bio_datos.resumen])) {
       if (!item || typeof item.es !== "string" || item.es.trim() === "" || typeof item.en !== "string" || item.en.trim() === "") {
         errores.push("simetria es/en rota en biografia");
         break;

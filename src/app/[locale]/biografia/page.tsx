@@ -16,6 +16,7 @@ export default async function BiografiaPage({
   const grupos = [
     { titulo: t("individuales"), items: BIOGRAFIA.individuales },
     { titulo: t("colectivas"), items: BIOGRAFIA.colectivas },
+    { titulo: t("residencias"), items: BIOGRAFIA.residencias },
     { titulo: t("reconocimientos"), items: BIOGRAFIA.reconocimientos }
   ];
   return (

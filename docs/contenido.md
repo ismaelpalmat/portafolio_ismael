@@ -28,4 +28,4 @@ Subir `.obj` o `.stl` livianos (three.js ya pesa unos 136 KB comprimido). `Viewe
 
 ## Bio y contacto
 
-`src/content/biografia.ts` (nombre, resumen, individuales, colectivas, reconocimientos) y `src/content/contacto.ts` (correo e Instagram). Etiquetas en `src/i18n/messages/{es,en}.json` (claves `bio.*`, `contacto.*`, `footer.*`). Contacto sin formulario por diseño.
+`src/content/biografia.ts` (nombre, resumen, individuales, colectivas, residencias, reconocimientos) y `src/content/contacto.ts` (correo e Instagram). Etiquetas en `src/i18n/messages/{es,en}.json` (claves `bio.*`, `contacto.*`, `footer.*`). Contacto sin formulario por diseño.
