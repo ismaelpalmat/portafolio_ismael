@@ -325,14 +325,8 @@ async function bioContacto() {
     }
     const c = await import("../src/content/contacto.ts");
     const con_datos = c.CONTACTO;
-    if (!con_datos || !con_datos.galeria.email || !con_datos.estudio.email) {
+    if (!con_datos || !con_datos.email || !con_datos.instagram) {
       errores.push("contacto incompleto");
-    }
-    for (const d of [con_datos.galeria.direccion, con_datos.estudio.direccion]) {
-      if (!d || typeof d.es !== "string" || d.es.trim() === "" || typeof d.en !== "string" || d.en.trim() === "") {
-        errores.push("simetria es/en rota en contacto");
-        break;
-      }
     }
   } catch (e) {
     errores.push("no se pudo importar bio/contacto");

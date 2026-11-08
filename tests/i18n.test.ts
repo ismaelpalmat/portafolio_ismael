@@ -63,11 +63,8 @@ test("claves bio y contacto completas y simetricas", () => {
     "bio.colectivas",
     "bio.reconocimientos",
     "contacto.titulo",
-    "contacto.galeria",
-    "contacto.estudio",
     "contacto.email",
-    "contacto.direccion",
-    "contacto.telefono"
+    "contacto.instagram"
   ];
   const hay = claves(es);
   for (const k of espero) {

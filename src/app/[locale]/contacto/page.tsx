@@ -2,7 +2,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CONTACTO } from "@/content/contacto";
 import Pie from "@/components/Pie";
 import Spotlights from "@/components/Spotlights";
-import type { Locale } from "@/content/tipos";
 
 export default async function ContactoPage({
   params
@@ -12,7 +11,6 @@ export default async function ContactoPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("contacto");
-  const l = locale as Locale;
   return (
     <>
       <Spotlights />
@@ -20,31 +18,21 @@ export default async function ContactoPage({
       <h1 className="indice-titulo">{t("titulo")}</h1>
       <div className="contacto-cols">
       <section>
-        <h2 className="grupo-titulo">{t("galeria")}</h2>
+        <h2 className="grupo-titulo">{t("email")}</h2>
         <p>
-          <strong>{CONTACTO.galeria.nombre}</strong>
-        </p>
-        <p>{CONTACTO.galeria.direccion[l]}</p>
-        <p>
-          {t("email")}:{" "}
-          <a href={`mailto:${CONTACTO.galeria.email}`}>{CONTACTO.galeria.email}</a>
-        </p>
-        <p>
-          {t("telefono")}:{" "}
-          <a href={`tel:${CONTACTO.galeria.telefono.replace(/ /g, "")}`}>
-            {CONTACTO.galeria.telefono}
-          </a>
+          <a href={`mailto:${CONTACTO.email}`}>{CONTACTO.email}</a>
         </p>
       </section>
       <section>
-        <h2 className="grupo-titulo">{t("estudio")}</h2>
+        <h2 className="grupo-titulo">{t("instagram")}</h2>
         <p>
-          <strong>{CONTACTO.estudio.nombre}</strong>
-        </p>
-        <p>{CONTACTO.estudio.direccion[l]}</p>
-        <p>
-          {t("email")}:{" "}
-          <a href={`mailto:${CONTACTO.estudio.email}`}>{CONTACTO.estudio.email}</a>
+          <a
+            href={`https://instagram.com/${CONTACTO.instagram}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            @{CONTACTO.instagram}
+          </a>
         </p>
       </section>
       </div>

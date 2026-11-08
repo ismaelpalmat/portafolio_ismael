@@ -33,11 +33,8 @@
   },
   "contacto": {
     "titulo": "Contacto",
-    "galeria": "Galería",
-    "estudio": "Estudio",
     "email": "Correo",
-    "direccion": "Dirección",
-    "telefono": "Teléfono"
+    "instagram": "Instagram"
   },
   "footer": {
     "derechos": "Todos los derechos reservados"
