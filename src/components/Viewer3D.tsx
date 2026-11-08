@@ -57,7 +57,8 @@ export default function Viewer3D({
   thetaInicial = 0.6,
   phiInicial = 1.1,
   velocidad = 0.008,
-  luzFrente = false
+  luzFrente = false,
+  reservaProcedural = true
 }: {
   modelo: string;
   formato: "obj" | "stl" | "glb";
@@ -69,6 +70,7 @@ export default function Viewer3D({
   phiInicial?: number;
   velocidad?: number;
   luzFrente?: boolean;
+  reservaProcedural?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -97,8 +99,10 @@ export default function Viewer3D({
     }
     const grupo = new THREE.Group();
     scene.add(grupo);
-    const reserva = mallaProcedural();
-    grupo.add(reserva);
+    const reserva = reservaProcedural ? mallaProcedural() : null;
+    if (reserva) {
+      grupo.add(reserva);
+    }
     let vivo = true;
     if (modelo) {
       cargarModelo(modelo, formato).then((obj) => {
@@ -114,7 +118,9 @@ export default function Viewer3D({
         const esc = 2.2 / max;
         obj.scale.setScalar(esc);
         obj.position.set(-centro.x * esc, -centro.y * esc, -centro.z * esc);
-        grupo.remove(reserva);
+        if (reserva) {
+          grupo.remove(reserva);
+        }
         grupo.add(obj);
       });
     }
@@ -237,7 +243,7 @@ export default function Viewer3D({
       renderer.dispose();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente]);
+  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural]);
 
   return (
     <div

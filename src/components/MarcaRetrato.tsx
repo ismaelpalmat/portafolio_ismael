@@ -41,6 +41,7 @@ export default function MarcaRetrato({ locale }: { locale: Locale }) {
             phiInicial={1.3}
             velocidad={0.016}
             luzFrente
+            reservaProcedural={false}
             cuadrado
           />
         </div>
