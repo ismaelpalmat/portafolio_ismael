@@ -53,7 +53,10 @@ export default function Viewer3D({
   titulo,
   cuadrado,
   distancia = 4.2,
-  glitchZoom = false
+  glitchZoom = false,
+  fijo = false,
+  thetaInicial = 0.6,
+  luzFrente = false
 }: {
   modelo: string;
   formato: "obj" | "stl" | "glb";
@@ -61,6 +64,9 @@ export default function Viewer3D({
   cuadrado?: boolean;
   distancia?: number;
   glitchZoom?: boolean;
+  fijo?: boolean;
+  thetaInicial?: number;
+  luzFrente?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -75,12 +81,17 @@ export default function Viewer3D({
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     el.appendChild(renderer.domElement);
-    const izq = new THREE.SpotLight(0xbfe3c6, 35, 30, Math.PI / 3.5, 0.9);
+    const izq = new THREE.SpotLight(0xbfe3c6, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
     izq.position.set(-4, 2, 3);
-    const der = new THREE.SpotLight(0xcabdea, 35, 30, Math.PI / 3.5, 0.9);
+    const der = new THREE.SpotLight(0xcabdea, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
+    if (luzFrente) {
+      const frente = new THREE.DirectionalLight(0xffffff, 2.2);
+      frente.position.set(0, 0.5, 5);
+      scene.add(frente);
+    }
     scene.add(new THREE.AmbientLight(0xffffff, 0.35));
     const grupo = new THREE.Group();
     scene.add(grupo);
@@ -105,8 +116,8 @@ export default function Viewer3D({
         grupo.add(obj);
       });
     }
-    let theta = 0.6;
-    let phi = 1.1;
+    let theta = thetaInicial;
+    let phi = fijo ? Math.PI / 2 : 1.1;
     let radio = distancia;
     let arrastrando = false;
     let moviendo = false;
@@ -184,7 +195,7 @@ export default function Viewer3D({
       if (!vivo) {
         return;
       }
-      if (!arrastrando) {
+      if (!arrastrando && !fijo) {
         theta += 0.008;
       }
       const jit = performance.now() < glitchHasta ? (Math.random() - 0.5) * 0.06 : 0;
@@ -224,7 +235,7 @@ export default function Viewer3D({
       renderer.dispose();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia, glitchZoom]);
+  }, [modelo, formato, distancia, glitchZoom, fijo, thetaInicial, luzFrente]);
 
   return (
     <div

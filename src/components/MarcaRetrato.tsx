@@ -36,7 +36,10 @@ export default function MarcaRetrato({ locale }: { locale: Locale }) {
             modelo="/models/head_1.glb"
             formato="glb"
             titulo=""
-            distancia={3.4}
+            distancia={3.9}
+            fijo
+            thetaInicial={0}
+            luzFrente
             cuadrado
           />
         </div>
