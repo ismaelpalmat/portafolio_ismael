@@ -33,7 +33,7 @@ export default async function BiografiaPage({
         </div>
       </div>
       <div className="bio-grupos">
-        {grupos.map((g) => (
+        {grupos.filter((g) => g.items.length > 0).map((g) => (
           <section key={g.titulo}>
             <h2 className="grupo-titulo">{g.titulo}</h2>
             <ul>

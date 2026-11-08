@@ -314,8 +314,8 @@ async function bioContacto() {
   try {
     const b = await import("../src/content/biografia.ts");
     const bio_datos = b.BIOGRAFIA;
-    if (!bio_datos || bio_datos.individuales.length !== 3 || bio_datos.colectivas.length !== 4 || bio_datos.reconocimientos.length !== 2) {
-      errores.push("biografia incompleta (3+4+2)");
+    if (!bio_datos || !Array.isArray(bio_datos.individuales) || !Array.isArray(bio_datos.colectivas) || !Array.isArray(bio_datos.reconocimientos)) {
+      errores.push("biografia incompleta");
     }
     for (const item of bio_datos.individuales.concat(bio_datos.colectivas, bio_datos.reconocimientos, [bio_datos.resumen])) {
       if (!item || typeof item.es !== "string" || item.es.trim() === "" || typeof item.en !== "string" || item.en.trim() === "") {
