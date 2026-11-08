@@ -23,9 +23,7 @@ export const BIOGRAFIA: Biografia = {
   ],
   colectivas: [
     texto("2018 — Trampa para Pájaros, Sala Juan Egenau"),
-    texto("2015 — Encuentros Sonoros, Sala Juan Egenau"),
-    texto("2015 — Muestra Taller Bellavista, S/E Universidad San Sebastián"),
-    texto("2014 — Muestra Taller Bellavista, Sala de Exposiciones Estación Mapocho")
+    texto("2015 — Encuentros Sonoros, Sala Juan Egenau")
   ],
   reconocimientos: []
 };
