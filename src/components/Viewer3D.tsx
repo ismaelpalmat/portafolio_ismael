@@ -54,8 +54,9 @@ export default function Viewer3D({
   cuadrado,
   distancia = 4.2,
   glitchZoom = false,
-  fijo = false,
   thetaInicial = 0.6,
+  phiInicial = 1.1,
+  velocidad = 0.008,
   luzFrente = false
 }: {
   modelo: string;
@@ -64,8 +65,9 @@ export default function Viewer3D({
   cuadrado?: boolean;
   distancia?: number;
   glitchZoom?: boolean;
-  fijo?: boolean;
   thetaInicial?: number;
+  phiInicial?: number;
+  velocidad?: number;
   luzFrente?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -117,7 +119,7 @@ export default function Viewer3D({
       });
     }
     let theta = thetaInicial;
-    let phi = fijo ? Math.PI / 2 : 1.1;
+    let phi = phiInicial;
     let radio = distancia;
     let arrastrando = false;
     let moviendo = false;
@@ -195,8 +197,8 @@ export default function Viewer3D({
       if (!vivo) {
         return;
       }
-      if (!arrastrando && !fijo) {
-        theta += 0.008;
+      if (!arrastrando) {
+        theta += velocidad;
       }
       const jit = performance.now() < glitchHasta ? (Math.random() - 0.5) * 0.06 : 0;
       camera.position.set(
@@ -235,7 +237,7 @@ export default function Viewer3D({
       renderer.dispose();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia, glitchZoom, fijo, thetaInicial, luzFrente]);
+  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente]);
 
   return (
     <div

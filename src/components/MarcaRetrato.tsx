@@ -37,8 +37,9 @@ export default function MarcaRetrato({ locale }: { locale: Locale }) {
             formato="glb"
             titulo=""
             distancia={3.9}
-            fijo
-            thetaInicial={0}
+            thetaInicial={0.4}
+            phiInicial={1.3}
+            velocidad={0.0025}
             luzFrente
             cuadrado
           />
