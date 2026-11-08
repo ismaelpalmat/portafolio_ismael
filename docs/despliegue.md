@@ -6,8 +6,8 @@ tags: [docs, despliegue]
 # Guía de despliegue
 
 - Remoto: `portafolio_ismael` en GitHub (reemplaza al viejo `portafolio1`).
-- Producción: rama `main`. Rama `vitrina-3d` ya integrada (se puede borrar).
-- GitHub Pages: workflow `.github/workflows/pages.yml` construye con `NEXT_BASE_PATH=/portafolio_ismael` y publica `out/`. Activar una vez en el repo: Settings → Pages → Source: GitHub Actions. URL: `https://ismaelpalmat.github.io/portafolio_ismael/`. Cada push a `main` redespliega.
+- Producción: rama `main`.
+- GitHub Pages: workflow `.github/workflows/pages.yml` construye sin base path (dominio propio en la raíz) y publica `out/`. URL: `https://ismael.palmatellez.cl/`. Cada push a `main` redespliega.
 - Vercel (alternativo): importar el repo sin variables de base path; el export estático sirve igual.
 
 ## Publicar un cambio

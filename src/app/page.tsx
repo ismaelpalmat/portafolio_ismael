@@ -1,6 +1,11 @@
-import { redirect } from "next/navigation";
-
-// GitHub Pages no negocia idioma en servidor: la raíz redirige al default.
+// Export estático: redirect() no corre en build; la raíz redirige en el navegador.
 export default function RootPage() {
-  redirect("/es");
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: 'location.replace("/es/")' }} />
+      <noscript>
+        <a href="/es/">ES</a>
+      </noscript>
+    </>
+  );
 }

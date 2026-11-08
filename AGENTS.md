@@ -25,7 +25,7 @@ Leer primero: `README.md`, `docs/indice.md` y `node_modules/next/dist/docs/` ant
 - Tipos `pintura|dibujo|3d`. Periodos con en-dash: 2026, 2024–25, 2022–23, 2020–21, 2018–19.
 - La ruta 3D es `/tresde`, nunca `/3d`. La home enlaza a la única obra con `destacada:true`.
 - Máximo un canvas three por página; nada de canvas en listas; 3D solo en cliente con `dynamic` y `ssr:false`.
-- Todo estático con `generateStaticParams`; sin `output:export`.
+- Export estático para GitHub Pages: `output:export` + `trailingSlash` + `images.unoptimized` en `next.config.mjs`; `generateStaticParams` en locales y slugs; sin middleware (no corre en export); sin base path (dominio propio en la raíz). La raíz redirige a `/es/` con script, porque `redirect()` no corre en export.
 
 ## Ramas y commits
 
