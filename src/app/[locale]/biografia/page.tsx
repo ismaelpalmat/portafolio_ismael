@@ -23,21 +23,27 @@ export default async function BiografiaPage({
       <Spotlights />
       <section className="indice">
       <h1 className="indice-titulo">{t("titulo")}</h1>
-      <p>
-        <strong>{BIOGRAFIA.nombre}</strong>
-      </p>
-      <h2 className="grupo-titulo">{t("resumen")}</h2>
-      <p>{BIOGRAFIA.resumen[l]}</p>
-      {grupos.map((g) => (
-        <section key={g.titulo}>
-          <h2 className="grupo-titulo">{g.titulo}</h2>
-          <ul>
-            {g.items.map((item) => (
-              <li key={item[l]}>{item[l]}</li>
-            ))}
-          </ul>
-        </section>
-      ))}
+      <div className="bio-cabecera">
+        <p>
+          <strong>{BIOGRAFIA.nombre}</strong>
+        </p>
+        <div>
+          <h2 className="grupo-titulo">{t("resumen")}</h2>
+          <p>{BIOGRAFIA.resumen[l]}</p>
+        </div>
+      </div>
+      <div className="bio-grupos">
+        {grupos.map((g) => (
+          <section key={g.titulo}>
+            <h2 className="grupo-titulo">{g.titulo}</h2>
+            <ul>
+              {g.items.map((item) => (
+                <li key={item[l]}>{item[l]}</li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
       </section>
       <Pie />
     </>

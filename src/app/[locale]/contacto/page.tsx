@@ -18,6 +18,7 @@ export default async function ContactoPage({
       <Spotlights />
       <section className="indice">
       <h1 className="indice-titulo">{t("titulo")}</h1>
+      <div className="contacto-cols">
       <section>
         <h2 className="grupo-titulo">{t("galeria")}</h2>
         <p>
@@ -46,6 +47,7 @@ export default async function ContactoPage({
           <a href={`mailto:${CONTACTO.estudio.email}`}>{CONTACTO.estudio.email}</a>
         </p>
       </section>
+      </div>
       </section>
       <Pie />
     </>

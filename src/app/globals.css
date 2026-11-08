@@ -213,6 +213,37 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
   .home-oscura { padding: 4.5rem 1rem 2rem; }
 }
 
+/* Páginas a todo el ancho: sin columna central. */
+.indice, .ficha { max-width: none; margin-inline: 0; padding-inline: clamp(1.25rem, 4vw, 4rem); }
+
+main { display: flex; flex-direction: column; min-height: 100dvh; }
+main > .pie { margin-top: auto; }
+.focos { overflow: hidden; }
+
+@media (min-width: 1024px) {
+  .ficha {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+    align-items: start;
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+  .ficha > .carrusel, .ficha > .visor { grid-column: 1; }
+  .ficha > .ficha-datos { grid-column: 2; }
+  .ficha > .anterior-siguiente { grid-column: 1 / -1; }
+  .ficha > .visor.cuadrado { width: 100%; max-width: min(100%, 72dvh); justify-self: center; }
+  .bio-cabecera { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem 3rem; align-items: start; }
+  .bio-cabecera p { max-width: 70ch; }
+  .bio-grupos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 3rem; align-items: start; }
+}
+
+@media (max-width: 1023px) {
+  .bio-grupos { display: flex; flex-direction: column; gap: 2.5rem; }
+}
+
+@media (min-width: 768px) {
+  .contacto-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 4rem; align-items: start; }
+}
+
 
 
 
