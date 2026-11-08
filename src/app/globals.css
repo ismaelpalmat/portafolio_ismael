@@ -198,9 +198,9 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 
 .marca { position: relative; }
 
-.marca-foto { position: absolute; pointer-events: none; overflow: hidden; width: 112px; height: 112px; background-color: #14161c; border: 1px solid rgba(255, 255, 255, 0.25); z-index: 60; }
+.marca-foto { position: absolute; pointer-events: none; overflow: hidden; width: 160px; height: 160px; background-color: #14161c; border: 1px solid rgba(255, 255, 255, 0.25); z-index: 60; }
 
-.marca-foto::after { content: ""; position: absolute; inset: 0; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.6'/></svg>"); opacity: 0.3; mix-blend-mode: overlay; }
+.marca-foto::after { content: ""; position: absolute; inset: 0; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.6'/></svg>"); opacity: 0.15; mix-blend-mode: overlay; }
 
 .marca:hover .marca-foto, .marca:focus-visible .marca-foto { display: block; }
 

@@ -89,12 +89,12 @@ export default function Viewer3D({
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
+    scene.add(new THREE.AmbientLight(0xffffff, luzFrente ? 0.6 : 0.35));
     if (luzFrente) {
-      const frente = new THREE.DirectionalLight(0xffffff, 2.2);
+      const frente = new THREE.DirectionalLight(0xffffff, 3.2);
       frente.position.set(0, 0.5, 5);
       scene.add(frente);
     }
-    scene.add(new THREE.AmbientLight(0xffffff, 0.35));
     const grupo = new THREE.Group();
     scene.add(grupo);
     const reserva = mallaProcedural();
