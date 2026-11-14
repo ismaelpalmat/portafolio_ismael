@@ -15,8 +15,8 @@ const texto = (s: string): LocalizedText => ({ es: s, en: s });
 export const BIOGRAFIA: Biografia = {
   nombre: "Ismael Palma Téllez",
   resumen: {
-    es: "Pinta y dibuja desde hace más de una década. Su obra explora el agua, la casa y la memoria familiar.",
-    en: "He has painted and drawn for over a decade. His work explores water, home and family memory."
+    es: "Artista visual que trabaja en Santiago de Chile. Explora distintos medios, como la pintura, el dibujo y la escultura.",
+    en: "Visual artist working in Santiago, Chile. Explores different disciplines, such as painting, drawing and sculpture."
   },
   individuales: [
     texto("2022 — Borrar y Rebobinar, Sala Juan Egenau"),
