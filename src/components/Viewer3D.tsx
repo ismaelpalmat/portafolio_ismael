@@ -259,7 +259,7 @@ export default function Viewer3D({
       ref={ref}
       role="img"
       aria-label={titulo}
-      style={{ touchAction: "none" }}
+      style={{ touchAction: "pan-y" }}
       className={cuadrado ? "visor cuadrado" : "visor"}
     />
   );
