@@ -23,6 +23,7 @@ export const BIOGRAFIA: Biografia = {
     texto("2018 — Ocasiones Propicias, Espacio O")
   ],
   colectivas: [
+    texto("2025 — Tarapacá Expandida, Museo Regional de Iquique"),
     texto("2018 — Trampa para Pájaros, Sala Juan Egenau"),
     texto("2015 — Encuentros Sonoros, Sala Juan Egenau")
   ],
