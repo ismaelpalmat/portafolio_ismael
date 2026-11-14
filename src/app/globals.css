@@ -65,13 +65,7 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 .home-titulo {
   font-size: 1.75rem;
   letter-spacing: 0.08em;
-}
-
-.home-cta {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  margin-bottom: 3rem;
 }
 
 .heroe-3d {
@@ -84,8 +78,7 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 }
 
 .home-sub,
-.home-titulo,
-.home-cta {
+.home-titulo {
   position: relative;
   z-index: 1;
 }

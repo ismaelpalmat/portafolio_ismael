@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import HomeHero3D from "@/components/HomeHero3D";
 import Spotlights from "@/components/Spotlights";
@@ -19,9 +18,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Spotlights />
       <HomeHero3D locale={l} slug={obra.slug} titulo={obra.titulo[l]} />
       <h1 className="home-titulo glitch" data-text={obra.titulo[l]}>{obra.titulo[l]}</h1>
-      <Link href={`/${locale}/obra/${obra.slug}`} className="home-cta">
-        {t("cta")}
-      </Link>
       </section>
       <Pie />
     </div>

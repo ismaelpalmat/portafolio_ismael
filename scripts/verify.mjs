@@ -167,7 +167,7 @@ async function homeTresD() {
     return ["no se pudo leer obra destacada"];
   }
   const errores = [];
-  if (!txt.includes("obraDestacada") || !txt.includes("/obra/")) {
+  if (!txt.includes("obraDestacada") || !txt.includes("HomeHero3D")) {
     errores.push("home no enlaza a la destacada obra/" + slug);
   }
   const hero = join(ROOT, "src", "components", "HomeHero3D.tsx");
@@ -193,6 +193,9 @@ async function homeTresD() {
     }
     if (!w.includes("use client")) {
       errores.push("Viewer3D debe ser client");
+    }
+    if (!h.includes("/obra/")) {
+      errores.push("HomeHero3D sin enlace a /obra/");
     }
   }
   const cfg = readFileSync(join(ROOT, "next.config.mjs"), "utf8");
