@@ -80,23 +80,31 @@ export default function Viewer3D({
       return;
     }
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0a0f);
+    const claro = () => document.documentElement.dataset.tema === "claro";
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     el.appendChild(renderer.domElement);
-    const izq = new THREE.SpotLight(0xbfe3c6, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
+    const izq = new THREE.SpotLight(claro() ? 0x2f8f52 : 0xbfe3c6, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
     izq.position.set(-4, 2, 3);
-    const der = new THREE.SpotLight(0xcabdea, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
+    const der = new THREE.SpotLight(claro() ? 0x6d4ec9 : 0xcabdea, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
-    scene.add(new THREE.AmbientLight(0xffffff, luzFrente ? 0.6 : 0.35));
+    const ambiente = new THREE.AmbientLight(0xffffff, luzFrente ? 0.6 : claro() ? 0.55 : 0.35);
+    scene.add(ambiente);
     if (luzFrente) {
       const frente = new THREE.DirectionalLight(0xffffff, 3.2);
       frente.position.set(0, 0.5, 5);
       scene.add(frente);
     }
+    const aplicarLuces = () => {
+      izq.color.set(claro() ? 0x2f8f52 : 0xbfe3c6);
+      der.color.set(claro() ? 0x6d4ec9 : 0xcabdea);
+      ambiente.intensity = luzFrente ? 0.6 : claro() ? 0.55 : 0.35;
+    };
+    const observador = new MutationObserver(aplicarLuces);
+    observador.observe(document.documentElement, { attributes: true, attributeFilter: ["data-tema"] });
     const grupo = new THREE.Group();
     scene.add(grupo);
     const reserva = reservaProcedural ? mallaProcedural() : null;
@@ -223,6 +231,7 @@ export default function Viewer3D({
         clearTimeout(temporizador);
       }
       ro.disconnect();
+      observador.disconnect();
       el.removeEventListener("pointerdown", abajo);
       el.removeEventListener("pointermove", mover);
       el.removeEventListener("pointerup", soltar);

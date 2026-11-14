@@ -41,6 +41,11 @@
   "shop": {
     "titulo": "Shop"
   },
+  "tema": {
+    "cambiar": "Cambiar tema",
+    "claro": "Claro",
+    "oscuro": "Oscuro"
+  },
   "footer": {
     "derechos": "Todos los derechos reservados"
   }

@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import type { Locale } from "@/content/tipos";
+import TemaToggle from "./TemaToggle";
 
 export default function LocaleSwitcher({ locale }: { locale: Locale }) {
   const pathname = usePathname();
@@ -16,7 +17,8 @@ export default function LocaleSwitcher({ locale }: { locale: Locale }) {
   }
 
   return (
-    <div className="interruptor" role="group" aria-label="Idioma / Language">
+    <div className="interruptor" role="group" aria-label="Idioma y tema / Language and theme">
+      <TemaToggle />
       {(["es", "en"] as const).map((l) => (
         <button
           key={l}

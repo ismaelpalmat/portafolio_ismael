@@ -9,8 +9,21 @@ export const metadata: Metadata = { title: "Portafolio" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${titulo.variable} ${cuerpo.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="es"
+      data-tema="claro"
+      suppressHydrationWarning
+      className={`${titulo.variable} ${cuerpo.variable}`}
+    >
+      <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{var t=localStorage.getItem("vitrina-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}'
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

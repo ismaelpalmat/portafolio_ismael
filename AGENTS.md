@@ -35,6 +35,6 @@ Leer primero: `README.md`, `docs/indice.md` y `node_modules/next/dist/docs/` ant
 
 ## Diseño
 
-- Tokens y clases en `src/app/globals.css`. Fondo global `#0a0a0f`; Space Grotesk en títulos, Inter en cuerpo (next/font, self-hosted).
-- Menú superior fijo translúcido oscuro; pie oscuro con ©, año dinámico y derechos bilingües.
+- Tokens y clases en `src/app/globals.css`. Tema claro por defecto (`#fff`) y oscuro (`#0a0a0f`) vía `data-tema` en `<html>`; la elección se guarda en `vitrina-tema` y el visor 3D ajusta sus luces. Space Grotesk en títulos, Inter en cuerpo (next/font, self-hosted).
+- Menú superior fijo translúcido (claro u oscuro según el tema); pie con ©, año dinámico y derechos bilingües.
 - Los ajustes visuales se iteran de a uno: cambio chico, build verde, commit.
