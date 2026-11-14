@@ -9,33 +9,33 @@ export interface Producto {
 // Piezas y montos de ejemplo: reemplazar por los reales.
 export const PRODUCTOS: Producto[] = [
   {
-    slug: "toroide-de-lluvia",
-    nombre: { es: "Toroide de lluvia", en: "Rain torus" },
+    slug: "test-1",
+    nombre: { es: "test_1", en: "test_1" },
     monto: "$130.00"
   },
   {
-    slug: "semilla-hueca",
-    nombre: { es: "Semilla hueca", en: "Hollow seed" },
+    slug: "test-2",
+    nombre: { es: "test_2", en: "test_2" },
     monto: "$130.00"
   },
   {
-    slug: "arco-de-sal",
-    nombre: { es: "Arco de sal", en: "Salt arch" },
+    slug: "test-3",
+    nombre: { es: "test_3", en: "test_3" },
     monto: "$130.00"
   },
   {
-    slug: "nido-de-alambre",
-    nombre: { es: "Nido de alambre", en: "Wire nest" },
+    slug: "test-4",
+    nombre: { es: "test_4", en: "test_4" },
     monto: "$130.00"
   },
   {
-    slug: "ola-cuadrada",
-    nombre: { es: "Ola cuadrada", en: "Square wave" },
+    slug: "test-5",
+    nombre: { es: "test_5", en: "test_5" },
     monto: "$130.00"
   },
   {
-    slug: "duna",
-    nombre: { es: "Duna", en: "Dune" },
+    slug: "test-6",
+    nombre: { es: "test_6", en: "test_6" },
     monto: "$130.00"
   }
 ];

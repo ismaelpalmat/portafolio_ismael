@@ -25,6 +25,7 @@ Leer primero: `README.md`, `docs/indice.md`, `docs/contenido.md` y `node_modules
 - Prohibida la compra online: sin carrito, checkout, pagos ni formularios. `shop` es la excepción para mostrar piezas y precios. Sin secciones media/textos.
 - Tipos `pintura|dibujo|3d`. Periodos con en-dash: 2026, 2024–25, 2022–23, 2020–21, 2018–19.
 - La ruta 3D es `/tresde`, nunca `/3d`; la tienda es `/shop`. La home enlaza a la única obra con `destacada:true` a través del propio 3D (`HomeHero3D`), sin CTA.
+- Las obras usan nombres de prueba `test_N` y slugs `test-N`; no reintroducir nombres inventados. La destacada es `test_1` (`/obra/test-1`).
 - Máximo un canvas three por página; nada de canvas en listas; 3D solo en cliente con `dynamic` y `ssr:false`. Excepción transitoria: el retrato 3D al hover del nombre, que se desmonta al salir.
 - El visor usa `touch-action: pan-y`: en móvil el swipe vertical hace scroll y el horizontal gira la figura.
 - Export estático para GitHub Pages: `output:export` + `trailingSlash` + `images.unoptimized` en `next.config.mjs`; `generateStaticParams` en locales y slugs; sin middleware (no corre en export); sin base path (dominio propio en la raíz). La raíz redirige a `/es/` con script, porque `redirect()` no corre en export.
@@ -42,7 +43,7 @@ Leer primero: `README.md`, `docs/indice.md`, `docs/contenido.md` y `node_modules
 
 - Índices, fichas, biografía, contacto y shop; el contenido vive en `src/content/*.ts`.
 - Contacto: correo e Instagram, sin formulario. Biografía: individuales, colectivas, residencias y reconocimientos; los grupos vacíos no se muestran.
-- Shop: `/shop` (`src/app/[locale]/shop/page.tsx`), piezas en `src/content/productos.ts`, panel blanco con grilla de 2 columnas; sin carrito ni compra. Imágenes placeholder por ahora.
+- Shop: `/shop` (`src/app/[locale]/shop/page.tsx`), piezas en `src/content/productos.ts` (nombres `test_1`..`test_6`), panel blanco con grilla de 2 columnas; sin carrito ni compra. Imágenes placeholder por ahora.
 
 ## Ramas y commits
 
