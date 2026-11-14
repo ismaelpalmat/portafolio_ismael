@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/content/tipos";
 import LocaleSwitcher from "./LocaleSwitcher";
 import MarcaRetrato from "./MarcaRetrato";
+import MenuMovil from "./MenuMovil";
 
 export default async function SiteNav({ locale }: { locale: Locale }) {
   const t = await getTranslations("nav");
@@ -20,13 +20,7 @@ export default async function SiteNav({ locale }: { locale: Locale }) {
     <header className="menu-blur">
       <nav>
         <MarcaRetrato locale={locale} />
-        <div className="nav-enlaces">
-          {enlaces.map((e) => (
-          <Link key={e.href} href={e.href}>
-            {e.etiqueta}
-          </Link>
-        ))}
-        </div>
+        <MenuMovil enlaces={enlaces} />
         <LocaleSwitcher locale={locale} />
       </nav>
     </header>
