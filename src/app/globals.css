@@ -260,10 +260,10 @@ main > .pie { margin-top: auto; }
 }
 
 /* Tema claro (el oscuro es el actual, por defecto en el CSS base). */
-.tema .tema-a-claro,
-.tema .tema-a-oscuro { display: none; }
-[data-tema="claro"] .tema .tema-a-oscuro { display: inline; }
-[data-tema="oscuro"] .tema .tema-a-claro { display: inline; }
+.tema { display: inline-flex; align-items: center; }
+.tema-icono { width: 1rem; height: 1rem; display: none; }
+[data-tema="claro"] .tema-icono-luna { display: block; }
+[data-tema="oscuro"] .tema-icono-sol { display: block; }
 
 [data-tema="claro"] body { background: #fff; color: #0a0a0f; }
 [data-tema="claro"] .menu-blur { background: rgba(255, 255, 255, 0.72); color: #0a0a0f; }
