@@ -6,7 +6,7 @@ export const OBRAS_PICTORICAS: ObraPictorica[] = [
     periodo: "2026",
     anio: 2026,
     tipo: "pintura",
-    titulo: { es: "Marea alta", en: "High tide" },
+    titulo: { es: "test_1", en: "test_1" },
     tecnica: { es: "Óleo sobre lienzo", en: "Oil on linen" },
     materiales: { es: "Óleo, lienzo de lino", en: "Oil, linen canvas" },
     dimensiones: "130 × 97 cm",
