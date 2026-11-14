@@ -21,7 +21,7 @@ export default async function FichaDatos({ obra, locale }: { obra: Obra; locale:
         </div>
         <div>
           <dt>{t("dimensiones")}</dt>
-          <dd>{obra.dimensiones}</dd>
+          <dd>{obra.dimensiones[locale]}</dd>
         </div>
       </dl>
       <p className="ficha-descripcion">{obra.descripcion[locale]}</p>

@@ -19,7 +19,7 @@ export interface ObraPictorica {
   titulo: LocalizedText;
   tecnica: LocalizedText;
   materiales: LocalizedText;
-  dimensiones: string;
+  dimensiones: LocalizedText;
   descripcion: LocalizedText;
   imagenes: number;
   destacada?: boolean;
@@ -33,7 +33,7 @@ export interface Obra3D {
   titulo: LocalizedText;
   tecnica: LocalizedText;
   materiales: LocalizedText;
-  dimensiones: string;
+  dimensiones: LocalizedText;
   descripcion: LocalizedText;
   modelo: string;
   formato: "obj" | "stl" | "glb";
