@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html:
-              'try{var t=localStorage.getItem("vitrina-tema");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}'
+              'try{var t=localStorage.getItem("vitrina-tema-v2");if(t==="claro"||t==="oscuro")document.documentElement.dataset.tema=t}catch(e){}'
           }}
         />
         {children}

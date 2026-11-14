@@ -15,7 +15,7 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 
 .menu-blur nav { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem 1rem; max-width: 900px; margin: 0 auto; padding: 0.7rem 1.25rem; font-size: 0.85rem; }
 
-.nav-enlaces { display: flex; flex: 1 1 100%; order: 3; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; gap: 0.4rem 1.4rem; padding-bottom: 0.15rem; }
+.nav-enlaces { display: flex; flex: 1 1 100%; order: 3; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; gap: 0.4rem 0.8rem; padding-bottom: 0.15rem; }
 
 .menu-blur a { color: #fff; text-decoration: none; opacity: 0.85; display: inline-block; transition: transform 0.2s ease, opacity 0.2s ease; }
 

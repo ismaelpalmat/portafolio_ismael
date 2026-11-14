@@ -14,7 +14,7 @@ export default function TemaToggle() {
         const siguiente = raiz.dataset.tema === "oscuro" ? "claro" : "oscuro";
         raiz.dataset.tema = siguiente;
         try {
-          window.localStorage.setItem("vitrina-tema", siguiente);
+          window.localStorage.setItem("vitrina-tema-v2", siguiente);
         } catch {
           // sin almacenamiento: el tema dura la sesión
         }
