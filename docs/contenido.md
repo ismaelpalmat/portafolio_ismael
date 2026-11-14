@@ -16,7 +16,7 @@ Helpers: `obraPorSlug`, `obrasPorTipo`, `vecinasDelMismoTipo`, `obraDestacada`, 
 ## Reglas de texto
 
 - Todo visible en ES y EN, sin vacíos.
-- Sin secciones media/textos. Cuidado con subcadenas que activan el verificador (aprecio, mediana). El shop es la excepción comercial: sin carrito, checkout, pagos ni formularios.
+- Sin secciones media/textos. Cuidado con subcadenas que activan el verificador (aprecio, mediana, media en inglés). El shop es la excepción comercial: sin carrito, checkout, pagos ni formularios.
 
 ## Fotos
 

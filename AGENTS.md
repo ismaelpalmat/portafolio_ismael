@@ -12,6 +12,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Leer primero: `README.md`, `docs/indice.md`, `docs/contenido.md` y `node_modules/next/dist/docs/` antes de tocar código Next.
 
+Estado: sitio en construcción. Las obras son `test_N`, las fichas muestran el tipo de dato y el shop tiene montos `—`. Producción: https://ismael.palmatellez.cl
+
 ## Entorno Windows
 
 - PowerShell 5.1 con `npm.cmd` (nunca `npm` ni `npm.ps1`).
@@ -27,6 +29,7 @@ Leer primero: `README.md`, `docs/indice.md`, `docs/contenido.md` y `node_modules
 - La ruta 3D es `/tresde`, nunca `/3d`; la tienda es `/shop`. La home enlaza a la única obra con `destacada:true` a través del propio 3D (`HomeHero3D`), sin CTA.
 - Las obras usan nombres de prueba `test_N` y slugs `test-N`; no reintroducir nombres inventados. La destacada es `test_1` (`/obra/test-1`).
 - En construcción: los campos de ficha muestran el tipo de dato (`Técnica`/`Technique`, `Materiales`/`Materials`, `Medidas`/`Dimensions`, `Descripción`/`Description`); no usar datos inventados. El año y el periodo se mantienen.
+- Evitar la palabra `media` en textos EN (el verificador la bloquea); usar `disciplines` u otra similar.
 - Máximo un canvas three por página; nada de canvas en listas; 3D solo en cliente con `dynamic` y `ssr:false`. Excepción transitoria: el retrato 3D al hover del nombre, que se desmonta al salir.
 - El visor usa `touch-action: pan-y`: en móvil el swipe vertical hace scroll y el horizontal gira la figura.
 - Export estático para GitHub Pages: `output:export` + `trailingSlash` + `images.unoptimized` en `next.config.mjs`; `generateStaticParams` en locales y slugs; sin middleware (no corre en export); sin base path (dominio propio en la raíz). La raíz redirige a `/es/` con script, porque `redirect()` no corre en export.
@@ -43,12 +46,13 @@ Leer primero: `README.md`, `docs/indice.md`, `docs/contenido.md` y `node_modules
 ## Secciones y contenido
 
 - Índices, fichas, biografía, contacto y shop; el contenido vive en `src/content/*.ts`.
-- Contacto: correo e Instagram, sin formulario. Biografía: individuales, colectivas, residencias y reconocimientos; los grupos vacíos no se muestran.
+- Biografía: resumen real (artista visual que trabaja en Santiago de Chile; pintura, dibujo y escultura) y listas reales de individuales, colectivas y residencias; reconocimientos vacío se oculta.
+- Contacto: `ismael@palmatellez.cl` e Instagram `@isma.elismael`, sin formulario.
 - Shop: `/shop` (`src/app/[locale]/shop/page.tsx`), piezas en `src/content/productos.ts` (nombres `test_1`..`test_6` y monto `—`), panel blanco con grilla de 2 columnas; sin carrito ni compra. Imágenes placeholder por ahora.
 
 ## Ramas y commits
 
-- Producción: `main` en `portafolio_ismael`. No commitear `node_modules`, `.next`, `.superpowers`, `.obsidian`.
+- Producción: `main` en `portafolio_ismael` (GitHub Pages: https://ismael.palmatellez.cl). No commitear `node_modules`, `.next`, `.superpowers`, `.obsidian`.
 - Commits en español, formato `area: descripción breve`.
 - No editar la misma rama a la vez que el dueño u otra sesión sin avisar: pisa cambios.
 
@@ -57,3 +61,11 @@ Leer primero: `README.md`, `docs/indice.md`, `docs/contenido.md` y `node_modules
 - Tokens y clases en `src/app/globals.css`; Space Grotesk en títulos, Inter en cuerpo (next/font, self-hosted).
 - Fondo y textos cambian con el tema; los acentos verde/violeta se adaptan al claro.
 - Los ajustes visuales se iteran de a uno: cambio chico, build verde, commit.
+
+## Pendientes
+
+- Actualizar Next 16.4.0: el build avisa de una vulnerabilidad conocida (reintentar el build continúa).
+- Shop: faltan fotos y precios reales (hoy monto `—`).
+- Fichas 3D: los modelos `/models/test-N.*` no existen; el visor usa geometría procedural. La home usa `mech_char_2.glb` y `mech_char_pose1.glb`.
+- Fotos reales: reemplazar `PlaceholderArt` cuando estén.
+- Contenido en construcción: títulos `test_N` y campos por tipo; no reintroducir datos inventados.
