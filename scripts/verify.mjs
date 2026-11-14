@@ -395,7 +395,7 @@ export async function verify() {
     .concat(scanSrc(/media|textos/i, "referencia a media/textos"))
     .concat(
       scanSrc(
-        /precio|comprar|tienda|carrito|checkout|pago|price|buy|shop|cart|payment/i,
+        /precio|comprar|tienda|carrito|checkout|pago|price|buy|cart|payment/i,
         "palabra comercial",
       ),
     )

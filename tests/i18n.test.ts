@@ -31,7 +31,7 @@ function valor(obj: Record<string, unknown>, ruta: string): unknown {
   return ruta.split(".").reduce<unknown>((a, k) => (a as Record<string, unknown>)[k], obj);
 }
 
-const PROHIBIDAS = /media|textos|precio|comprar|tienda|carrito|checkout|pago|price|buy|shop|cart|payment/i;
+const PROHIBIDAS = /media|textos|precio|comprar|tienda|carrito|checkout|pago|price|buy|cart|payment/i;
 
 test("paridad exacta de claves es/en", () => {
   assert.deepEqual(claves(es).sort(), claves(en).sort());

@@ -21,7 +21,7 @@ Leer primero: `README.md`, `docs/indice.md` y `node_modules/next/dist/docs/` ant
 ## Reglas del sitio (las cuida `scripts/verify.mjs`)
 
 - Bilingüe simétrico: todo texto visible en `{es,en}`; solo slug, año y dimensiones son neutros.
-- Prohibidos tienda, precios, formularios, palabras comerciales y secciones media/textos.
+- Prohibida la compra online: sin carrito, checkout, pagos ni formularios. `shop` es la excepción para mostrar piezas y precios. Sin secciones media/textos.
 - Tipos `pintura|dibujo|3d`. Periodos con en-dash: 2026, 2024–25, 2022–23, 2020–21, 2018–19.
 - La ruta 3D es `/tresde`, nunca `/3d`. La home enlaza a la única obra con `destacada:true`.
 - Máximo un canvas three por página; nada de canvas en listas; 3D solo en cliente con `dynamic` y `ssr:false`.

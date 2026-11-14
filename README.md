@@ -15,6 +15,7 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · next-intl
 - `/es/obra/[slug]` — ficha con carrusel o viewer 3D + anterior/siguiente del mismo tipo
 - `/es/biografia` — bio + individuales, colectivas, reconocimientos
 - `/es/contacto` — correo e Instagram, sin formulario
+- `/es/shop` — piezas y precios, sin carrito ni formularios
 
 ## Comandos (en Windows: `npm.cmd`)
 

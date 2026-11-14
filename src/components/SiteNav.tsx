@@ -12,6 +12,7 @@ export default async function SiteNav({ locale }: { locale: Locale }) {
     { href: `${base}/pinturas`, etiqueta: t("pinturas") },
     { href: `${base}/dibujos`, etiqueta: t("dibujos") },
     { href: `${base}/tresde`, etiqueta: t("tresde") },
+    { href: `${base}/shop`, etiqueta: t("shop") },
     { href: `${base}/biografia`, etiqueta: t("biografia") },
     { href: `${base}/contacto`, etiqueta: t("contacto") }
   ];

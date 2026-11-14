@@ -4,6 +4,7 @@
     "pinturas": "Paintings",
     "dibujos": "Drawings",
     "tresde": "3D",
+    "shop": "Shop",
     "biografia": "Biography",
     "contacto": "Contact"
   },
@@ -36,6 +37,9 @@
     "titulo": "Contact",
     "email": "Email",
     "instagram": "Instagram"
+  },
+  "shop": {
+    "titulo": "Shop"
   },
   "footer": {
     "derechos": "All rights reserved"

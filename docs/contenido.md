@@ -29,3 +29,7 @@ Subir `.obj` o `.stl` livianos (three.js ya pesa unos 136 KB comprimido). `Viewe
 ## Bio y contacto
 
 `src/content/biografia.ts` (nombre, resumen, individuales, colectivas, residencias, reconocimientos) y `src/content/contacto.ts` (correo e Instagram). Etiquetas en `src/i18n/messages/{es,en}.json` (claves `bio.*`, `contacto.*`, `footer.*`). Contacto sin formulario por diseño.
+
+## Shop
+
+`src/content/productos.ts` (piezas y montos) y `src/app/[locale]/shop/page.tsx` (panel blanco, grilla de dos columnas). Es solo vitrina: sin carrito, checkout, pagos ni formularios. Las imágenes son placeholders.
