@@ -1,10 +1,13 @@
 {
+  "meta": {
+    "titulo": "Ismael Palma Téllez · Portfolio",
+    "descripcion": "Paintings, drawings and 3D work by Ismael Palma Téllez, visual artist in Santiago, Chile."
+  },
   "nav": {
     "inicio": "Home",
     "pinturas": "Paintings",
     "dibujos": "Drawings",
     "tresde": "3D",
-    "shop": "Shop",
     "biografia": "Biography",
     "contacto": "Contact",
     "menu": "Menu"
@@ -20,7 +23,8 @@
     "materiales": "Materials",
     "dimensiones": "Dimensions",
     "anterior": "Previous",
-    "siguiente": "Next"
+    "siguiente": "Next",
+    "modeloPendiente": "3D model in preparation"
   },
   "bio": {
     "titulo": "Biography",

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import type { Locale } from "@/content/tipos";
@@ -8,6 +8,15 @@ import LangSync from "@/components/LangSync";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  return {
+    title: { default: t("titulo"), template: "%s · Ismael Palma Téllez" },
+    description: t("descripcion")
+  };
 }
 
 export default async function LocaleLayout({

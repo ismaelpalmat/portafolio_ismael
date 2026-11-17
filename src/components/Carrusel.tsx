@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PlaceholderArt from "./PlaceholderArt";
 
 export default function Carrusel({
@@ -17,6 +17,18 @@ export default function Carrusel({
     (d: number) => setIndice((i) => (i + d + n) % n),
     [n]
   );
+  const botonAbrir = useRef<HTMLButtonElement>(null);
+  const botonCerrar = useRef<HTMLButtonElement>(null);
+  const estabaAmpliada = useRef(false);
+
+  useEffect(() => {
+    if (ampliada) {
+      botonCerrar.current?.focus();
+    } else if (estabaAmpliada.current) {
+      botonAbrir.current?.focus();
+    }
+    estabaAmpliada.current = ampliada;
+  }, [ampliada]);
 
   useEffect(() => {
     const teclas = (e: KeyboardEvent) => {
@@ -26,6 +38,9 @@ export default function Carrusel({
         ir(1);
       } else if (e.key === "Escape" && ampliada) {
         setAmpliada(false);
+      } else if (e.key === "Tab" && ampliada) {
+        e.preventDefault();
+        botonCerrar.current?.focus();
       }
     };
     window.addEventListener("keydown", teclas);
@@ -39,6 +54,7 @@ export default function Carrusel({
         ‹
       </button>
       <button
+        ref={botonAbrir}
         type="button"
         className="carrusel-imagen"
         onClick={() => setAmpliada(true)}
@@ -89,6 +105,7 @@ export default function Carrusel({
             {indice + 1}/{imagenes.length}
           </p>
           <button
+            ref={botonCerrar}
             type="button"
             className="overlay-cerrar"
             aria-label="Cerrar"
