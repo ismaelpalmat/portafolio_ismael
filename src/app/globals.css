@@ -81,8 +81,21 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
 }
 
 .visor {
+  position: relative;
   width: 100%;
   height: min(46dvh, 440px);
+}
+
+.visor-aviso {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.6;
 }
 
 .visor canvas {
@@ -123,7 +136,8 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
   background: linear-gradient(180deg, #b79df0, transparent 70%);
   transform: rotate(-12deg);
 }
-.indice { background: #0a0a0f; color: #f2f4f8; max-width: 1080px; margin: 0 auto; padding: 2rem 1.25rem 4rem; display: flex; flex-direction: column; gap: 2.5rem; position: relative; overflow: hidden; } .indice-titulo { font-size: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; } .grupos { display: flex; flex-direction: column; gap: 3rem; } .grupo-titulo { font-size: 1.1rem; letter-spacing: 0.2em; opacity: 0.6; margin-bottom: 1.25rem; } .tarjetas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } .tarjeta { display: flex; flex-direction: column; gap: 0.5rem; color: inherit; text-decoration: none; } .tarjeta-titulo { font-size: 1rem; } .tarjeta-anio { font-size: 0.85rem; opacity: 0.6; } .placeholder { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 0.75rem; } .placeholder-etiqueta { font-size: 0.75rem; letter-spacing: 0.08em; opacity: 0.65; } .ficha { background: #0a0a0f; color: #f2f4f8; max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; display: flex; flex-direction: column; gap: 2rem; position: relative; overflow: hidden; } .carrusel { position: relative; display: flex; align-items: center; gap: 0.5rem; } .carrusel-imagen { flex: 1; border: 0; padding: 0; background: none; cursor: zoom-in; } .flecha { font-size: 2.5rem; line-height: 1; border: 0; background: none; cursor: pointer; padding: 0.5rem; color: inherit; } .contador { text-align: center; font-size: 0.85rem; opacity: 0.65; } .overlay { display: flex; align-items: center; justify-content: center; gap: 1rem; z-index: 50; cursor: zoom-out; } .overlay-imagen { width: min(88vw, 900px); } .overlay-cerrar { position: absolute; top: 1rem; right: 1.25rem; font-size: 2rem; color: #fff; border: 0; background: none; cursor: pointer; } .ficha-titulo { font-size: 1.6rem; letter-spacing: 0.06em; } .ficha-lista { display: flex; flex-direction: column; gap: 0.4rem; } .ficha-lista dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.18em; opacity: 0.6; } .anterior-siguiente { display: flex; justify-content: space-between; gap: 1rem; }
+.indice { background: #0a0a0f; color: #f2f4f8; max-width: 1080px; margin: 0 auto; padding: 2rem 1.25rem 4rem; display: flex; flex-direction: column; gap: 2.5rem; position: relative; overflow: hidden; } .indice-titulo { font-size: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; } .grupos { display: flex; flex-direction: column; gap: 3rem; } .grupo-titulo { font-size: 1.1rem; letter-spacing: 0.2em; opacity: 0.6; margin-bottom: 1.25rem; } .tarjetas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } .tarjeta { display: flex; flex-direction: column; gap: 0.5rem; color: inherit; text-decoration: none; } .tarjeta-titulo { font-size: 1rem; } .tarjeta-anio { font-size: 0.85rem; opacity: 0.6; } .placeholder { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 0.75rem; } .placeholder-etiqueta { font-size: 0.75rem; letter-spacing: 0.08em; opacity: 0.65; }
+.tarjeta-miniatura { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; display: block; } .ficha { background: #0a0a0f; color: #f2f4f8; max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; display: flex; flex-direction: column; gap: 2rem; position: relative; overflow: hidden; } .carrusel { position: relative; display: flex; align-items: center; gap: 0.5rem; } .carrusel-imagen { flex: 1; border: 0; padding: 0; background: none; cursor: zoom-in; } .flecha { font-size: 2.5rem; line-height: 1; border: 0; background: none; cursor: pointer; padding: 0.5rem; color: inherit; } .contador { text-align: center; font-size: 0.85rem; opacity: 0.65; } .overlay { display: flex; align-items: center; justify-content: center; gap: 1rem; z-index: 50; cursor: zoom-out; } .overlay-imagen { width: min(88vw, 900px); } .overlay-cerrar { position: absolute; top: 1rem; right: 1.25rem; font-size: 2rem; color: #fff; border: 0; background: none; cursor: pointer; } .ficha-titulo { font-size: 1.6rem; letter-spacing: 0.06em; } .ficha-lista { display: flex; flex-direction: column; gap: 0.4rem; } .ficha-lista dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.18em; opacity: 0.6; } .anterior-siguiente { display: flex; justify-content: space-between; gap: 1rem; }
 
 .pie { background: #0a0a0f; color: rgba(242, 244, 248, 0.75); text-align: center; font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.45rem 1.25rem; }
 
@@ -195,6 +209,15 @@ h1, h2, .home-titulo, .indice-titulo, .ficha-titulo, .grupo-titulo, .tarjeta-tit
   .indice, .ficha { padding-top: 6rem; }
   .home-oscura { padding: 4.5rem 1rem 2rem; }
 }
+
+/* Ficha 3D: sin scroll; el visor ocupa lo que sobra entre el menú y el pie. */
+main:has(.ficha-3d) { height: 100dvh; overflow: hidden; }
+main:has(.ficha-3d) .ficha-3d { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 1rem; overflow: hidden; }
+.ficha-3d > .anterior-siguiente { flex: 0 0 auto; }
+.ficha-3d-caja { position: relative; flex: 1 1 auto; min-height: 0; }
+.ficha-3d-caja > .visor { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; aspect-ratio: auto; }
+.ficha-3d-info { position: absolute; top: 1rem; left: 1rem; max-width: min(22rem, 60%); padding: 0.9rem 1rem; border-radius: 8px; background: rgba(10, 10, 15, 0.55); color: #f2f4f8; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); pointer-events: none; }
+[data-tema="claro"] .ficha-3d-info { background: rgba(255, 255, 255, 0.72); color: #0a0a0f; }
 
 /* Páginas a todo el ancho: sin columna central. */
 .indice, .ficha { max-width: none; margin-inline: 0; padding-inline: clamp(1.25rem, 4vw, 4rem); }
