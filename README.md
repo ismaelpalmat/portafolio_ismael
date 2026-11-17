@@ -6,11 +6,11 @@ La home es un 3D gigante que gira bajo dos focos de color, con un easter egg par
 
 ## Stack
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · next-intl · three.js · Node 24. Todo estático y desplegado en Vercel desde GitHub (rama `main`).
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · next-intl · three.js · Node 24. Todo estático y publicado en GitHub Pages desde GitHub (rama `main`).
 
 ## Rutas (ES de ejemplo; EN idéntico)
 
-- `/es` — home mínima sin scroll: subtítulo, 3D gigante, título
+- `/es` — home mínima sin scroll: 3D gigante, título
 - `/es/pinturas`, `/es/dibujos`, `/es/tresde` — índices por periodo, grilla de 4
 - `/es/obra/[slug]` — ficha con carrusel o viewer 3D + anterior/siguiente del mismo tipo
 - `/es/biografia` — bio + individuales, colectivas, reconocimientos
@@ -33,4 +33,4 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · next-intl
 - [docs/indice.md](docs/indice.md) — mapa
 - [docs/contenido.md](docs/contenido.md) — cómo sumar obra, fotos y modelos
 - [docs/diseno.md](docs/diseno.md) — tokens, clases y pendientes visuales
-- [docs/despliegue.md](docs/despliegue.md) — GitHub + Vercel + rollback
+- [docs/despliegue.md](docs/despliegue.md) — GitHub Pages + CI + rollback

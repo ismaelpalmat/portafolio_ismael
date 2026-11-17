@@ -9,7 +9,7 @@ Todo el contenido vive en código (sin CMS). En construcción, las obras se llam
 
 ## Obras (`src/content/obras.ts`)
 
-Cada obra: `slug` único (`test-N`), `periodo` (uno de los 5 válidos), `anio`, `tipo`, `titulo/tecnica/materiales/descripcion` en `{es,en}`, `dimensiones` en `{es,en}` (`Medidas`/`Dimensions`), `imagenes` (vistas placeholder). Las 3D suman `modelo` (`/models/test-N.obj`) y `formato` (`obj|stl`). Solo una obra lleva `destacada:true`: `test_1`, la que enlaza la home.
+Cada obra: `slug` único (`test-N`), `periodo` (uno de los 5 válidos), `anio`, `tipo`, `titulo/tecnica/materiales/descripcion` en `{es,en}`, `dimensiones` en `{es,en}` (`Medidas`/`Dimensions`), `imagenes` (vistas placeholder). Las 3D suman `modelo` (`/models/test-N.obj`) y `formato` (`obj|stl`). Solo una obra lleva `destacada:true`: `test_33`, una 3D, la que enlaza la home.
 
 Helpers: `obraPorSlug`, `obrasPorTipo`, `vecinasDelMismoTipo`, `obraDestacada`, `todasLasObras`. Tipos en `src/content/tipos.ts`.
 
