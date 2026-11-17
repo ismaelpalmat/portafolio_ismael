@@ -1,4 +1,6 @@
-export type Locale = "es" | "en";
+export const LOCALES = ["es", "en"] as const;
+
+export type Locale = (typeof LOCALES)[number];
 
 export interface LocalizedText {
   es: string;
@@ -37,7 +39,6 @@ export interface Obra3D {
   descripcion: LocalizedText;
   modelo: string;
   formato: "obj" | "stl" | "glb";
-  imagenes: number;
   destacada?: boolean;
 }
 

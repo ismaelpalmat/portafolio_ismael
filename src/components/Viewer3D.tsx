@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-export async function cargarModelo(
+async function cargarModelo(
   url: string,
   formato: "obj" | "stl" | "glb"
 ): Promise<THREE.Object3D | null> {
   try {
-    const res = await fetch((process.env.NEXT_PUBLIC_BASE_PATH ?? "") + url);
+    const res = await fetch(url);
     if (!res.ok) {
       return null;
     }
@@ -37,6 +37,17 @@ export async function cargarModelo(
   }
 }
 
+function liberar(o: THREE.Object3D) {
+  o.traverse((x) => {
+    const m = x as THREE.Mesh;
+    if (m.isMesh) {
+      m.geometry.dispose();
+      const mt = m.material as THREE.Material | THREE.Material[];
+      (Array.isArray(mt) ? mt : [mt]).forEach((k) => k.dispose());
+    }
+  });
+}
+
 function mallaProcedural(): THREE.Mesh {
   const geo = new THREE.TorusKnotGeometry(1, 0.32, 160, 24);
   const mat = new THREE.MeshStandardMaterial({
@@ -58,7 +69,8 @@ export default function Viewer3D({
   phiInicial = 1.1,
   velocidad = 0.008,
   luzFrente = false,
-  reservaProcedural = true
+  reservaProcedural = true,
+  aviso
 }: {
   modelo: string;
   formato: "obj" | "stl" | "glb";
@@ -71,8 +83,10 @@ export default function Viewer3D({
   velocidad?: number;
   luzFrente?: boolean;
   reservaProcedural?: boolean;
+  aviso?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [sinModelo, setSinModelo] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -82,7 +96,12 @@ export default function Viewer3D({
     const scene = new THREE.Scene();
     const claro = () => document.documentElement.dataset.tema === "claro";
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    } catch {
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     el.appendChild(renderer.domElement);
     const izq = new THREE.SpotLight(claro() ? 0x2f8f52 : 0xbfe3c6, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
@@ -114,7 +133,14 @@ export default function Viewer3D({
     let vivo = true;
     if (modelo) {
       cargarModelo(modelo, formato).then((obj) => {
-        if (!vivo || !obj) {
+        if (!vivo) {
+          if (obj) {
+            liberar(obj);
+          }
+          return;
+        }
+        if (!obj) {
+          setSinModelo(true);
           return;
         }
         const caja = new THREE.Box3().setFromObject(obj);
@@ -128,6 +154,7 @@ export default function Viewer3D({
         obj.position.set(-centro.x * esc, -centro.y * esc, -centro.z * esc);
         if (reserva) {
           grupo.remove(reserva);
+          liberar(reserva);
         }
         grupo.add(obj);
       });
@@ -186,6 +213,9 @@ export default function Viewer3D({
       temporizador = setTimeout(() => el.classList.remove("zoom-glitch"), 220);
     };
     const rueda = (e: WheelEvent) => {
+      if (!glitchZoom && !e.ctrlKey) {
+        return;
+      }
       e.preventDefault();
       radio = Math.min(8, Math.max(2.2, radio * (1 + e.deltaY * 0.001)));
       if (glitchZoom) {
@@ -237,19 +267,9 @@ export default function Viewer3D({
       el.removeEventListener("pointerup", soltar);
       el.removeEventListener("pointercancel", soltar);
       el.removeEventListener("wheel", rueda);
-      grupo.traverse((o) => {
-        const m = o as THREE.Mesh;
-        if (m.isMesh) {
-          m.geometry.dispose();
-          const mt = m.material as THREE.Material | THREE.Material[];
-          if (Array.isArray(mt)) {
-            mt.forEach((x) => x.dispose());
-          } else {
-            mt.dispose();
-          }
-        }
-      });
+      liberar(grupo);
       renderer.dispose();
+      renderer.forceContextLoss();
       el.removeChild(renderer.domElement);
     };
   }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural]);
@@ -261,6 +281,8 @@ export default function Viewer3D({
       aria-label={titulo}
       style={{ touchAction: "pan-y" }}
       className={cuadrado ? "visor cuadrado" : "visor"}
-    />
+    >
+      {sinModelo && aviso && <p className="visor-aviso">{aviso}</p>}
+    </div>
   );
 }

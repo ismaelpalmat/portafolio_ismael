@@ -20,6 +20,16 @@ export function generateStaticParams() {
   return out;
 }
 
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  const obra = obraPorSlug(slug);
+  return { title: obra?.titulo[locale as Locale] };
+}
+
 export default async function ObraPage({
   params
 }: {
@@ -36,18 +46,25 @@ export default async function ObraPage({
   return (
     <>
       <Spotlights />
-      <section className="ficha">
+      <section className={obra.tipo === "3d" ? "ficha ficha-3d" : "ficha"}>
       {obra.tipo === "3d" ? (
-        <FichaTresD modelo={obra.modelo} formato={obra.formato} titulo={obra.titulo[l]} />
+        <div className="ficha-3d-caja">
+          <FichaTresD modelo={obra.modelo} formato={obra.formato} titulo={obra.titulo[l]} />
+          <div className="ficha-3d-info">
+            <FichaDatos obra={obra} locale={l} />
+          </div>
+        </div>
       ) : (
-        <Carrusel
-          titulo={obra.titulo[l]}
-          imagenes={Array.from({ length: obra.imagenes }, (_, i) => ({
-            etiqueta: `${obra.slug} vista ${i + 1}`
-          }))}
-        />
+        <>
+          <Carrusel
+            titulo={obra.titulo[l]}
+            imagenes={Array.from({ length: obra.imagenes }, (_, i) => ({
+              etiqueta: `${obra.slug} vista ${i + 1}`
+            }))}
+          />
+          <FichaDatos obra={obra} locale={l} />
+        </>
       )}
-      <FichaDatos obra={obra} locale={l} />
       <AnteriorSiguiente locale={l} anterior={anterior} siguiente={siguiente} />
       </section>
       <Pie />

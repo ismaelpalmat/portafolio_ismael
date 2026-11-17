@@ -14,7 +14,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     <div className="home-viewport">
       <section className="home-oscura">
       <Spotlights />
-      <HomeHero3D locale={l} slug={obra.slug} titulo={obra.titulo[l]} />
+      <HomeHero3D locale={l} titulo={obra.titulo[l]} />
       <h1 className="home-titulo glitch" data-text={obra.titulo[l]}>{obra.titulo[l]}</h1>
       </section>
       <Pie />

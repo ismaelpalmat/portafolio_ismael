@@ -21,6 +21,7 @@ export default function GrupoPorPeriodo({ locale, obras }: { locale: Locale; obr
                   slug={o.slug}
                   titulo={o.titulo[locale]}
                   anio={o.anio}
+                  miniatura={o.tipo === "3d" ? `/thumbs/${o.slug}.png` : undefined}
                 />
               ))}
             </div>

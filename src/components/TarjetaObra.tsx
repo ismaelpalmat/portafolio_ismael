@@ -6,16 +6,23 @@ export default function TarjetaObra({
   locale,
   slug,
   titulo,
-  anio
+  anio,
+  miniatura
 }: {
   locale: Locale;
   slug: string;
   titulo: string;
   anio: number;
+  miniatura?: string;
 }) {
   return (
     <Link href={`/${locale}/obra/${slug}`} className="tarjeta tarjeta-hover">
-      <PlaceholderArt etiqueta={slug} titulo={titulo} />
+      {miniatura ? (
+        // eslint-disable-next-line @next/next/no-img-element -- export estático: sin optimizador de imágenes
+        <img src={miniatura} alt={titulo} className="tarjeta-miniatura" />
+      ) : (
+        <PlaceholderArt etiqueta={slug} titulo={titulo} />
+      )}
       <span className="tarjeta-titulo">{titulo}</span>
       <span className="tarjeta-anio">{anio}</span>
     </Link>

@@ -7,19 +7,17 @@ import type { Locale } from "@/content/tipos";
 
 const Viewer3D = dynamic(() => import("./Viewer3D"), { ssr: false });
 
-const MODELOS: Array<{ modelo: string; formato: "obj" | "glb"; distancia: number }> = [
-  { modelo: "", formato: "obj", distancia: 4 },
-  { modelo: "/models/mech_char_2.glb", formato: "glb", distancia: 4 },
-  { modelo: "/models/mech_char_pose1.glb", formato: "glb", distancia: 4 }
+const MODELOS: Array<{ slug: string; modelo: string; formato: "obj" | "glb"; distancia: number }> = [
+  { slug: "test-33", modelo: "", formato: "obj", distancia: 4 },
+  { slug: "test-34", modelo: "/models/mech_char_2.glb", formato: "glb", distancia: 4 },
+  { slug: "test-35", modelo: "/models/mech_char_pose1.glb", formato: "glb", distancia: 4 }
 ];
 
 export default function HomeHero3D({
   locale,
-  slug,
   titulo
 }: {
   locale: Locale;
-  slug: string;
   titulo: string;
 }) {
   const router = useRouter();
@@ -36,7 +34,7 @@ export default function HomeHero3D({
       return 0;
     }
   });
-  const destino = `/${locale}/obra/${slug}`;
+  const destino = `/${locale}/obra/${MODELOS[opcion].slug}`;
   useEffect(() => {
     try {
       window.localStorage.setItem("vitrina-hero", String(opcion));
