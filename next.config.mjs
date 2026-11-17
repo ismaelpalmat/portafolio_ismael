@@ -6,7 +6,6 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath: process.env.NEXT_BASE_PATH || undefined,
   images: { unoptimized: true }
 };
 

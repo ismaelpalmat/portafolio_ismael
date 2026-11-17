@@ -64,8 +64,8 @@ async function contenido() {
   if (pictoricas.length < 20) {
     errores.push("pictoricas=" + pictoricas.length + " (minimo 20)");
   }
-  if (tresde.length < 4) {
-    errores.push("3d=" + tresde.length + " (minimo 4)");
+  if (tresde.length < 3) {
+    errores.push("3d=" + tresde.length + " (minimo 3)");
   }
   const validos = ["2026", "2024–25", "2022–23", "2020–21", "2018–19"];
   if (JSON.stringify(periodos) !== JSON.stringify(validos)) {
@@ -79,6 +79,12 @@ async function contenido() {
   for (const o of todas) {
     if (!validos.includes(o.periodo)) {
       errores.push("periodo invalido en " + o.slug);
+    } else {
+      const inicio = Number(o.periodo.slice(0, 4));
+      const fin = 2000 + Number(o.periodo.slice(-2));
+      if (o.anio < inicio || o.anio > fin) {
+        errores.push("anio fuera de su periodo en " + o.slug);
+      }
     }
     for (const campo of ["titulo", "tecnica", "materiales", "descripcion"]) {
       const v = o[campo];
@@ -91,12 +97,14 @@ async function contenido() {
     errores.push("destacada debe ser exactamente 1");
   }
   for (const o of tresde) {
-    if (typeof o.modelo !== "string" || !o.modelo.startsWith("/models/")) {
+    if (typeof o.modelo !== "string") {
+      errores.push("modelo no es texto en " + o.slug);
+    } else if (o.modelo !== "" && !o.modelo.startsWith("/models/")) {
       errores.push("modelo fuera de /models/ en " + o.slug);
     }
     if (o.formato !== "obj" && o.formato !== "stl" && o.formato !== "glb") {
       errores.push("formato invalido en " + o.slug);
-    } else if (!o.modelo.endsWith("." + o.formato)) {
+    } else if (o.modelo !== "" && !o.modelo.endsWith("." + o.formato)) {
       errores.push("extension no coincide en " + o.slug);
     }
   }

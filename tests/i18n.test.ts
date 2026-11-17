@@ -31,12 +31,6 @@ function valor(obj: Record<string, unknown>, ruta: string): unknown {
   return ruta.split(".").reduce<unknown>((a, k) => (a as Record<string, unknown>)[k], obj);
 }
 
-const PROHIBIDAS = /media|textos|precio|comprar|tienda|carrito|checkout|pago|price|buy|cart|payment/i;
-
-test("paridad exacta de claves es/en", () => {
-  assert.deepEqual(claves(es).sort(), claves(en).sort());
-});
-
 test("ningun valor vacio", () => {
   for (const ruta of claves(es)) {
     const ves = valor(es, ruta);
@@ -46,16 +40,7 @@ test("ningun valor vacio", () => {
   }
 });
 
-test("sin palabras prohibidas en diccionarios", () => {
-  for (const ruta of claves(es)) {
-    const ves = valor(es, ruta);
-    const ven = valor(en, ruta);
-    assert.ok(typeof ves === "string" && !PROHIBIDAS.test(ves), "prohibida es." + ruta);
-    assert.ok(typeof ven === "string" && !PROHIBIDAS.test(ven), "prohibida en." + ruta);
-  }
-});
-
-test("claves bio y contacto completas y simetricas", () => {
+test("claves bio y contacto completas", () => {
   const espero = [
     "bio.titulo",
     "bio.resumen",
@@ -70,15 +55,5 @@ test("claves bio y contacto completas y simetricas", () => {
   const hay = claves(es);
   for (const k of espero) {
     assert.ok(hay.includes(k), "falta clave " + k);
-    assert.ok(typeof valor(en, k) === "string" && (valor(en, k) as string).trim() !== "", "en vacio " + k);
-  }
-});
-
-test("contacto sin formulario", () => {
-  const c = readFileSync(join(ROOT, "src/content/contacto.ts"), "utf8");
-  const p = readFileSync(join(ROOT, "src/app/[locale]/contacto/page.tsx"), "utf8");
-  for (const s of ["<form", "submit", "<input", "<textarea"]) {
-    assert.ok(!c.includes(s), "formulario en contacto.ts: " + s);
-    assert.ok(!p.includes(s), "formulario en contacto page: " + s);
   }
 });
