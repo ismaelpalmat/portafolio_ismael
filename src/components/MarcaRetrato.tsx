@@ -33,12 +33,12 @@ export default function MarcaRetrato({ locale }: { locale: Locale }) {
           style={{ left: pos.x + 16, top: pos.y + 16 }}
         >
           <Viewer3D
-            modelo="/models/head_1.glb"
+            modelo="/models/head_2.glb"
             formato="glb"
             titulo=""
             distancia={3.9}
             thetaInicial={1.45}
-            phiInicial={1.3}
+            phiInicial={1.6}
             velocidad={0.016}
             luzFrente
             reservaProcedural={false}
