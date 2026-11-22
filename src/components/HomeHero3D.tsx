@@ -1,14 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Locale } from "@/content/tipos";
 
 const Viewer3D = dynamic(() => import("./Viewer3D"), { ssr: false });
 
 const MODELOS: Array<{ slug: string; modelo: string; formato: "obj" | "glb"; distancia: number }> = [
-  { slug: "flower-scene", modelo: "/models/Flower_scene.glb", formato: "glb", distancia: 3.5 }
+  { slug: "flower-scene", modelo: "/models/Flower_scene.glb", formato: "glb", distancia: 3.5 },
+  { slug: "buildings-brutalist-1", modelo: "/models/Buildings_Brutalist_1.glb", formato: "glb", distancia: 4 }
 ];
 
 export default function HomeHero3D({
@@ -20,26 +21,8 @@ export default function HomeHero3D({
 }) {
   const router = useRouter();
   const origen = useRef<{ x: number; y: number } | null>(null);
-  const [opcion] = useState(() => {
-    if (typeof window === "undefined") {
-      return 0;
-    }
-    try {
-      const g = Number(window.localStorage.getItem("vitrina-hero"));
-      const visto = Number.isInteger(g) ? g : -1;
-      return (visto + 1) % MODELOS.length;
-    } catch {
-      return 0;
-    }
-  });
+  const [opcion] = useState(() => Math.floor(Math.random() * MODELOS.length));
   const destino = `/${locale}/obra/${MODELOS[opcion].slug}`;
-  useEffect(() => {
-    try {
-      window.localStorage.setItem("vitrina-hero", String(opcion));
-    } catch {
-      // sin almacenamiento: se queda en procedural
-    }
-  }, [opcion]);
   return (
     <div
       className="heroe-3d"
@@ -68,7 +51,7 @@ export default function HomeHero3D({
         }
       }}
     >
-      <Viewer3D modelo={MODELOS[opcion].modelo} formato={MODELOS[opcion].formato} titulo={titulo} distancia={MODELOS[opcion].distancia} velocidad={0.003} phiInicial={0.9} zoomAuto={0.4} glitchZoom />
+      <Viewer3D modelo={MODELOS[opcion].modelo} formato={MODELOS[opcion].formato} titulo={titulo} distancia={MODELOS[opcion].distancia} velocidad={0.003} phiInicial={0.9} zoomAuto={0.4} focoSuperior glitchZoom />
     </div>
   );
 }

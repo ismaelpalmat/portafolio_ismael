@@ -71,6 +71,7 @@ export default function Viewer3D({
   luzFrente = false,
   reservaProcedural = true,
   zoomAuto = 0,
+  focoSuperior = false,
   aviso
 }: {
   modelo: string;
@@ -85,6 +86,7 @@ export default function Viewer3D({
   luzFrente?: boolean;
   reservaProcedural?: boolean;
   zoomAuto?: number;
+  focoSuperior?: boolean;
   aviso?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -118,6 +120,11 @@ export default function Viewer3D({
       const frente = new THREE.DirectionalLight(0xffffff, 3.2);
       frente.position.set(0, 0.5, 5);
       scene.add(frente);
+    }
+    if (focoSuperior) {
+      const arriba = new THREE.DirectionalLight(0xffffff, 3);
+      arriba.position.set(0, 6, 0);
+      scene.add(arriba);
     }
     const aplicarLuces = () => {
       izq.color.set(claro() ? 0x2f8f52 : 0xbfe3c6);
@@ -275,7 +282,7 @@ export default function Viewer3D({
       renderer.forceContextLoss();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural, zoomAuto]);
+  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural, zoomAuto, focoSuperior]);
 
   return (
     <div

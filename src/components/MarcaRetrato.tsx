@@ -39,7 +39,7 @@ export default function MarcaRetrato({ locale }: { locale: Locale }) {
             distancia={3.9}
             thetaInicial={1.45}
             phiInicial={1.6}
-            velocidad={0.016}
+            velocidad={0.032}
             luzFrente
             reservaProcedural={false}
             cuadrado

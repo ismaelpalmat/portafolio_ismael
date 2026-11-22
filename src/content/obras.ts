@@ -502,6 +502,22 @@ export const OBRAS_3D: Obra3D[] = [
     destacada: true,
   },
   {
+    slug: "buildings-brutalist-1",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "3d",
+    titulo: { es: "Buildings_Brutalist_1", en: "Buildings_Brutalist_1" },
+    tecnica: { es: "Técnica", en: "Technique" },
+    materiales: { es: "Materiales", en: "Materials" },
+    dimensiones: { es: "Medidas", en: "Dimensions" },
+    descripcion: {
+      es: "Descripción",
+      en: "Description",
+    },
+    modelo: "/models/Buildings_Brutalist_1.glb",
+    formato: "glb",
+  },
+  {
     slug: "test-34",
     periodo: "2024–25",
     anio: 2025,

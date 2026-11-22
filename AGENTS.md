@@ -42,8 +42,8 @@ Estado: sitio en construcción. Las obras son `test_N`, las fichas muestran el t
 - Menú fijo translúcido en todos los tamaños. Escritorio: enlaces en línea y juntos (`gap` 0.8rem) con el nombre aislado a la izquierda. Móvil (<768px): nombre + sol/luna + ES/EN + hamburguesa; el panel de enlaces se despliega debajo (`MenuMovil`) y cierra al navegar o con Escape.
 - Tema claro por defecto y oscuro con `data-tema` en `<html>`; la elección se guarda en `vitrina-tema-v2` (cambiar la clave fuerza el claro de nuevo). El botón muestra luna en claro y sol en oscuro. El script inline del layout aplica el tema antes de pintar.
 - Rueda del mouse: en la home el 3D hace zoom con la rueda; en las fichas solo con Ctrl, para que la página baje con la rueda. Si el WebGL falla, el visor no tumba la app (se queda vacío).
-- Los visores 3D leen el tema, usan canvas transparente y ajustan luces (verde/violeta más profundos en claro). El retrato `head_1.glb` del hover del nombre arranca en la oreja izquierda, aparece solo con hover en el nombre, sin fondo ni marco, y gira en su eje (giro automático `velocidad={0.016}`) hasta que el puntero sale del nombre; sin seguimiento del mouse (pendiente de retomar), con luz frontal y sin figura procedural mientras carga (`reservaProcedural={false}`).
-- Home: el modelo es `Flower_scene.glb` (flores), a distancia 4 para no tapar el título, y enlaza a `flower-scene`. Los visores de ficha de pintura usan la distancia por defecto (4.2); las fichas 3D usan 3.8 para verse más grandes.
+- Los visores 3D leen el tema, usan canvas transparente y ajustan luces (verde/violeta más profundos en claro). El retrato `head_1.glb` del hover del nombre arranca en la oreja izquierda, aparece solo con hover en el nombre, sin fondo ni marco, y gira en su eje (giro automático `velocidad={0.032}`) hasta que el puntero sale del nombre; sin seguimiento del mouse (pendiente de retomar), con luz frontal y sin figura procedural mientras carga (`reservaProcedural={false}`).
+- Home: rota al azar en cada carga entre los modelos de `MODELOS` (`HomeHero3D.tsx`): `Flower_scene.glb` (flores, distancia 3.5, destacada) y `Buildings_Brutalist_1.glb` (compañero, distancia 4). Cada objeto nuevo del home debe agregarse también a `OBRAS_3D` (título = nombre del archivo, sin destacada) y tener su miniatura `public/thumbs/<slug>.png`, renderizada del modelo con fondo transparente. Los visores de ficha de pintura usan la distancia por defecto (4.2); las fichas 3D usan 3.8 para verse más grandes.
 
 ## Secciones y contenido
 
@@ -72,7 +72,7 @@ Estado: sitio en construcción. Las obras son `test_N`, las fichas muestran el t
 - Probar el scroll del visor en un celular real: no se encontró causa en el código; el usuario describió la molestia pero no el caso exacto.
 - Cambios de la sesión sin commitear (revisar `git status` antes de commitear).
 - Shop: faltan fotos y precios reales (hoy monto `—`).
-- Sección 3D: 3 obras. `Flower_scene` usa `Flower_scene.glb` (destacada de la home, nombre del archivo como título); `test_34` usa `mech_char_2.glb` y `test_35` usa `mech_char_pose1.glb`. `test_33` se quitó del sitio. Cada una tiene su ficha (`/obra/test-N`); el clic en la home lleva a la ficha del modelo que se ve. Si un archivo falta, la ficha muestra "Modelo 3D en preparación".
+- Sección 3D: 4 obras. `Flower_scene` usa `Flower_scene.glb` (destacada de la home, nombre del archivo como título); `Buildings_Brutalist_1` usa `Buildings_Brutalist_1.glb` (compañero en la home); `test_34` usa `mech_char_2.glb` y `test_35` usa `mech_char_pose1.glb`. `test_33` se quitó del sitio. Cada una tiene su ficha (`/obra/test-N`); el clic en la home lleva a la ficha del modelo que se ve. Si un archivo falta, la ficha muestra "Modelo 3D en preparación".
 - Fotos reales: reemplazar `PlaceholderArt` cuando estén.
 - Contenido en construcción: títulos `test_N` y campos por tipo; no reintroducir datos inventados.
 
