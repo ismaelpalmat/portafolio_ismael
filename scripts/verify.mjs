@@ -175,10 +175,11 @@ async function homeTresD() {
     return ["no se pudo leer obra destacada"];
   }
   const errores = [];
-  if (!txt.includes("obraDestacada") || !txt.includes("HomeHero3D")) {
+  const hero = join(ROOT, "src", "components", "HomeHero3D.tsx");
+  const heroTxt = existsSync(hero) ? readFileSync(hero, "utf8") : "";
+  if (!txt.includes("HomeHero3D") || !heroTxt.includes(slug)) {
     errores.push("home no enlaza a la destacada obra/" + slug);
   }
-  const hero = join(ROOT, "src", "components", "HomeHero3D.tsx");
   const viewer = join(ROOT, "src", "components", "Viewer3D.tsx");
   if (!existsSync(hero) || !existsSync(viewer)) {
     errores.push("falta HomeHero3D o Viewer3D");

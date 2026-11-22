@@ -506,7 +506,7 @@ export const OBRAS_3D: Obra3D[] = [
     periodo: "2026",
     anio: 2026,
     tipo: "3d",
-    titulo: { es: "Buildings_Brutalist_1", en: "Buildings_Brutalist_1" },
+    titulo: { es: "Brutalist_building", en: "Brutalist_building" },
     tecnica: { es: "Técnica", en: "Technique" },
     materiales: { es: "Materiales", en: "Materials" },
     dimensiones: { es: "Medidas", en: "Dimensions" },
