@@ -27,7 +27,7 @@ Estado: sitio en construcción. Las obras son `test_N`, las fichas muestran el t
 - Prohibida la compra online: sin carrito, checkout, pagos ni formularios. `shop` es la excepción para mostrar piezas y precios. Sin secciones media/textos.
 - Tipos `pintura|dibujo|3d`. Periodos con en-dash: 2026, 2024–25, 2022–23, 2020–21, 2018–19.
 - La ruta 3D es `/tresde`, nunca `/3d`; la tienda es `/shop`. La home enlaza a la única obra con `destacada:true` a través del propio 3D (`HomeHero3D`), sin CTA.
-- Las obras usan nombres de prueba `test_N` y slugs `test-N`; no reintroducir nombres inventados. La destacada es `test_33` (`/obra/test-33`), una obra 3D.
+- Las obras usan nombres de prueba `test_N` y slugs `test-N`; no reintroducir nombres inventados. La destacada es `Flower_scene` (`/obra/flower-scene`), una obra 3D.
 - En construcción: los campos de ficha muestran el tipo de dato (`Técnica`/`Technique`, `Materiales`/`Materials`, `Medidas`/`Dimensions`, `Descripción`/`Description`); no usar datos inventados. El año y el periodo se mantienen.
 - Evitar la palabra `media` en textos EN (el verificador la bloquea); usar `disciplines` u otra similar.
 - Máximo un canvas three por página; nada de canvas en listas; 3D solo en cliente con `dynamic` y `ssr:false`. Excepción transitoria: el retrato 3D al hover del nombre, que se desmonta al salir.
@@ -42,8 +42,8 @@ Estado: sitio en construcción. Las obras son `test_N`, las fichas muestran el t
 - Menú fijo translúcido en todos los tamaños. Escritorio: enlaces en línea y juntos (`gap` 0.8rem) con el nombre aislado a la izquierda. Móvil (<768px): nombre + sol/luna + ES/EN + hamburguesa; el panel de enlaces se despliega debajo (`MenuMovil`) y cierra al navegar o con Escape.
 - Tema claro por defecto y oscuro con `data-tema` en `<html>`; la elección se guarda en `vitrina-tema-v2` (cambiar la clave fuerza el claro de nuevo). El botón muestra luna en claro y sol en oscuro. El script inline del layout aplica el tema antes de pintar.
 - Rueda del mouse: en la home el 3D hace zoom con la rueda; en las fichas solo con Ctrl, para que la página baje con la rueda. Si el WebGL falla, el visor no tumba la app (se queda vacío).
-- Los visores 3D leen el tema, usan canvas transparente y ajustan luces (verde/violeta más profundos en claro). El retrato `head_1.glb` del hover del nombre arranca en la oreja izquierda, gira lento, con luz frontal y sin figura procedural mientras carga (`reservaProcedural={false}`).
-- Home: los tres modelos (torus, `mech_char_2`, `mech_char_pose1`) arrancan a distancia 4 para no tapar el título. Los visores de ficha de pintura usan la distancia por defecto (4.2); las fichas 3D usan 3.8 para verse más grandes.
+- Los visores 3D leen el tema, usan canvas transparente y ajustan luces (verde/violeta más profundos en claro). El retrato `head_1.glb` del hover del nombre arranca en la oreja izquierda, aparece solo con hover en el nombre, sin fondo ni marco, y gira en su eje (giro automático `velocidad={0.016}`) hasta que el puntero sale del nombre; sin seguimiento del mouse (pendiente de retomar), con luz frontal y sin figura procedural mientras carga (`reservaProcedural={false}`).
+- Home: el modelo es `Flower_scene.glb` (flores), a distancia 4 para no tapar el título, y enlaza a `flower-scene`. Los visores de ficha de pintura usan la distancia por defecto (4.2); las fichas 3D usan 3.8 para verse más grandes.
 
 ## Secciones y contenido
 
@@ -72,6 +72,10 @@ Estado: sitio en construcción. Las obras son `test_N`, las fichas muestran el t
 - Probar el scroll del visor en un celular real: no se encontró causa en el código; el usuario describió la molestia pero no el caso exacto.
 - Cambios de la sesión sin commitear (revisar `git status` antes de commitear).
 - Shop: faltan fotos y precios reales (hoy monto `—`).
-- Sección 3D: 3 obras. `test_33` es el torus procedural (sin archivo, `modelo: ""`, destacada de la home); `test_34` usa `mech_char_2.glb` y `test_35` usa `mech_char_pose1.glb`. Cada una tiene su ficha (`/obra/test-N`); el clic en la home lleva a la ficha del modelo que se ve. Si un archivo falta, la ficha muestra "Modelo 3D en preparación".
+- Sección 3D: 3 obras. `Flower_scene` usa `Flower_scene.glb` (destacada de la home, nombre del archivo como título); `test_34` usa `mech_char_2.glb` y `test_35` usa `mech_char_pose1.glb`. `test_33` se quitó del sitio. Cada una tiene su ficha (`/obra/test-N`); el clic en la home lleva a la ficha del modelo que se ve. Si un archivo falta, la ficha muestra "Modelo 3D en preparación".
 - Fotos reales: reemplazar `PlaceholderArt` cuando estén.
 - Contenido en construcción: títulos `test_N` y campos por tipo; no reintroducir datos inventados.
+
+## Mapa del vault
+
+La documentación completa está en el [[docs/indice|mapa de documentación]].

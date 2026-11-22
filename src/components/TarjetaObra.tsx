@@ -12,7 +12,7 @@ export default function TarjetaObra({
   locale: Locale;
   slug: string;
   titulo: string;
-  anio: number;
+  anio?: number;
   miniatura?: string;
 }) {
   return (
@@ -24,7 +24,7 @@ export default function TarjetaObra({
         <PlaceholderArt etiqueta={slug} titulo={titulo} />
       )}
       <span className="tarjeta-titulo">{titulo}</span>
-      <span className="tarjeta-anio">{anio}</span>
+      {anio && <span className="tarjeta-anio">{anio}</span>}
     </Link>
   );
 }

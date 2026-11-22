@@ -485,11 +485,11 @@ export const OBRAS_PICTORICAS: ObraPictorica[] = [
 
 export const OBRAS_3D: Obra3D[] = [
   {
-    slug: "test-33",
+    slug: "flower-scene",
     periodo: "2026",
     anio: 2026,
     tipo: "3d",
-    titulo: { es: "test_33", en: "test_33" },
+    titulo: { es: "Flower_scene", en: "Flower_scene" },
     tecnica: { es: "Técnica", en: "Technique" },
     materiales: { es: "Materiales", en: "Materials" },
     dimensiones: { es: "Medidas", en: "Dimensions" },
@@ -497,7 +497,7 @@ export const OBRAS_3D: Obra3D[] = [
       es: "Descripción",
       en: "Description",
     },
-    modelo: "",
+    modelo: "/models/Flower_scene.glb",
     formato: "glb",
     destacada: true,
   },

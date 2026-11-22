@@ -20,7 +20,7 @@ export default function GrupoPorPeriodo({ locale, obras }: { locale: Locale; obr
                   locale={locale}
                   slug={o.slug}
                   titulo={o.titulo[locale]}
-                  anio={o.anio}
+                  anio={o.tipo === "3d" ? undefined : o.anio}
                   miniatura={o.tipo === "3d" ? `/thumbs/${o.slug}.png` : undefined}
                 />
               ))}
