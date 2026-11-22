@@ -534,6 +534,22 @@ export const OBRAS_3D: Obra3D[] = [
     formato: "glb",
   },
   {
+    slug: "boxer-helmet",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "3d",
+    titulo: { es: "Boxer_helmet", en: "Boxer_helmet" },
+    tecnica: { es: "Técnica", en: "Technique" },
+    materiales: { es: "Materiales", en: "Materials" },
+    dimensiones: { es: "Medidas", en: "Dimensions" },
+    descripcion: {
+      es: "Descripción",
+      en: "Description",
+    },
+    modelo: "/models/Boxer_helmet.glb",
+    formato: "glb",
+  },
+  {
     slug: "test-34",
     periodo: "2024–25",
     anio: 2025,
