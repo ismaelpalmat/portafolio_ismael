@@ -8,7 +8,7 @@ import type { Locale } from "@/content/tipos";
 const Viewer3D = dynamic(() => import("./Viewer3D"), { ssr: false });
 
 const MODELOS: Array<{ slug: string; modelo: string; formato: "obj" | "glb"; distancia: number }> = [
-  { slug: "flower-scene", modelo: "/models/Flower_scene.glb", formato: "glb", distancia: 4 }
+  { slug: "flower-scene", modelo: "/models/Flower_scene.glb", formato: "glb", distancia: 3.5 }
 ];
 
 export default function HomeHero3D({
@@ -68,7 +68,7 @@ export default function HomeHero3D({
         }
       }}
     >
-      <Viewer3D modelo={MODELOS[opcion].modelo} formato={MODELOS[opcion].formato} titulo={titulo} distancia={MODELOS[opcion].distancia} velocidad={0.003} glitchZoom />
+      <Viewer3D modelo={MODELOS[opcion].modelo} formato={MODELOS[opcion].formato} titulo={titulo} distancia={MODELOS[opcion].distancia} velocidad={0.003} phiInicial={0.9} zoomAuto={0.4} glitchZoom />
     </div>
   );
 }

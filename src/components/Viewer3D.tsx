@@ -70,6 +70,7 @@ export default function Viewer3D({
   velocidad = 0.008,
   luzFrente = false,
   reservaProcedural = true,
+  zoomAuto = 0,
   aviso
 }: {
   modelo: string;
@@ -83,6 +84,7 @@ export default function Viewer3D({
   velocidad?: number;
   luzFrente?: boolean;
   reservaProcedural?: boolean;
+  zoomAuto?: number;
   aviso?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -245,10 +247,11 @@ export default function Viewer3D({
         theta += velocidad;
       }
       const jit = performance.now() < glitchHasta ? (Math.random() - 0.5) * 0.06 : 0;
+      const r = radio + Math.sin(performance.now() * 0.0002) * zoomAuto;
       camera.position.set(
-        radio * Math.sin(phi) * Math.sin(theta + jit),
-        radio * Math.cos(phi + jit * 0.5),
-        radio * Math.sin(phi) * Math.cos(theta + jit)
+        r * Math.sin(phi) * Math.sin(theta + jit),
+        r * Math.cos(phi + jit * 0.5),
+        r * Math.sin(phi) * Math.cos(theta + jit)
       );
       camera.lookAt(0, 0, 0);
       renderer.render(scene, camera);
@@ -272,7 +275,7 @@ export default function Viewer3D({
       renderer.forceContextLoss();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural]);
+  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural, zoomAuto]);
 
   return (
     <div
