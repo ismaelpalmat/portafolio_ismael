@@ -8,7 +8,7 @@ import {
 
 test("helpers por tipo, slug y vecinas", () => {
   assert.ok(obrasPorTipo("pintura").length + obrasPorTipo("dibujo").length >= 20);
-  assert.equal(obrasPorTipo("3d").length, 4);
+  assert.equal(obrasPorTipo("3d").length, 5);
   const primera = obrasPorTipo("pintura")[0];
   assert.equal(obraPorSlug(primera.slug)?.slug, primera.slug);
   assert.equal(obraPorSlug("no-existe"), undefined);

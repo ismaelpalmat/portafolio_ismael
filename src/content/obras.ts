@@ -518,6 +518,22 @@ export const OBRAS_3D: Obra3D[] = [
     formato: "glb",
   },
   {
+    slug: "boxer-gold",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "3d",
+    titulo: { es: "Boxer_gold", en: "Boxer_gold" },
+    tecnica: { es: "Técnica", en: "Technique" },
+    materiales: { es: "Materiales", en: "Materials" },
+    dimensiones: { es: "Medidas", en: "Dimensions" },
+    descripcion: {
+      es: "Descripción",
+      en: "Description",
+    },
+    modelo: "/models/Boxer_gold.glb",
+    formato: "glb",
+  },
+  {
     slug: "test-34",
     periodo: "2024–25",
     anio: 2025,

@@ -10,7 +10,8 @@ const Viewer3D = dynamic(() => import("./Viewer3D"), { ssr: false });
 
 const MODELOS: Array<{ slug: string; modelo: string; formato: "obj" | "glb"; distancia: number }> = [
   { slug: "flower-scene", modelo: "/models/Flower_scene.glb", formato: "glb", distancia: 3.5 },
-  { slug: "buildings-brutalist-1", modelo: "/models/Buildings_Brutalist_1.glb", formato: "glb", distancia: 4 }
+  { slug: "buildings-brutalist-1", modelo: "/models/Buildings_Brutalist_1.glb", formato: "glb", distancia: 4 },
+  { slug: "boxer-gold", modelo: "/models/Boxer_gold.glb", formato: "glb", distancia: 4 }
 ];
 
 let eleccion: number | null = null;
