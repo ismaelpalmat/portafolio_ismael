@@ -546,7 +546,7 @@ export const OBRAS_3D: Obra3D[] = [
       es: "Descripción",
       en: "Description",
     },
-    modelo: "/models/Boxer_helmet.glb",
+    modelo: "/models/Boxer_helmet_2.glb",
     formato: "glb",
   },
   {
