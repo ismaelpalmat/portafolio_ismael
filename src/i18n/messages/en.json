@@ -29,6 +29,8 @@
   "bio": {
     "titulo": "Biography",
     "resumen": "Profile",
+    "formacion": "Education",
+    "habilidades": "Skills",
     "individuales": "Solo shows",
     "colectivas": "Group shows",
     "residencias": "Residencies",
