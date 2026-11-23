@@ -15,7 +15,6 @@ export default async function BiografiaPage({
   const l = locale as Locale;
   const grupos = [
     { titulo: t("formacion"), items: BIOGRAFIA.formacion },
-    { titulo: t("habilidades"), items: BIOGRAFIA.habilidades },
     { titulo: t("individuales"), items: BIOGRAFIA.individuales },
     { titulo: t("colectivas"), items: BIOGRAFIA.colectivas },
     { titulo: t("residencias"), items: BIOGRAFIA.residencias },

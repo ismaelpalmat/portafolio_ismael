@@ -4,7 +4,6 @@ export interface Biografia {
   nombre: string;
   resumen: LocalizedText;
   formacion: LocalizedText[];
-  habilidades: LocalizedText[];
   individuales: LocalizedText[];
   colectivas: LocalizedText[];
   residencias: LocalizedText[];
@@ -25,11 +24,6 @@ export const BIOGRAFIA: Biografia = {
       es: "2012–16 — Licenciado en Artes Visuales, Universidad de Chile",
       en: "2012–16 — Bachelor's in Visual Arts, Universidad de Chile"
     }
-  ],
-  habilidades: [
-    { es: "Pintura y dibujo académico", en: "Academic painting and drawing" },
-    { es: "Gráficos 3D, Blender", en: "3D graphics, Blender" },
-    { es: "Motores gráficos, con Unreal Engine 5", en: "Graphics engines, with Unreal Engine 5" }
   ],
   individuales: [
     texto("2022 — Borrar y Rebobinar, Sala Juan Egenau"),
