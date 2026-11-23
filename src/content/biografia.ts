@@ -3,7 +3,6 @@ import type { LocalizedText } from "./tipos.ts";
 export interface Biografia {
   nombre: string;
   resumen: LocalizedText;
-  formacion: LocalizedText[];
   individuales: LocalizedText[];
   colectivas: LocalizedText[];
   residencias: LocalizedText[];
@@ -19,12 +18,6 @@ export const BIOGRAFIA: Biografia = {
     es: "Artista visual que trabaja en Santiago de Chile. Explora distintos medios, como la pintura, el dibujo y la escultura, y ha trabajado en gráficos 3D. Licenciado en Artes Visuales.",
     en: "Visual artist working in Santiago, Chile. Explores different disciplines, such as painting, drawing and sculpture, and has worked in 3D graphics. Holds a degree in Visual Arts."
   },
-  formacion: [
-    {
-      es: "2012–16 — Licenciado en Artes Visuales, Universidad de Chile",
-      en: "2012–16 — Bachelor's in Visual Arts, Universidad de Chile"
-    }
-  ],
   individuales: [
     texto("2022 — Borrar y Rebobinar, Sala Juan Egenau"),
     texto("2018 — Ocasiones Propicias, Espacio O")

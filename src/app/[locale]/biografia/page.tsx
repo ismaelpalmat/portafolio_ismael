@@ -14,7 +14,6 @@ export default async function BiografiaPage({
   const t = await getTranslations("bio");
   const l = locale as Locale;
   const grupos = [
-    { titulo: t("formacion"), items: BIOGRAFIA.formacion },
     { titulo: t("individuales"), items: BIOGRAFIA.individuales },
     { titulo: t("colectivas"), items: BIOGRAFIA.colectivas },
     { titulo: t("residencias"), items: BIOGRAFIA.residencias },
