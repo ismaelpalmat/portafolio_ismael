@@ -191,25 +191,28 @@ export default function Viewer3D({
         if (recorrer) {
           modeloVisto = obj;
           obj.updateMatrixWorld(true);
-          const pasillo = new THREE.PointLight(0xfff1c2, 6, 10, 1.5);
+          const pasillo = new THREE.PointLight(0xfff1c2, 1.2, 10, 1.5);
           pasillo.position.set(0, 1.5, 0);
           scene.add(pasillo);
           for (const nombre of [mirar ?? "", "Text.003", "dibujo mañio", "paisaje_hztl_mañio"]) {
             const nodoLuz = buscar(obj, nombre);
             if (nodoLuz) {
               const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
-              const foco = new THREE.PointLight(0xfff1c2, 1.6, 4, 2);
+              const foco = new THREE.PointLight(0xfff1c2, 0.5, 4, 2);
               foco.position.copy(c).multiplyScalar(0.8);
               scene.add(foco);
             }
           }
-          // Arranque en la sala con más obras (coordenadas del glb), mirando a sus cuadros.
+          // Arranque en la sala con más obras mirando al rótulo "Vislumbres".
           const inicio = obj.localToWorld(new THREE.Vector3(-3.6, 0, -1.0));
-          const rumbo = obj.localToWorld(new THREE.Vector3(-1.46, 0, -0.3));
+          const rotulo = buscar(obj, "Text.003");
+          const rumbo = rotulo
+            ? new THREE.Box3().setFromObject(rotulo).getCenter(new THREE.Vector3())
+            : obj.localToWorld(new THREE.Vector3(-1.46, 0, -0.3));
           x = inicio.x;
           z = inicio.z;
           yaw = Math.atan2(-(rumbo.x - inicio.x), -(rumbo.z - inicio.z));
-          pitch = 0;
+          pitch = Math.atan2(rumbo.y, Math.hypot(rumbo.x - inicio.x, rumbo.z - inicio.z));
         }
       });
     }
