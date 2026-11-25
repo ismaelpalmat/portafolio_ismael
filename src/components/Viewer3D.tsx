@@ -72,6 +72,8 @@ export default function Viewer3D({
   reservaProcedural = true,
   zoomAuto = 0,
   focoSuperior = false,
+  recorrer = false,
+  mirar,
   aviso
 }: {
   modelo: string;
@@ -87,6 +89,8 @@ export default function Viewer3D({
   reservaProcedural?: boolean;
   zoomAuto?: number;
   focoSuperior?: boolean;
+  recorrer?: boolean;
+  mirar?: string;
   aviso?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -99,7 +103,7 @@ export default function Viewer3D({
     }
     const scene = new THREE.Scene();
     const claro = () => document.documentElement.dataset.tema === "claro";
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -108,13 +112,17 @@ export default function Viewer3D({
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     el.appendChild(renderer.domElement);
-    const izq = new THREE.SpotLight(claro() ? 0x2f8f52 : 0xbfe3c6, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
+    const colorIzq = () => (recorrer ? 0xffffff : claro() ? 0x2f8f52 : 0xbfe3c6);
+    const colorDer = () => (recorrer ? 0xffffff : claro() ? 0x6d4ec9 : 0xcabdea);
+    const intensidadSpot = recorrer ? 0 : luzFrente ? 10 : 35;
+    const izq = new THREE.SpotLight(colorIzq(), intensidadSpot, 30, Math.PI / 3.5, 0.9);
     izq.position.set(-4, 2, 3);
-    const der = new THREE.SpotLight(claro() ? 0x6d4ec9 : 0xcabdea, luzFrente ? 10 : 35, 30, Math.PI / 3.5, 0.9);
+    const der = new THREE.SpotLight(colorDer(), intensidadSpot, 30, Math.PI / 3.5, 0.9);
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
-    const ambiente = new THREE.AmbientLight(0xffffff, luzFrente ? 0.6 : claro() ? 0.55 : 0.35);
+    const intensidadAmbiente = () => (recorrer ? 1 : luzFrente ? 0.6 : claro() ? 0.55 : 0.35);
+    const ambiente = new THREE.AmbientLight(0xffffff, intensidadAmbiente());
     scene.add(ambiente);
     if (luzFrente) {
       const frente = new THREE.DirectionalLight(0xffffff, 3.2);
@@ -127,9 +135,9 @@ export default function Viewer3D({
       scene.add(arriba);
     }
     const aplicarLuces = () => {
-      izq.color.set(claro() ? 0x2f8f52 : 0xbfe3c6);
-      der.color.set(claro() ? 0x6d4ec9 : 0xcabdea);
-      ambiente.intensity = luzFrente ? 0.6 : claro() ? 0.55 : 0.35;
+      izq.color.set(colorIzq());
+      der.color.set(colorDer());
+      ambiente.intensity = intensidadAmbiente();
     };
     const observador = new MutationObserver(aplicarLuces);
     observador.observe(document.documentElement, { attributes: true, attributeFilter: ["data-tema"] });
@@ -140,6 +148,7 @@ export default function Viewer3D({
       grupo.add(reserva);
     }
     let vivo = true;
+    let modeloVisto: THREE.Object3D | undefined;
     if (modelo) {
       cargarModelo(modelo, formato).then((obj) => {
         if (!vivo) {
@@ -158,7 +167,7 @@ export default function Viewer3D({
         const centro = new THREE.Vector3();
         caja.getCenter(centro);
         const max = Math.max(tam.x, tam.y, tam.z) || 1;
-        const esc = 2.2 / max;
+        const esc = (recorrer ? 6 : 2.2) / max;
         obj.scale.setScalar(esc);
         obj.position.set(-centro.x * esc, -centro.y * esc, -centro.z * esc);
         if (reserva) {
@@ -166,34 +175,171 @@ export default function Viewer3D({
           liberar(reserva);
         }
         grupo.add(obj);
+        if (recorrer) {
+          modeloVisto = obj;
+          obj.updateMatrixWorld(true);
+          const pasillo = new THREE.PointLight(0xfff1c2, 6, 10, 1.5);
+          pasillo.position.set(0, 1.5, 0);
+          scene.add(pasillo);
+        }
+        const nodo = recorrer && mirar ? obj.getObjectByName(mirar) : undefined;
+        if (nodo) {
+          obj.updateMatrixWorld(true);
+          const caja = new THREE.Box3().setFromObject(nodo);
+          const p = caja.getCenter(new THREE.Vector3());
+          for (const nombre of [mirar ?? "", "Text.003", "dibujo mañio", "paisaje_hztl_mañio"]) {
+            const nodoLuz = obj.getObjectByName(nombre);
+            if (nodoLuz) {
+              const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
+              const foco = new THREE.PointLight(0xfff1c2, 1.6, 4, 2);
+              foco.position.copy(c).multiplyScalar(0.8);
+              scene.add(foco);
+            }
+          }
+          x = p.x * 0.5;
+          z = p.z * 0.5;
+          yaw = Math.atan2(-(p.x - x), -(p.z - z));
+          pitch = Math.min(1.2, Math.max(-1.2, Math.atan2(p.y, Math.hypot(p.x - x, p.z - z))));
+        }
       });
     }
     let theta = thetaInicial;
     let phi = phiInicial;
     let radio = distancia;
+    let yaw = 0;
+    let pitch = 0;
+    let x = 0;
+    let z = 0;
+    const teclas = new Set<string>();
+    const tecla = (e: KeyboardEvent, activa: boolean) => {
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (!recorrer || !/^(w|a|s|d|ArrowUp|ArrowDown|ArrowLeft|ArrowRight)$/.test(k)) {
+        return;
+      }
+      e.preventDefault();
+      if (activa) {
+        teclas.add(k);
+      } else {
+        teclas.delete(k);
+      }
+    };
+    const teclaAbajo = (e: KeyboardEvent) => tecla(e, true);
+    const teclaArriba = (e: KeyboardEvent) => tecla(e, false);
+    const limpiarTeclas = () => teclas.clear();
+    let ya = 0;
+    let bloqueo: { pos: THREE.Vector3; mira: THREE.Vector3; giro: number; libre: { x: number; ya: number; z: number; yaw: number; pitch: number } } | null = null;
+    const rayoClic = new THREE.Raycaster();
+    const obraDe = (h: THREE.Intersection): THREE.Object3D | null => {
+      for (let o: THREE.Object3D | null = h.object; o; o = o.parent) {
+        if (/^(dibujo|paisaje|Plane)/.test(o.name)) {
+          return o;
+        }
+      }
+      return null;
+    };
+    const clic = (e: MouseEvent) => {
+      if (!recorrer || moviendo) {
+        return;
+      }
+      if (bloqueo) {
+        ({ x, ya, z, yaw, pitch } = bloqueo.libre);
+        bloqueo = null;
+        return;
+      }
+      if (!modeloVisto) {
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      rayoClic.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
+      const hits = rayoClic.intersectObject(modeloVisto, true);
+      const hit = hits.find((h) => obraDe(h));
+      const obra = hit && obraDe(hit);
+      if (!hit || !obra || !hit.face) {
+        return;
+      }
+      const caja = new THREE.Box3().setFromObject(obra);
+      const tam = caja.getSize(new THREE.Vector3());
+      const mira = caja.getCenter(new THREE.Vector3());
+      const normal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld);
+      if (normal.dot(camera.position.clone().sub(mira)) < 0) {
+        normal.negate();
+      }
+      const lado = Math.max(tam.x, tam.y, 0.05);
+      const dist = (lado / 2 / Math.tan(Math.PI / 8)) * 1.3;
+      const pos = mira.clone().addScaledVector(normal, dist);
+      bloqueo = { pos, mira, giro: 0, libre: { x, ya, z, yaw, pitch } };
+    };
+    el.addEventListener("click", clic);
+    const rayo = new THREE.Raycaster();
+    rayo.far = 0.35;
+    const choca = (sx: number, sz: number) => {
+      if (!modeloVisto) {
+        return false;
+      }
+      rayo.set(new THREE.Vector3(x, 0, z), new THREE.Vector3(sx, 0, sz));
+      return rayo.intersectObject(modeloVisto, true).length > 0;
+    };
     let arrastrando = false;
     let moviendo = false;
     let ultimoX = 0;
     let ultimoY = 0;
+    let origenX = 0;
+    let origenY = 0;
     const abajo = (e: PointerEvent) => {
+      if (e.button === 1) {
+        e.preventDefault();
+      }
       arrastrando = true;
       moviendo = false;
       ultimoX = e.clientX;
       ultimoY = e.clientY;
+      origenX = e.clientX;
+      origenY = e.clientY;
       el.setPointerCapture(e.pointerId);
     };
     const mover = (e: PointerEvent) => {
       if (!arrastrando) {
         return;
       }
-      if (!moviendo) {
+      if (!moviendo && Math.hypot(e.clientX - origenX, e.clientY - origenY) > 4) {
         moviendo = true;
         if (glitchZoom) {
           glitch();
         }
       }
-      theta -= (e.clientX - ultimoX) * 0.006;
-      phi = Math.min(Math.PI - 0.15, Math.max(0.15, phi - (e.clientY - ultimoY) * 0.006));
+      if (recorrer && bloqueo && (e.buttons & 4) !== 0) {
+        const arriba = new THREE.Vector3(0, 1, 0);
+        const rel = bloqueo.pos.clone().sub(bloqueo.mira);
+        const nuevoGiro = Math.min(1.22, Math.max(-1.22, bloqueo.giro + (ultimoX - e.clientX) * 0.01));
+        rel.applyAxisAngle(arriba, nuevoGiro - bloqueo.giro);
+        bloqueo.giro = nuevoGiro;
+        const eje = new THREE.Vector3().crossVectors(rel, arriba);
+        if (eje.lengthSq() > 0) {
+          const alt = rel.clone().applyAxisAngle(eje.normalize(), (e.clientY - ultimoY) * 0.01);
+          const angulo = alt.angleTo(arriba);
+          if (angulo > 0.2 && angulo < Math.PI - 0.2) {
+            rel.copy(alt);
+          }
+        }
+        bloqueo.pos.copy(rel.add(bloqueo.mira));
+      } else if (recorrer && (e.buttons & 4) !== 0) {
+        const adelante = (ultimoY - e.clientY) * 0.01;
+        const lateral = (e.clientX - ultimoX) * 0.01;
+        const dx = -adelante * Math.sin(yaw) + lateral * Math.cos(yaw);
+        const dz = -adelante * Math.cos(yaw) - lateral * Math.sin(yaw);
+        if (dx && !choca(Math.sign(dx), 0)) {
+          x += dx;
+        }
+        if (dz && !choca(0, Math.sign(dz))) {
+          z += dz;
+        }
+      } else if (recorrer) {
+        yaw -= (e.clientX - ultimoX) * 0.004;
+        pitch = Math.min(1.2, Math.max(-1.2, pitch - (e.clientY - ultimoY) * 0.004));
+      } else {
+        theta -= (e.clientX - ultimoX) * 0.006;
+        phi = Math.min(Math.PI - 0.15, Math.max(0.15, phi - (e.clientY - ultimoY) * 0.006));
+      }
       ultimoX = e.clientX;
       ultimoY = e.clientY;
     };
@@ -222,6 +368,27 @@ export default function Viewer3D({
       temporizador = setTimeout(() => el.classList.remove("zoom-glitch"), 220);
     };
     const rueda = (e: WheelEvent) => {
+      if (recorrer && bloqueo) {
+        e.preventDefault();
+        let distancia = Math.min(3, Math.max(0.05, bloqueo.pos.distanceTo(bloqueo.mira) * (1 + e.deltaY * 0.001)));
+        const direccion = bloqueo.pos.clone().sub(bloqueo.mira).normalize();
+        if (modeloVisto) {
+          rayoClic.set(bloqueo.mira, direccion);
+          rayoClic.far = Infinity;
+          const pared = rayoClic.intersectObject(modeloVisto, true).find((h) => h.distance > 0.02);
+          if (pared && pared.distance < distancia) {
+            distancia = Math.max(0.05, pared.distance - 0.05);
+          }
+        }
+        bloqueo.pos.copy(bloqueo.mira).addScaledVector(direccion, distancia);
+        return;
+      }
+      if (recorrer) {
+        e.preventDefault();
+        camera.fov = Math.min(45, Math.max(20, camera.fov * (1 + e.deltaY * 0.001)));
+        camera.updateProjectionMatrix();
+        return;
+      }
       if (!glitchZoom && !e.ctrlKey) {
         return;
       }
@@ -236,6 +403,9 @@ export default function Viewer3D({
     el.addEventListener("pointerup", soltar);
     el.addEventListener("pointercancel", soltar);
     el.addEventListener("wheel", rueda, { passive: false });
+    el.addEventListener("keydown", teclaAbajo);
+    el.addEventListener("keyup", teclaArriba);
+    el.addEventListener("blur", limpiarTeclas);
     const resize = () => {
       const w = el.clientWidth || 1;
       const h = el.clientHeight || 1;
@@ -248,6 +418,30 @@ export default function Viewer3D({
     resize();
     const tick = () => {
       if (!vivo) {
+        return;
+      }
+      if (recorrer) {
+        if (bloqueo) {
+          camera.position.copy(bloqueo.pos);
+          camera.lookAt(bloqueo.mira);
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+          return;
+        }
+        const avance = (teclas.has("w") || teclas.has("ArrowUp") ? 1 : 0) - (teclas.has("s") || teclas.has("ArrowDown") ? 1 : 0);
+        const lado = (teclas.has("d") || teclas.has("ArrowRight") ? 1 : 0) - (teclas.has("a") || teclas.has("ArrowLeft") ? 1 : 0);
+        const dx = (-avance * Math.sin(yaw) + lado * Math.cos(yaw)) * 0.03;
+        const dz = (-avance * Math.cos(yaw) - lado * Math.sin(yaw)) * 0.03;
+        if (dx && !choca(Math.sign(dx), 0)) {
+          x += dx;
+        }
+        if (dz && !choca(0, Math.sign(dz))) {
+          z += dz;
+        }
+        camera.position.set(x, ya, z);
+        camera.rotation.set(pitch, yaw, 0, "YXZ");
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
         return;
       }
       if (!arrastrando) {
@@ -277,18 +471,23 @@ export default function Viewer3D({
       el.removeEventListener("pointerup", soltar);
       el.removeEventListener("pointercancel", soltar);
       el.removeEventListener("wheel", rueda);
+      el.removeEventListener("click", clic);
+      el.removeEventListener("keydown", teclaAbajo);
+      el.removeEventListener("keyup", teclaArriba);
+      el.removeEventListener("blur", limpiarTeclas);
       liberar(grupo);
       renderer.dispose();
       renderer.forceContextLoss();
       el.removeChild(renderer.domElement);
     };
-  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural, zoomAuto, focoSuperior]);
+  }, [modelo, formato, distancia, glitchZoom, thetaInicial, phiInicial, velocidad, luzFrente, reservaProcedural, zoomAuto, focoSuperior, recorrer, mirar]);
 
   return (
     <div
       ref={ref}
       role="img"
       aria-label={titulo}
+      tabIndex={recorrer ? 0 : undefined}
       style={{ touchAction: "pan-y" }}
       className={cuadrado ? "visor cuadrado" : "visor"}
     >

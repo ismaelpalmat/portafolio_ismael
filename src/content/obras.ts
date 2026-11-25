@@ -581,6 +581,24 @@ export const OBRAS_3D: Obra3D[] = [
     modelo: "/models/mech_char_pose1.glb",
     formato: "glb",
   },
+  {
+    slug: "gallery-map-1",
+    periodo: "2026",
+    anio: 2026,
+    tipo: "3d",
+    titulo: { es: "Gallery+_map_1", en: "Gallery+_map_1" },
+    tecnica: { es: "Técnica", en: "Technique" },
+    materiales: { es: "Materiales", en: "Materials" },
+    dimensiones: { es: "Medidas", en: "Dimensions" },
+    descripcion: {
+      es: "Descripción",
+      en: "Description",
+    },
+    modelo: "/models/Gallery+_map_1.glb",
+    formato: "glb",
+    recorrer: true,
+    mirar: "Plane.004",
+  },
 ];
 
 export function todasLasObras(): Obra[] {

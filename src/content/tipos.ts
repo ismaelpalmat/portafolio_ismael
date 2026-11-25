@@ -40,6 +40,8 @@ export interface Obra3D {
   modelo: string;
   formato: "obj" | "stl" | "glb";
   destacada?: boolean;
+  recorrer?: boolean;
+  mirar?: string;
 }
 
 export type Obra = ObraPictorica | Obra3D;
