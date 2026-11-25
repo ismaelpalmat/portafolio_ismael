@@ -191,10 +191,10 @@ export default function Viewer3D({
         if (recorrer) {
           modeloVisto = obj;
           obj.updateMatrixWorld(true);
-          // Focos tenues bajo el riel del techo, repartidos a lo largo de la sala.
-          for (const gx of [-4.0, -3.3, -2.6, -1.9]) {
-            const p = obj.localToWorld(new THREE.Vector3(gx, 3.15, 0.03));
-            const luz = new THREE.SpotLight(0xfff1c2, 1.2, 6, Math.PI / 4, 0.9, 1.5);
+          // Focos tenues pegados al riel del techo, repartidos a lo largo de la sala.
+          for (let i = 0; i < 8; i++) {
+            const p = obj.localToWorld(new THREE.Vector3(-4.2 + i * 0.33, 3.35, 0.03));
+            const luz = new THREE.SpotLight(0xfff1c2, 1, 6, Math.PI / 4, 0.9, 1.5);
             luz.position.copy(p);
             luz.target.position.set(p.x, 0, p.z);
             scene.add(luz);
