@@ -191,9 +191,15 @@ export default function Viewer3D({
         if (recorrer) {
           modeloVisto = obj;
           obj.updateMatrixWorld(true);
-          const pasillo = new THREE.PointLight(0xfff1c2, 1.2, 10, 1.5);
-          pasillo.position.set(0, 1.5, 0);
-          scene.add(pasillo);
+          // Focos tenues bajo el riel del techo, repartidos a lo largo de la sala.
+          for (const gx of [-4.0, -3.3, -2.6, -1.9]) {
+            const p = obj.localToWorld(new THREE.Vector3(gx, 3.15, 0.03));
+            const luz = new THREE.SpotLight(0xfff1c2, 1.2, 6, Math.PI / 4, 0.9, 1.5);
+            luz.position.copy(p);
+            luz.target.position.set(p.x, 0, p.z);
+            scene.add(luz);
+            scene.add(luz.target);
+          }
           for (const nombre of [mirar ?? "", "Text.003", "dibujo mañio", "paisaje_hztl_mañio"]) {
             const nodoLuz = buscar(obj, nombre);
             if (nodoLuz) {
