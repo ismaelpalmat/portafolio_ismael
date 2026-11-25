@@ -37,6 +37,19 @@ async function cargarModelo(
   }
 }
 
+// GLTFLoader sanea los nombres ("Plane.004" -> "Plane004"), así que se buscan sin signos.
+function buscar(obj: THREE.Object3D, nombre: string): THREE.Object3D | undefined {
+  const limpio = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const buscado = limpio(nombre);
+  let encontrado: THREE.Object3D | undefined;
+  obj.traverse((n) => {
+    if (!encontrado && n.name && limpio(n.name) === buscado) {
+      encontrado = n;
+    }
+  });
+  return encontrado;
+}
+
 function liberar(o: THREE.Object3D) {
   o.traverse((x) => {
     const m = x as THREE.Mesh;
@@ -181,14 +194,8 @@ export default function Viewer3D({
           const pasillo = new THREE.PointLight(0xfff1c2, 6, 10, 1.5);
           pasillo.position.set(0, 1.5, 0);
           scene.add(pasillo);
-        }
-        const nodo = recorrer && mirar ? obj.getObjectByName(mirar) : undefined;
-        if (nodo) {
-          obj.updateMatrixWorld(true);
-          const caja = new THREE.Box3().setFromObject(nodo);
-          const p = caja.getCenter(new THREE.Vector3());
           for (const nombre of [mirar ?? "", "Text.003", "dibujo mañio", "paisaje_hztl_mañio"]) {
-            const nodoLuz = obj.getObjectByName(nombre);
+            const nodoLuz = buscar(obj, nombre);
             if (nodoLuz) {
               const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
               const foco = new THREE.PointLight(0xfff1c2, 1.6, 4, 2);
@@ -196,10 +203,13 @@ export default function Viewer3D({
               scene.add(foco);
             }
           }
-          x = p.x * 0.5;
-          z = p.z * 0.5;
-          yaw = Math.atan2(-(p.x - x), -(p.z - z));
-          pitch = Math.min(1.2, Math.max(-1.2, Math.atan2(p.y, Math.hypot(p.x - x, p.z - z))));
+          // Arranque en la sala con más obras (coordenadas del glb), mirando a sus cuadros.
+          const inicio = obj.localToWorld(new THREE.Vector3(-3.6, 0, -1.0));
+          const rumbo = obj.localToWorld(new THREE.Vector3(-1.46, 0, -0.3));
+          x = inicio.x;
+          z = inicio.z;
+          yaw = Math.atan2(-(rumbo.x - inicio.x), -(rumbo.z - inicio.z));
+          pitch = 0;
         }
       });
     }
