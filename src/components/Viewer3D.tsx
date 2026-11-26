@@ -191,9 +191,12 @@ export default function Viewer3D({
         if (recorrer) {
           modeloVisto = obj;
           obj.updateMatrixWorld(true);
-          // Focos tenues pegados al riel del techo, repartidos a lo largo de la sala.
-          for (let i = 0; i < 8; i++) {
-            const p = obj.localToWorld(new THREE.Vector3(-4.2 + i * 0.33, 3.35, 0.03));
+          // Focos tenues pegados a los dos brazos del riel del techo.
+          const riel: Array<[number, number]> = [];
+          for (let i = 0; i < 5; i++) riel.push([-4.2 + i * 0.55, -1.15]);
+          for (let i = 0; i < 4; i++) riel.push([-1.9, -0.8 + i * 0.6]);
+          for (const [gx, gz] of riel) {
+            const p = obj.localToWorld(new THREE.Vector3(gx, 3.45, gz));
             const luz = new THREE.SpotLight(0xfff1c2, 1, 6, Math.PI / 4, 0.9, 1.5);
             luz.position.copy(p);
             luz.target.position.set(p.x, 0, p.z);
@@ -204,7 +207,7 @@ export default function Viewer3D({
             const nodoLuz = buscar(obj, nombre);
             if (nodoLuz) {
               const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
-              const foco = new THREE.PointLight(0xfff1c2, 0.5, 4, 2);
+              const foco = new THREE.PointLight(0xfff1c2, nombre === "Text.003" ? 0.2 : 0.5, 4, 2);
               foco.position.copy(c).multiplyScalar(0.8);
               scene.add(foco);
             }
