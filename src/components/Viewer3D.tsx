@@ -317,14 +317,11 @@ export default function Viewer3D({
           });
           // Arranque en el pasillo, frente al rótulo "Vislumbres" (coordenadas del glb).
           const inicio = obj.localToWorld(new THREE.Vector3(0.1, 0, 0.25));
-          const rotulo = buscar(obj, "Text.003");
-          const rumbo = rotulo
-            ? new THREE.Box3().setFromObject(rotulo).getCenter(new THREE.Vector3())
-            : obj.localToWorld(new THREE.Vector3(-1.46, 0, -0.3));
+          const rumbo = obj.localToWorld(new THREE.Vector3(0.1, 0, 1.83));
           x = inicio.x;
           z = inicio.z;
           yaw = Math.atan2(-(rumbo.x - inicio.x), -(rumbo.z - inicio.z));
-          pitch = Math.atan2(rumbo.y, Math.hypot(rumbo.x - inicio.x, rumbo.z - inicio.z));
+          pitch = 0.06;
         }
       });
     }
