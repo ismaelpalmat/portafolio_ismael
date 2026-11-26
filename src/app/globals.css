@@ -216,6 +216,8 @@ main:has(.ficha-3d) .ficha-3d { flex: 1 1 auto; min-height: 0; display: flex; fl
 .ficha-3d-caja > .visor { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; aspect-ratio: auto; }
 .ficha-3d-info { position: absolute; top: 1rem; left: 1rem; max-width: min(22rem, 60%); padding: 0.9rem 1rem; border-radius: 8px; background: rgba(10, 10, 15, 0.55); color: #f2f4f8; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); pointer-events: none; }
 [data-tema="claro"] .ficha-3d-info { background: rgba(255, 255, 255, 0.72); color: #0a0a0f; }
+.ficha-3d-info-ocultar { animation: ficha-3d-info-fuera 600ms ease 3s forwards; }
+@keyframes ficha-3d-info-fuera { to { opacity: 0; } }
 
 /* Ficha de la obra enmarcada: aparece con fade y se queda mientras el puntero esté encima. */
 .ficha-obra { position: absolute; left: 1rem; bottom: 1rem; z-index: 5; width: min(20rem, 80%); padding: 0.9rem 1rem; border-radius: 8px; background: rgba(10, 10, 15, 0.72); color: #f2f4f8; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 350ms ease; pointer-events: none; }

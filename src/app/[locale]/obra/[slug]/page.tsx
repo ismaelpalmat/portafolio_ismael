@@ -50,7 +50,7 @@ export default async function ObraPage({
       {obra.tipo === "3d" ? (
         <div className="ficha-3d-caja">
           <FichaTresD modelo={obra.modelo} formato={obra.formato} titulo={obra.titulo[l]} recorrer={obra.recorrer} mirar={obra.mirar} />
-          <div className="ficha-3d-info">
+          <div className="ficha-3d-info ficha-3d-info-ocultar">
             <FichaDatos obra={obra} locale={l} />
           </div>
         </div>
