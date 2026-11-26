@@ -3,25 +3,30 @@ import FichaTresD from "@/components/FichaTresD";
 import type { FichaObraDatos } from "@/components/FichaObra";
 
 //solo para desarrollo: en el export no existe
-const FICHAS: Record<string, FichaObraDatos> = {
-  Plane006_3: {
-    titulo: "Paisaje de prueba",
-    tecnica: "Óleo sobre tela",
-    materiales: "Tela",
-    medidas: "80 × 60 cm",
-    descripcion: "Ficha de demostración: aparece al enmarcar la obra en el recorrido.",
-    disponible: true,
-    monto: "$ 1.200.000"
-  },
-  Plane021_3: {
-    titulo: "Retrato de prueba",
-    tecnica: "Óleo sobre tela",
-    materiales: "Tela",
-    medidas: "60 × 50 cm",
-    descripcion: "Esta obra figura como no disponible, así que no muestra monto.",
-    disponible: false
-  }
-};
+const CLAVES = [
+  "Plane001",
+  "Plane004",
+  "Plane005",
+  "Plane006",
+  "Plane021",
+  "dibujo_mañio",
+  "paisaje_hztl_mañio"
+];
+
+const FICHAS: Record<string, FichaObraDatos> = Object.fromEntries(
+  CLAVES.map((clave, i) => [
+    clave,
+    {
+      titulo: `Obra de prueba ${i + 1}`,
+      tecnica: "Óleo sobre tela",
+      materiales: "Tela",
+      medidas: "80 × 60 cm",
+      descripcion: "Ficha de demostración: aparece al enmarcar la obra en el recorrido.",
+      disponible: i % 2 === 0,
+      ...(i % 2 === 0 ? { monto: "$ 1.200.000" } : {})
+    }
+  ])
+);
 
 export default async function DemoPili({ params }: { params: Promise<{ locale: string }> }) {
   await params;

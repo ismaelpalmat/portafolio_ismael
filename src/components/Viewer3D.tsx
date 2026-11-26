@@ -361,12 +361,15 @@ export default function Viewer3D({
     let bloqueo: { pos: THREE.Vector3; mira: THREE.Vector3; giro: number; libre: { x: number; ya: number; z: number; yaw: number; pitch: number } } | null = null;
     const rayoClic = new THREE.Raycaster();
     const obraDe = (h: THREE.Intersection): THREE.Object3D | null => {
+      // Sube hasta el nodo de la obra: los hijos de una malla llegan como "Plane006_3".
+      let obra: THREE.Object3D | null = null;
       for (let o: THREE.Object3D | null = h.object; o; o = o.parent) {
-        if (/^(dibujo|paisaje|Plane)/.test(o.name)) {
-          return o;
+        if (!/^(dibujo|paisaje|Plane)/.test(o.name)) {
+          break;
         }
+        obra = o;
       }
-      return null;
+      return obra;
     };
     const clic = (e: MouseEvent) => {
       if (esPanel(e)) {
@@ -403,7 +406,8 @@ export default function Viewer3D({
       const dist = (lado / 2 / Math.tan(Math.PI / 8)) * 1.3;
       const pos = mira.clone().addScaledVector(normal, dist);
       bloqueo = { pos, mira, giro: 0, libre: { x, ya, z, yaw, pitch } };
-      enfocarRef.current?.(obra.name);
+      // Los hijos de una malla llegan como "Plane006_3"; se avisa el nombre de la obra.
+      enfocarRef.current?.(obra.name.replace(/_\d+$/, ""));
     };
     el.addEventListener("click", clic);
     const rayo = new THREE.Raycaster();
