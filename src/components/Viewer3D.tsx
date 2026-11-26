@@ -5,7 +5,11 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { RIEL, OBRAS } from "./luces";
+import { RIEL, OBRAS, type FocoObra, type FocoRiel } from "./luces";
+import EditorLuces from "./EditorLuces";
+
+// Los eventos del panel del editor no deben llegar a los listeners del visor.
+const esPanel = (e: Event) => e.target instanceof Element && Boolean(e.target.closest("[data-luces]"));
 
 async function cargarModelo(
   url: string,
@@ -109,12 +113,26 @@ export default function Viewer3D({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [sinModelo, setSinModelo] = useState(false);
+  const [editor] = useState(
+    () =>
+      process.env.NODE_ENV === "development" &&
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).has("luces")
+  );
+  const [focos, setFocos] = useState<{
+    riel: FocoRiel[];
+    obra: FocoObra[];
+    aplicarRiel: (i: number, f: FocoRiel) => void;
+    aplicarObra: (i: number, f: FocoObra) => void;
+    marcar: (grupo: "riel" | "obra", i: number | null) => void;
+  } | null>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) {
       return;
     }
+    setFocos(null);
     const scene = new THREE.Scene();
     const claro = () => document.documentElement.dataset.tema === "claro";
     const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
@@ -157,6 +175,13 @@ export default function Viewer3D({
     observador.observe(document.documentElement, { attributes: true, attributeFilter: ["data-tema"] });
     const grupo = new THREE.Group();
     scene.add(grupo);
+    const marca = new THREE.Mesh(
+      new THREE.SphereGeometry(0.05, 12, 8),
+      new THREE.MeshBasicMaterial({ color: 0xff3b5c, depthTest: false })
+    );
+    marca.visible = false;
+    marca.renderOrder = 999;
+    scene.add(marca);
     const reserva = reservaProcedural ? mallaProcedural() : null;
     if (reserva) {
       grupo.add(reserva);
@@ -193,6 +218,7 @@ export default function Viewer3D({
           modeloVisto = obj;
           obj.updateMatrixWorld(true);
           // Focos tenues pegados a los dos brazos del riel del techo.
+          const focosRiel: THREE.SpotLight[] = [];
           for (const f of RIEL) {
             const luz = new THREE.SpotLight(0xfff1c2, f.potencia, 6, Math.PI / 4, 0.9, 1.5);
             const p = obj.localToWorld(new THREE.Vector3(f.x, f.alto, f.z));
@@ -200,18 +226,52 @@ export default function Viewer3D({
             luz.target.position.set(p.x, 0, p.z);
             scene.add(luz);
             scene.add(luz.target);
+            focosRiel.push(luz);
           }
           const obras = mirar ? [{ ...OBRAS[0], nombre: mirar }, ...OBRAS.slice(1)] : OBRAS;
+          const focosObra: THREE.PointLight[] = [];
+          const basesObra: THREE.Vector3[] = [];
+          const obrasEncontradas: FocoObra[] = [];
           for (const f of obras) {
             const nodoLuz = buscar(obj, f.nombre);
             if (!nodoLuz) {
               continue;
             }
-            const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
+            const base = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3()).multiplyScalar(0.8);
             const foco = new THREE.PointLight(0xfff1c2, f.potencia, 4, 2);
-            foco.position.copy(c).multiplyScalar(0.8);
+            foco.position.copy(base);
             scene.add(foco);
+            focosObra.push(foco);
+            basesObra.push(base);
+            obrasEncontradas.push(f);
           }
+          const aplicarRiel = (i: number, f: FocoRiel) => {
+            const p = obj.localToWorld(new THREE.Vector3(f.x, f.alto, f.z));
+            const luz = focosRiel[i];
+            luz.position.copy(p);
+            luz.target.position.set(p.x, 0, p.z);
+            luz.target.updateMatrixWorld();
+            luz.intensity = f.potencia;
+          };
+          const aplicarObra = (i: number, f: FocoObra) => {
+            const luz = focosObra[i];
+            luz.position.copy(basesObra[i]).add(new THREE.Vector3(f.dx, f.dy, f.dz));
+            luz.intensity = f.potencia;
+          };
+          const marcar = (grupo: "riel" | "obra", i: number | null) => {
+            const luz = i === null ? undefined : grupo === "riel" ? focosRiel[i] : focosObra[i];
+            marca.visible = Boolean(luz);
+            if (luz) {
+              marca.position.copy(luz.position);
+            }
+          };
+          setFocos({
+            riel: RIEL.map((f) => ({ ...f })),
+            obra: obrasEncontradas.map((f) => ({ ...f })),
+            aplicarRiel,
+            aplicarObra,
+            marcar
+          });
           // Arranque en la sala con más obras mirando al rótulo "Vislumbres".
           const inicio = obj.localToWorld(new THREE.Vector3(-3.6, 0, -1.0));
           const rotulo = buscar(obj, "Text.003");
@@ -234,6 +294,9 @@ export default function Viewer3D({
     let z = 0;
     const teclas = new Set<string>();
     const tecla = (e: KeyboardEvent, activa: boolean) => {
+      if (esPanel(e)) {
+        return;
+      }
       const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
       if (!recorrer || !/^(w|a|s|d|ArrowUp|ArrowDown|ArrowLeft|ArrowRight)$/.test(k)) {
         return;
@@ -260,6 +323,9 @@ export default function Viewer3D({
       return null;
     };
     const clic = (e: MouseEvent) => {
+      if (esPanel(e)) {
+        return;
+      }
       if (!recorrer || moviendo) {
         return;
       }
@@ -308,6 +374,9 @@ export default function Viewer3D({
     let origenX = 0;
     let origenY = 0;
     const abajo = (e: PointerEvent) => {
+      if (esPanel(e)) {
+        return;
+      }
       if (e.button === 1) {
         e.preventDefault();
       }
@@ -320,7 +389,7 @@ export default function Viewer3D({
       el.setPointerCapture(e.pointerId);
     };
     const mover = (e: PointerEvent) => {
-      if (!arrastrando) {
+      if (esPanel(e) || !arrastrando) {
         return;
       }
       if (!moviendo && Math.hypot(e.clientX - origenX, e.clientY - origenY) > 4) {
@@ -390,6 +459,9 @@ export default function Viewer3D({
       temporizador = setTimeout(() => el.classList.remove("zoom-glitch"), 220);
     };
     const rueda = (e: WheelEvent) => {
+      if (esPanel(e)) {
+        return;
+      }
       if (recorrer && bloqueo) {
         e.preventDefault();
         let distancia = Math.min(3, Math.max(0.05, bloqueo.pos.distanceTo(bloqueo.mira) * (1 + e.deltaY * 0.001)));
@@ -497,6 +569,8 @@ export default function Viewer3D({
       el.removeEventListener("keydown", teclaAbajo);
       el.removeEventListener("keyup", teclaArriba);
       el.removeEventListener("blur", limpiarTeclas);
+      marca.geometry.dispose();
+      (marca.material as THREE.Material).dispose();
       liberar(grupo);
       renderer.dispose();
       renderer.forceContextLoss();
@@ -513,6 +587,7 @@ export default function Viewer3D({
       style={{ touchAction: "pan-y" }}
       className={cuadrado ? "visor cuadrado" : "visor"}
     >
+      {editor && focos && <EditorLuces key={focos.obra.map((f) => f.nombre).join()} {...focos} />}
       {sinModelo && aviso && <p className="visor-aviso">{aviso}</p>}
     </div>
   );
