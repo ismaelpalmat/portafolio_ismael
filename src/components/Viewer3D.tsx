@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { RIEL, obrasEditor, AMBIENTE, type FocoObra, type FocoRiel } from "./luces";
+import { RIEL, obrasEditor, AMBIENTE, PAREDES, type FocoObra, type FocoRiel } from "./luces";
 import EditorLuces from "./EditorLuces";
 
 // Los eventos del panel del editor no deben llegar a los listeners del visor.
@@ -123,9 +123,11 @@ export default function Viewer3D({
     riel: FocoRiel[];
     obra: FocoObra[];
     ambiente: number;
+    paredes: number;
     aplicarRiel: (i: number, f: FocoRiel) => void;
     aplicarObra: (i: number, f: FocoObra) => void;
     aplicarAmbiente: (v: number) => void;
+    aplicarParedes: (v: number) => void;
     marcar: (grupo: "riel" | "obra", i: number | null) => void;
   } | null>(null);
 
@@ -223,7 +225,7 @@ export default function Viewer3D({
           // Focos tenues pegados a los dos brazos del riel del techo.
           const focosRiel: THREE.SpotLight[] = [];
           for (const f of RIEL) {
-            const luz = new THREE.SpotLight(0xfff1c2, f.potencia, 6, Math.PI / 4, 0.9, 1.5);
+            const luz = new THREE.SpotLight(0xfff1c2, f.potencia, 6, Math.PI / 4, f.blend, 1.5);
             const p = obj.localToWorld(new THREE.Vector3(f.x, f.alto, f.z));
             luz.position.copy(p);
             luz.target.position.set(p.x, 0, p.z);
@@ -255,6 +257,7 @@ export default function Viewer3D({
             luz.target.position.set(p.x, 0, p.z);
             luz.target.updateMatrixWorld();
             luz.intensity = f.potencia;
+            luz.penumbra = f.blend;
           };
           const aplicarObra = (i: number, f: FocoObra) => {
             const luz = focosObra[i];
@@ -268,6 +271,31 @@ export default function Viewer3D({
             ambienteActual = v;
             ambiente.intensity = v;
           };
+          // Paredes más sólidas: absorben más luz y pierden el brillo.
+          const muros: Array<{ mat: THREE.MeshStandardMaterial; color: THREE.Color }> = [];
+          const vistos = new Set<string>();
+          obj.traverse((m) => {
+            const mesh = m as THREE.Mesh;
+            if (!mesh.isMesh || !/^(cube|suelo|1techo|4cielo)/i.test(mesh.name)) {
+              return;
+            }
+            for (const mat of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+              const std = mat as THREE.MeshStandardMaterial;
+              if (!std.color || vistos.has(std.uuid)) {
+                continue;
+              }
+              vistos.add(std.uuid);
+              muros.push({ mat: std, color: std.color.clone() });
+              std.roughness = 1;
+              std.metalness = 0;
+            }
+          });
+          const aplicarParedes = (v: number) => {
+            for (const m of muros) {
+              m.mat.color.copy(m.color).multiplyScalar(v);
+            }
+          };
+          aplicarParedes(PAREDES);
           const marcar = (grupo: "riel" | "obra", i: number | null) => {
             const luz = i === null ? undefined : grupo === "riel" ? focosRiel[i] : focosObra[i];
             marca.visible = Boolean(luz);
@@ -279,9 +307,11 @@ export default function Viewer3D({
             riel: RIEL.map((f) => ({ ...f })),
             obra: obras.map((f) => ({ ...f })),
             ambiente: ambienteActual,
+            paredes: PAREDES,
             aplicarRiel,
             aplicarObra,
             aplicarAmbiente,
+            aplicarParedes,
             marcar
           });
           // Arranque en la sala con más obras mirando al rótulo "Vislumbres".

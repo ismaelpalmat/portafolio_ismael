@@ -1,20 +1,20 @@
-export type FocoRiel = { x: number; z: number; alto: number; potencia: number };
+export type FocoRiel = { x: number; z: number; alto: number; potencia: number; blend: number };
 export type FocoObra = { nombre: string; potencia: number; dx: number; dy: number; dz: number };
 
 export const RIEL: FocoRiel[] = [
-  { x: -3.9, z: -1.3, alto: 3.05, potencia: 1.1 },
-  { x: -3.1, z: -1.25, alto: 3.1, potencia: 1.1 },
-  { x: -2.35, z: -1.14, alto: 3.05, potencia: 2.15 },
-  { x: -2.65, z: -1.14, alto: 3.05, potencia: 1 },
-  { x: -4.4, z: -1.1, alto: 3.05, potencia: 1.2 },
-  { x: -4.35, z: -0.25, alto: 3.05, potencia: 0 },
-  { x: -5, z: 0.18, alto: 3.05, potencia: 1 },
-  { x: -4.45, z: 0.1, alto: 2.8, potencia: 0.7 },
-  { x: -4.35, z: 1.2, alto: 2.95, potencia: 1.3 },
-  { x: -4.3, z: 0.2, alto: 3.05, potencia: 1 },
-  { x: -1.7, z: -0.95, alto: 2.8, potencia: 0.65 },
-  { x: -1.95, z: -0.45, alto: 3.05, potencia: 1 },
-  { x: -1.2, z: 1.5, alto: 2.8, potencia: 0.4 }
+  { x: -3.9, z: -1.3, alto: 3.05, potencia: 1.1, blend: 0.9 },
+  { x: -3.1, z: -1.25, alto: 3.1, potencia: 1.1, blend: 0.9 },
+  { x: -2.35, z: -1.14, alto: 3.05, potencia: 2.15, blend: 0.9 },
+  { x: -2.65, z: -1.14, alto: 3.05, potencia: 1, blend: 0.9 },
+  { x: -4.4, z: -1.1, alto: 3.05, potencia: 1.2, blend: 0.9 },
+  { x: -4.35, z: -0.25, alto: 3.05, potencia: 0, blend: 0.9 },
+  { x: -5, z: 0.18, alto: 3.05, potencia: 1, blend: 0.9 },
+  { x: -4.45, z: 0.1, alto: 2.8, potencia: 0.7, blend: 0.9 },
+  { x: -4.35, z: 1.2, alto: 2.95, potencia: 1.3, blend: 0.9 },
+  { x: -4.3, z: 0.2, alto: 3.05, potencia: 1, blend: 0.9 },
+  { x: -1.7, z: -0.95, alto: 2.8, potencia: 0.65, blend: 0.9 },
+  { x: -1.95, z: -0.45, alto: 3.05, potencia: 1, blend: 0.9 },
+  { x: -1.2, z: 1.5, alto: 2.8, potencia: 0.4, blend: 0.9 }
 ];
 
 export const OBRAS: FocoObra[] = [
@@ -26,6 +26,9 @@ export const OBRAS: FocoObra[] = [
 
 // Cuánto ilumina el ambiente lo que no tiene foco; bajarlo oscurece las esquinas y hace resaltar las obras.
 export const AMBIENTE = 0.3;
+
+// Cuánto absorben las paredes: 1 es el color original, menos es más oscuro y sólido.
+export const PAREDES = 0.7;
 
 const n = (v: number) => String(Number(v.toFixed(2)));
 
@@ -51,13 +54,14 @@ export async function copiar(
   }
 }
 
-export function codigoFocos(riel: FocoRiel[], obra: FocoObra[], ambiente: number): string {
+export function codigoFocos(riel: FocoRiel[], obra: FocoObra[], ambiente: number, paredes: number): string {
   const filasRiel = riel.map(
-    (f) => `  { x: ${n(f.x)}, z: ${n(f.z)}, alto: ${n(f.alto)}, potencia: ${n(f.potencia)} }`
+    (f) =>
+      `  { x: ${n(f.x)}, z: ${n(f.z)}, alto: ${n(f.alto)}, potencia: ${n(f.potencia)}, blend: ${n(f.blend)} }`
   );
   const filasObra = obra.map(
     (f) =>
       `  { nombre: ${JSON.stringify(f.nombre)}, potencia: ${n(f.potencia)}, dx: ${n(f.dx)}, dy: ${n(f.dy)}, dz: ${n(f.dz)} }`
   );
-  return `export const AMBIENTE = ${n(ambiente)};\n\nexport const RIEL: FocoRiel[] = [\n${filasRiel.join(",\n")}\n];\n\nexport const OBRAS: FocoObra[] = [\n${filasObra.join(",\n")}\n];\n`;
+  return `export const AMBIENTE = ${n(ambiente)};\n\nexport const PAREDES = ${n(paredes)};\n\nexport const RIEL: FocoRiel[] = [\n${filasRiel.join(",\n")}\n];\n\nexport const OBRAS: FocoObra[] = [\n${filasObra.join(",\n")}\n];\n`;
 }

@@ -39,22 +39,27 @@ export default function EditorLuces({
   riel,
   obra,
   ambiente,
+  paredes,
   aplicarRiel,
   aplicarObra,
   aplicarAmbiente,
+  aplicarParedes,
   marcar
 }: {
   riel: FocoRiel[];
   obra: FocoObra[];
   ambiente: number;
+  paredes: number;
   aplicarRiel: (i: number, f: FocoRiel) => void;
   aplicarObra: (i: number, f: FocoObra) => void;
   aplicarAmbiente: (v: number) => void;
+  aplicarParedes: (v: number) => void;
   marcar: (grupo: "riel" | "obra", i: number | null) => void;
 }) {
   const [r, setR] = useState(riel);
   const [o, setO] = useState(obra);
   const [amb, setAmb] = useState(ambiente);
+  const [prd, setPrd] = useState(paredes);
   const [texto, setTexto] = useState("");
   const [copiado, setCopiado] = useState(false);
 
@@ -71,7 +76,7 @@ export default function EditorLuces({
   };
 
   const alCopiar = async () => {
-    const codigo = codigoFocos(r, o, amb);
+    const codigo = codigoFocos(r, o, amb, prd);
     if (await copiar(codigo, navigator.clipboard)) {
       setCopiado(true);
       setTexto("");
@@ -98,6 +103,18 @@ export default function EditorLuces({
           aplicarAmbiente(v);
         }}
       />
+      <p className="mb-1 mt-2 text-neutral-700">Paredes</p>
+      <Campo
+        etiqueta="opac."
+        valor={prd}
+        min={0.2}
+        max={1}
+        paso={0.05}
+        alCambiar={(v) => {
+          setPrd(v);
+          aplicarParedes(v);
+        }}
+      />
       <p className="mb-2 mt-3 text-neutral-500">Riel del techo</p>
       {r.map((f, i) => (
         <div
@@ -111,6 +128,7 @@ export default function EditorLuces({
           <Campo etiqueta="z" valor={f.z} min={-3} max={3} paso={0.05} alCambiar={(v) => cambiarR(i, "z", v)} />
           <Campo etiqueta="alto" valor={f.alto} min={2.8} max={3.6} paso={0.05} alCambiar={(v) => cambiarR(i, "alto", v)} />
           <Campo etiqueta="pot." valor={f.potencia} min={0} max={3} paso={0.05} alCambiar={(v) => cambiarR(i, "potencia", v)} />
+          <Campo etiqueta="blend" valor={f.blend} min={0} max={1} paso={0.05} alCambiar={(v) => cambiarR(i, "blend", v)} />
         </div>
       ))}
       <p className="mb-2 mt-3 text-neutral-500">Obras</p>
