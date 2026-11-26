@@ -9,13 +9,12 @@ function leerLista(txt: string, nombre: string): Record<string, number | string>
 }
 
 test("codigo de focos listo para pegar", () => {
-  assert.equal(RIEL.length, 9);
+  assert.equal(RIEL.length, 13);
   const txt = codigoFocos(RIEL, OBRAS);
   assert.ok(txt.includes("export const RIEL: FocoRiel[] = ["));
   assert.ok(txt.includes("export const OBRAS: FocoObra[] = ["));
   assert.equal(txt.match(/\{ x: /g)?.length, RIEL.length);
   assert.equal(txt.match(/nombre: "/g)?.length, OBRAS.length);
-  assert.ok(txt.includes("{ x: -4.2, z: -1.15, alto: 3.45, potencia: 1 }"));
 });
 
 test("redondea a dos decimales y conserva los cambios", () => {

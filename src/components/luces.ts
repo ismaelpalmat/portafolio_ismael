@@ -2,15 +2,19 @@ export type FocoRiel = { x: number; z: number; alto: number; potencia: number };
 export type FocoObra = { nombre: string; potencia: number; dx: number; dy: number; dz: number };
 
 export const RIEL: FocoRiel[] = [
-  { x: -4.2, z: -1.15, alto: 3.45, potencia: 1 },
-  { x: -3.65, z: -1.15, alto: 3.45, potencia: 1 },
-  { x: -3.1, z: -1.15, alto: 3.45, potencia: 1 },
-  { x: -2.55, z: -1.15, alto: 3.45, potencia: 1 },
-  { x: -2, z: -1.15, alto: 3.45, potencia: 1 },
-  { x: -1.9, z: -0.8, alto: 3.45, potencia: 1 },
-  { x: -1.9, z: -0.2, alto: 3.45, potencia: 1 },
-  { x: -1.9, z: 0.4, alto: 3.45, potencia: 1 },
-  { x: -1.9, z: 1, alto: 3.45, potencia: 1 }
+  { x: -3.8, z: -1.14, alto: 3.05, potencia: 1 },
+  { x: -3.35, z: -1.14, alto: 3.05, potencia: 1 },
+  { x: -2.92, z: -1.14, alto: 3.05, potencia: 1 },
+  { x: -2.65, z: -1.14, alto: 3.05, potencia: 1 },
+  { x: -4.27, z: -0.51, alto: 3.05, potencia: 1 },
+  { x: -4.27, z: -0.25, alto: 3.05, potencia: 1 },
+  { x: -4.27, z: 0.18, alto: 3.05, potencia: 1 },
+  { x: -4.27, z: 0.63, alto: 3.05, potencia: 1 },
+  { x: -4.27, z: 1.01, alto: 3.05, potencia: 1 },
+  { x: -3.8, z: 1.01, alto: 3.05, potencia: 1 },
+  { x: -1.89, z: -0.6, alto: 3.05, potencia: 1 },
+  { x: -1.89, z: 0.88, alto: 3.05, potencia: 1 },
+  { x: -1.89, z: 1.15, alto: 3.05, potencia: 1 }
 ];
 
 export const OBRAS: FocoObra[] = [
