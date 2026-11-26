@@ -117,7 +117,7 @@ export default function Viewer3D({
     () =>
       process.env.NODE_ENV === "development" &&
       typeof window !== "undefined" &&
-      window.matchMedia("(min-width: 768px)").matches &&
+      window.innerWidth >= 768 &&
       new URLSearchParams(window.location.search).has("luces")
   );
   const [focos, setFocos] = useState<{
