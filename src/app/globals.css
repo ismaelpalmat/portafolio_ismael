@@ -217,6 +217,17 @@ main:has(.ficha-3d) .ficha-3d { flex: 1 1 auto; min-height: 0; display: flex; fl
 .ficha-3d-info { position: absolute; top: 1rem; left: 1rem; max-width: min(22rem, 60%); padding: 0.9rem 1rem; border-radius: 8px; background: rgba(10, 10, 15, 0.55); color: #f2f4f8; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); pointer-events: none; }
 [data-tema="claro"] .ficha-3d-info { background: rgba(255, 255, 255, 0.72); color: #0a0a0f; }
 
+/* Ficha de la obra enmarcada: aparece con fade y se queda mientras el puntero esté encima. */
+.ficha-obra { position: absolute; left: 1rem; bottom: 1rem; z-index: 5; width: min(20rem, 80%); padding: 0.9rem 1rem; border-radius: 8px; background: rgba(10, 10, 15, 0.72); color: #f2f4f8; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 350ms ease; pointer-events: none; }
+.ficha-obra.ficha-obra-visible { opacity: 1; pointer-events: auto; }
+[data-tema="claro"] .ficha-obra { background: rgba(255, 255, 255, 0.86); color: #0a0a0f; }
+.ficha-obra h2 { font-size: 1rem; }
+.ficha-obra dl { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.6rem; margin-top: 0.35rem; font-size: 0.78rem; }
+.ficha-obra dt { opacity: 0.6; }
+.ficha-obra p { margin-top: 0.4rem; font-size: 0.8rem; }
+.ficha-obra-estado { font-weight: 600; }
+.ficha-obra-monto { font-variant-numeric: tabular-nums; }
+
 /* Páginas a todo el ancho: sin columna central. */
 .indice, .ficha { max-width: none; margin-inline: 0; padding-inline: clamp(1.25rem, 4vw, 4rem); }
 

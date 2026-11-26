@@ -92,6 +92,7 @@ export default function Viewer3D({
   focoSuperior = false,
   recorrer = false,
   mirar,
+  onEnfocar,
   aviso
 }: {
   modelo: string;
@@ -109,9 +110,14 @@ export default function Viewer3D({
   focoSuperior?: boolean;
   recorrer?: boolean;
   mirar?: string;
+  onEnfocar?: (nodo: string | null) => void;
   aviso?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const enfocarRef = useRef(onEnfocar);
+  useEffect(() => {
+    enfocarRef.current = onEnfocar;
+  }, [onEnfocar]);
   const [sinModelo, setSinModelo] = useState(false);
   const [editor] = useState(
     () =>
@@ -372,6 +378,7 @@ export default function Viewer3D({
       if (bloqueo) {
         ({ x, ya, z, yaw, pitch } = bloqueo.libre);
         bloqueo = null;
+        enfocarRef.current?.(null);
         return;
       }
       if (!modeloVisto) {
@@ -396,6 +403,7 @@ export default function Viewer3D({
       const dist = (lado / 2 / Math.tan(Math.PI / 8)) * 1.3;
       const pos = mira.clone().addScaledVector(normal, dist);
       bloqueo = { pos, mira, giro: 0, libre: { x, ya, z, yaw, pitch } };
+      enfocarRef.current?.(obra.name);
     };
     el.addEventListener("click", clic);
     const rayo = new THREE.Raycaster();
