@@ -14,12 +14,12 @@ export const RIEL: FocoRiel[] = [
   { x: -4.3, z: 0.2, alto: 3.05, potencia: 1, blend: 0.9 },
   { x: -1.7, z: -1.05, alto: 2.8, potencia: 1.15, blend: 0.55 },
   { x: -2, z: -0.25, alto: 3.05, potencia: 1.9, blend: 0.35 },
-  { x: -1.2, z: 1.5, alto: 2.8, potencia: 0.4, blend: 0.9 }
+  { x: -1.35, z: 1.5, alto: 2.8, potencia: 1.35, blend: 0.9 }
 ];
 
 export const OBRAS: FocoObra[] = [
   { nombre: "Plane.004", potencia: 0, dx: 0, dy: 0, dz: 0 },
-  { nombre: "Text.003", potencia: 0.15, dx: -0.05, dy: 0.04, dz: -0.1 },
+  { nombre: "Text.003", potencia: 0.15, dx: -0.01, dy: 0.03, dz: -0.08 },
   { nombre: "dibujo mañio", potencia: 0.05, dx: -0.02, dy: 0.15, dz: 0.01 },
   { nombre: "paisaje_hztl_mañio", potencia: 0.05, dx: -0.07, dy: 0.1, dz: 0 }
 ];
