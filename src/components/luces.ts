@@ -20,9 +20,12 @@ export const RIEL: FocoRiel[] = [
 export const OBRAS: FocoObra[] = [
   { nombre: "Plane.004", potencia: 0.5, dx: 0, dy: 0, dz: 0 },
   { nombre: "Text.003", potencia: 0.1, dx: -0.05, dy: 0.04, dz: -0.1 },
-  { nombre: "dibujo mañio", potencia: 0.05, dx: 0.1, dy: 0.04, dz: 0 },
-  { nombre: "paisaje_hztl_mañio", potencia: 0, dx: 0.05, dy: 0, dz: 0 }
+  { nombre: "dibujo mañio", potencia: 0.05, dx: 0.05, dy: 0.02, dz: -0.04 },
+  { nombre: "paisaje_hztl_mañio", potencia: 0.1, dx: -0.05, dy: -0.07, dz: 0.05 }
 ];
+
+// Cuánto ilumina el ambiente lo que no tiene foco; bajarlo oscurece las esquinas y hace resaltar las obras.
+export const AMBIENTE = 0.3;
 
 const n = (v: number) => String(Number(v.toFixed(2)));
 
@@ -48,7 +51,7 @@ export async function copiar(
   }
 }
 
-export function codigoFocos(riel: FocoRiel[], obra: FocoObra[]): string {
+export function codigoFocos(riel: FocoRiel[], obra: FocoObra[], ambiente: number): string {
   const filasRiel = riel.map(
     (f) => `  { x: ${n(f.x)}, z: ${n(f.z)}, alto: ${n(f.alto)}, potencia: ${n(f.potencia)} }`
   );
@@ -56,5 +59,5 @@ export function codigoFocos(riel: FocoRiel[], obra: FocoObra[]): string {
     (f) =>
       `  { nombre: ${JSON.stringify(f.nombre)}, potencia: ${n(f.potencia)}, dx: ${n(f.dx)}, dy: ${n(f.dy)}, dz: ${n(f.dz)} }`
   );
-  return `export const RIEL: FocoRiel[] = [\n${filasRiel.join(",\n")}\n];\n\nexport const OBRAS: FocoObra[] = [\n${filasObra.join(",\n")}\n];\n`;
+  return `export const AMBIENTE = ${n(ambiente)};\n\nexport const RIEL: FocoRiel[] = [\n${filasRiel.join(",\n")}\n];\n\nexport const OBRAS: FocoObra[] = [\n${filasObra.join(",\n")}\n];\n`;
 }

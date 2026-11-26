@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { RIEL, obrasEditor, type FocoObra, type FocoRiel } from "./luces";
+import { RIEL, obrasEditor, AMBIENTE, type FocoObra, type FocoRiel } from "./luces";
 import EditorLuces from "./EditorLuces";
 
 // Los eventos del panel del editor no deben llegar a los listeners del visor.
@@ -122,8 +122,10 @@ export default function Viewer3D({
   const [focos, setFocos] = useState<{
     riel: FocoRiel[];
     obra: FocoObra[];
+    ambiente: number;
     aplicarRiel: (i: number, f: FocoRiel) => void;
     aplicarObra: (i: number, f: FocoObra) => void;
+    aplicarAmbiente: (v: number) => void;
     marcar: (grupo: "riel" | "obra", i: number | null) => void;
   } | null>(null);
 
@@ -153,7 +155,8 @@ export default function Viewer3D({
     der.position.set(4, 2, 3);
     scene.add(izq);
     scene.add(der);
-    const intensidadAmbiente = () => (recorrer ? 1 : luzFrente ? 0.6 : claro() ? 0.55 : 0.35);
+    let ambienteActual = AMBIENTE;
+    const intensidadAmbiente = () => (recorrer ? ambienteActual : luzFrente ? 0.6 : claro() ? 0.55 : 0.35);
     const ambiente = new THREE.AmbientLight(0xffffff, intensidadAmbiente());
     scene.add(ambiente);
     if (luzFrente) {
@@ -261,6 +264,10 @@ export default function Viewer3D({
             luz.position.copy(basesObra[i]).add(new THREE.Vector3(f.dx, f.dy, f.dz));
             luz.intensity = f.potencia;
           };
+          const aplicarAmbiente = (v: number) => {
+            ambienteActual = v;
+            ambiente.intensity = v;
+          };
           const marcar = (grupo: "riel" | "obra", i: number | null) => {
             const luz = i === null ? undefined : grupo === "riel" ? focosRiel[i] : focosObra[i];
             marca.visible = Boolean(luz);
@@ -271,8 +278,10 @@ export default function Viewer3D({
           setFocos({
             riel: RIEL.map((f) => ({ ...f })),
             obra: obras.map((f) => ({ ...f })),
+            ambiente: ambienteActual,
             aplicarRiel,
             aplicarObra,
+            aplicarAmbiente,
             marcar
           });
           // Arranque en la sala con más obras mirando al rótulo "Vislumbres".

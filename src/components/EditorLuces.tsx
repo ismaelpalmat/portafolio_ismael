@@ -38,18 +38,23 @@ function Campo({
 export default function EditorLuces({
   riel,
   obra,
+  ambiente,
   aplicarRiel,
   aplicarObra,
+  aplicarAmbiente,
   marcar
 }: {
   riel: FocoRiel[];
   obra: FocoObra[];
+  ambiente: number;
   aplicarRiel: (i: number, f: FocoRiel) => void;
   aplicarObra: (i: number, f: FocoObra) => void;
+  aplicarAmbiente: (v: number) => void;
   marcar: (grupo: "riel" | "obra", i: number | null) => void;
 }) {
   const [r, setR] = useState(riel);
   const [o, setO] = useState(obra);
+  const [amb, setAmb] = useState(ambiente);
   const [texto, setTexto] = useState("");
   const [copiado, setCopiado] = useState(false);
 
@@ -66,7 +71,7 @@ export default function EditorLuces({
   };
 
   const alCopiar = async () => {
-    const codigo = codigoFocos(r, o);
+    const codigo = codigoFocos(r, o, amb);
     if (await copiar(codigo, navigator.clipboard)) {
       setCopiado(true);
       setTexto("");
@@ -81,7 +86,19 @@ export default function EditorLuces({
       className="absolute bottom-3 right-3 z-20 max-h-[75%] w-[19rem] overflow-auto rounded-md bg-white/95 p-3 text-[11px] leading-tight text-neutral-900 shadow-lg"
     >
       <p className="mb-1 font-semibold">Luces (solo dev)</p>
-      <p className="mb-2 text-neutral-500">Riel del techo</p>
+      <p className="mb-1 text-neutral-700">Ambiente</p>
+      <Campo
+        etiqueta="amb."
+        valor={amb}
+        min={0}
+        max={1.5}
+        paso={0.05}
+        alCambiar={(v) => {
+          setAmb(v);
+          aplicarAmbiente(v);
+        }}
+      />
+      <p className="mb-2 mt-3 text-neutral-500">Riel del techo</p>
       {r.map((f, i) => (
         <div
           key={"riel" + i}

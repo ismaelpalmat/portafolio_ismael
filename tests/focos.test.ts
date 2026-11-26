@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { RIEL, OBRAS, codigoFocos, copiar, obrasEditor } from "../src/components/luces.ts";
+import { RIEL, OBRAS, AMBIENTE, codigoFocos, copiar, obrasEditor } from "../src/components/luces.ts";
 
 function leerLista(txt: string, nombre: string): Record<string, number | string>[] {
   const m = txt.match(new RegExp(`export const ${nombre}: [A-Za-z]+\\[\\] = \\[([\\s\\S]*?)\\n\\];`));
@@ -10,7 +10,8 @@ function leerLista(txt: string, nombre: string): Record<string, number | string>
 
 test("codigo de focos listo para pegar", () => {
   assert.equal(RIEL.length, 13);
-  const txt = codigoFocos(RIEL, OBRAS);
+  const txt = codigoFocos(RIEL, OBRAS, AMBIENTE);
+  assert.ok(txt.includes("export const AMBIENTE = 0.3;"));
   assert.ok(txt.includes("export const RIEL: FocoRiel[] = ["));
   assert.ok(txt.includes("export const OBRAS: FocoObra[] = ["));
   assert.equal(txt.match(/\{ x: /g)?.length, RIEL.length);
@@ -20,8 +21,10 @@ test("codigo de focos listo para pegar", () => {
 test("redondea a dos decimales y conserva los cambios", () => {
   const txt = codigoFocos(
     [{ x: -1.234, z: 2.005, alto: 3.456, potencia: 0.556 }],
-    [{ nombre: "Text.003", potencia: 0.234, dx: -0.1, dy: 0.02, dz: 0 }]
+    [{ nombre: "Text.003", potencia: 0.234, dx: -0.1, dy: 0.02, dz: 0 }],
+    0.456
   );
+  assert.ok(txt.includes("export const AMBIENTE = 0.46;"));
   assert.ok(txt.includes("x: -1.23"));
   assert.ok(txt.includes("alto: 3.46"));
   assert.ok(txt.includes("potencia: 0.56"));
@@ -30,13 +33,14 @@ test("redondea a dos decimales y conserva los cambios", () => {
 });
 
 test("valores extremos no producen NaN", () => {
-  const txt = codigoFocos([{ x: 0, z: 0, alto: 0, potencia: 0 }], []);
+  const txt = codigoFocos([{ x: 0, z: 0, alto: 0, potencia: 0 }], [], 0);
   assert.ok(txt.includes("potencia: 0"));
+  assert.ok(txt.includes("export const AMBIENTE = 0;"));
   assert.ok(!txt.includes("NaN"));
 });
 
 test("el codigo generado se puede pegar y parsear", () => {
-  const txt = codigoFocos(RIEL, OBRAS);
+  const txt = codigoFocos(RIEL, OBRAS, AMBIENTE);
   assert.deepEqual(leerLista(txt, "RIEL"), RIEL);
   assert.deepEqual(leerLista(txt, "OBRAS"), OBRAS);
 });
