@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { RIEL, OBRAS, type FocoObra, type FocoRiel } from "./luces";
+import { RIEL, obrasEditor, type FocoObra, type FocoRiel } from "./luces";
 import EditorLuces from "./EditorLuces";
 
 // Los eventos del panel del editor no deben llegar a los listeners del visor.
@@ -228,22 +228,22 @@ export default function Viewer3D({
             scene.add(luz.target);
             focosRiel.push(luz);
           }
-          const obras = mirar ? [{ ...OBRAS[0], nombre: mirar }, ...OBRAS.slice(1)] : OBRAS;
-          const focosObra: THREE.PointLight[] = [];
+          const { obras, objetivos } = obrasEditor(mirar);
+          const focosObra: Array<THREE.PointLight | null> = [];
           const basesObra: THREE.Vector3[] = [];
-          const obrasEncontradas: FocoObra[] = [];
-          for (const f of obras) {
-            const nodoLuz = buscar(obj, f.nombre);
+          for (let i = 0; i < obras.length; i++) {
+            const nodoLuz = buscar(obj, objetivos[i]);
             if (!nodoLuz) {
+              focosObra.push(null);
+              basesObra.push(new THREE.Vector3());
               continue;
             }
             const base = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3()).multiplyScalar(0.8);
-            const foco = new THREE.PointLight(0xfff1c2, f.potencia, 4, 2);
+            const foco = new THREE.PointLight(0xfff1c2, obras[i].potencia, 4, 2);
             foco.position.copy(base);
             scene.add(foco);
             focosObra.push(foco);
             basesObra.push(base);
-            obrasEncontradas.push(f);
           }
           const aplicarRiel = (i: number, f: FocoRiel) => {
             const p = obj.localToWorld(new THREE.Vector3(f.x, f.alto, f.z));
@@ -255,6 +255,9 @@ export default function Viewer3D({
           };
           const aplicarObra = (i: number, f: FocoObra) => {
             const luz = focosObra[i];
+            if (!luz) {
+              return;
+            }
             luz.position.copy(basesObra[i]).add(new THREE.Vector3(f.dx, f.dy, f.dz));
             luz.intensity = f.potencia;
           };
@@ -267,7 +270,7 @@ export default function Viewer3D({
           };
           setFocos({
             riel: RIEL.map((f) => ({ ...f })),
-            obra: obrasEncontradas.map((f) => ({ ...f })),
+            obra: obras.map((f) => ({ ...f })),
             aplicarRiel,
             aplicarObra,
             marcar

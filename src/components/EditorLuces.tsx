@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { codigoFocos, type FocoObra, type FocoRiel } from "./luces";
+import { codigoFocos, copiar, type FocoObra, type FocoRiel } from "./luces";
 
 function Campo({
   etiqueta,
@@ -65,15 +65,14 @@ export default function EditorLuces({
     aplicarObra(i, nuevo[i]);
   };
 
-  const copiar = () => {
+  const alCopiar = async () => {
     const codigo = codigoFocos(r, o);
-    navigator.clipboard.writeText(codigo).then(
-      () => {
-        setCopiado(true);
-        setTexto("");
-      },
-      () => setTexto(codigo)
-    );
+    if (await copiar(codigo, navigator.clipboard)) {
+      setCopiado(true);
+      setTexto("");
+    } else {
+      setTexto(codigo);
+    }
   };
 
   return (
@@ -112,7 +111,7 @@ export default function EditorLuces({
           <Campo etiqueta="dz" valor={f.dz} min={-1} max={1} paso={0.01} alCambiar={(v) => cambiarO(i, "dz", v)} />
         </div>
       ))}
-      <button type="button" onClick={copiar} className="mt-2 rounded bg-neutral-900 px-2 py-1 text-white">
+      <button type="button" onClick={alCopiar} className="mt-2 rounded bg-neutral-900 px-2 py-1 text-white">
         {copiado ? "Copiado" : "Copiar código"}
       </button>
       {texto && (

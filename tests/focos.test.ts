@@ -1,6 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { RIEL, OBRAS, codigoFocos } from "../src/components/luces.ts";
+import { RIEL, OBRAS, codigoFocos, copiar, obrasEditor } from "../src/components/luces.ts";
+
+function leerLista(txt: string, nombre: string): Record<string, number | string>[] {
+  const m = txt.match(new RegExp(`export const ${nombre}: [A-Za-z]+\\[\\] = \\[([\\s\\S]*?)\\n\\];`));
+  assert.ok(m, "sin bloque " + nombre);
+  return JSON.parse("[" + m[1].replace(/(\w+):/g, '"$1":') + "]") as Record<string, number | string>[];
+}
 
 test("codigo de focos listo para pegar", () => {
   assert.equal(RIEL.length, 9);
@@ -28,4 +34,31 @@ test("valores extremos no producen NaN", () => {
   const txt = codigoFocos([{ x: 0, z: 0, alto: 0, potencia: 0 }], []);
   assert.ok(txt.includes("potencia: 0"));
   assert.ok(!txt.includes("NaN"));
+});
+
+test("el codigo generado se puede pegar y parsear", () => {
+  const txt = codigoFocos(RIEL, OBRAS);
+  assert.deepEqual(leerLista(txt, "RIEL"), RIEL);
+  assert.deepEqual(leerLista(txt, "OBRAS"), OBRAS);
+});
+
+test("el editor conserva la plantilla aunque mirar no exista", () => {
+  const { obras, objetivos } = obrasEditor("NoExiste");
+  assert.equal(obras.length, OBRAS.length);
+  assert.equal(obras[0].nombre, "Plane.004");
+  assert.equal(objetivos[0], "NoExiste");
+  assert.deepEqual(objetivos.slice(1), OBRAS.slice(1).map((f) => f.nombre));
+});
+
+test("copiar avisa cuando no hay portapapeles", async () => {
+  assert.equal(await copiar("x", undefined), false);
+  assert.equal(await copiar("x", { writeText: async () => {} }), true);
+  assert.equal(
+    await copiar("x", {
+      writeText: () => {
+        throw new Error("bloqueado");
+      }
+    }),
+    false
+  );
 });

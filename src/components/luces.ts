@@ -22,6 +22,28 @@ export const OBRAS: FocoObra[] = [
 
 const n = (v: number) => String(Number(v.toFixed(2)));
 
+export function obrasEditor(mirar?: string): { obras: FocoObra[]; objetivos: string[] } {
+  return {
+    obras: OBRAS.map((f) => ({ ...f })),
+    objetivos: OBRAS.map((f, i) => (i === 0 && mirar ? mirar : f.nombre))
+  };
+}
+
+export async function copiar(
+  texto: string,
+  portapapeles?: { writeText: (t: string) => Promise<void> }
+): Promise<boolean> {
+  try {
+    if (!portapapeles) {
+      return false;
+    }
+    await portapapeles.writeText(texto);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function codigoFocos(riel: FocoRiel[], obra: FocoObra[]): string {
   const filasRiel = riel.map(
     (f) => `  { x: ${n(f.x)}, z: ${n(f.z)}, alto: ${n(f.alto)}, potencia: ${n(f.potencia)} }`
