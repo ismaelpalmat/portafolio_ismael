@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import FichaTresD from "@/components/FichaTresD";
 import type { FichaObraDatos } from "@/components/FichaObra";
 
@@ -28,11 +27,12 @@ const FICHAS: Record<string, FichaObraDatos> = Object.fromEntries(
   ])
 );
 
+export const metadata = {
+  robots: { index: false, follow: false }
+};
+
 export default async function DemoPili({ params }: { params: Promise<{ locale: string }> }) {
   await params;
-  if (process.env.NODE_ENV === "production") {
-    notFound();
-  }
   return (
     <section className="ficha ficha-3d">
       <div className="ficha-3d-caja">
