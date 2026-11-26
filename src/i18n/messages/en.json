@@ -24,7 +24,9 @@
     "dimensiones": "Dimensions",
     "anterior": "Previous",
     "siguiente": "Next",
-    "modeloPendiente": "3D model in preparation"
+    "modeloPendiente": "3D model in preparation",
+    "pantallaCompleta": "Full screen",
+    "salirPantalla": "Exit full screen"
   },
   "bio": {
     "titulo": "Biography",

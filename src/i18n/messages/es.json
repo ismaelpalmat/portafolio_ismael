@@ -24,7 +24,9 @@
     "dimensiones": "Dimensiones",
     "anterior": "Anterior",
     "siguiente": "Siguiente",
-    "modeloPendiente": "Modelo 3D en preparación"
+    "modeloPendiente": "Modelo 3D en preparación",
+    "pantallaCompleta": "Pantalla completa",
+    "salirPantalla": "Salir de pantalla completa"
   },
   "bio": {
     "titulo": "Biografía",
