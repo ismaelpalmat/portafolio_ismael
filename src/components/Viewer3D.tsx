@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { RIEL, OBRAS } from "./luces";
 
 async function cargarModelo(
   url: string,
@@ -192,25 +193,24 @@ export default function Viewer3D({
           modeloVisto = obj;
           obj.updateMatrixWorld(true);
           // Focos tenues pegados a los dos brazos del riel del techo.
-          const riel: Array<[number, number]> = [];
-          for (let i = 0; i < 5; i++) riel.push([-4.2 + i * 0.55, -1.15]);
-          for (let i = 0; i < 4; i++) riel.push([-1.9, -0.8 + i * 0.6]);
-          for (const [gx, gz] of riel) {
-            const p = obj.localToWorld(new THREE.Vector3(gx, 3.45, gz));
-            const luz = new THREE.SpotLight(0xfff1c2, 1, 6, Math.PI / 4, 0.9, 1.5);
+          for (const f of RIEL) {
+            const luz = new THREE.SpotLight(0xfff1c2, f.potencia, 6, Math.PI / 4, 0.9, 1.5);
+            const p = obj.localToWorld(new THREE.Vector3(f.x, f.alto, f.z));
             luz.position.copy(p);
             luz.target.position.set(p.x, 0, p.z);
             scene.add(luz);
             scene.add(luz.target);
           }
-          for (const nombre of [mirar ?? "", "Text.003", "dibujo mañio", "paisaje_hztl_mañio"]) {
-            const nodoLuz = buscar(obj, nombre);
-            if (nodoLuz) {
-              const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
-              const foco = new THREE.PointLight(0xfff1c2, nombre === "Text.003" ? 0.2 : 0.5, 4, 2);
-              foco.position.copy(c).multiplyScalar(0.8);
-              scene.add(foco);
+          const obras = mirar ? [{ ...OBRAS[0], nombre: mirar }, ...OBRAS.slice(1)] : OBRAS;
+          for (const f of obras) {
+            const nodoLuz = buscar(obj, f.nombre);
+            if (!nodoLuz) {
+              continue;
             }
+            const c = new THREE.Box3().setFromObject(nodoLuz).getCenter(new THREE.Vector3());
+            const foco = new THREE.PointLight(0xfff1c2, f.potencia, 4, 2);
+            foco.position.copy(c).multiplyScalar(0.8);
+            scene.add(foco);
           }
           // Arranque en la sala con más obras mirando al rótulo "Vislumbres".
           const inicio = obj.localToWorld(new THREE.Vector3(-3.6, 0, -1.0));
