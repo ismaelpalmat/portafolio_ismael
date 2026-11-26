@@ -11,8 +11,8 @@ function leerLista(txt: string, nombre: string): Record<string, number | string>
 test("codigo de focos listo para pegar", () => {
   assert.equal(RIEL.length, 13);
   const txt = codigoFocos(RIEL, OBRAS, AMBIENTE, PAREDES);
-  assert.ok(txt.includes("export const AMBIENTE = 0.3;"));
-  assert.ok(txt.includes("export const PAREDES = 0.7;"));
+  assert.ok(txt.includes(`export const AMBIENTE = ${AMBIENTE};`));
+  assert.ok(txt.includes(`export const PAREDES = ${PAREDES};`));
   assert.ok(txt.includes("export const RIEL: FocoRiel[] = ["));
   assert.ok(txt.includes("export const OBRAS: FocoObra[] = ["));
   assert.equal(txt.match(/\{ x: /g)?.length, RIEL.length);
