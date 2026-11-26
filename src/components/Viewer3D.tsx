@@ -315,8 +315,8 @@ export default function Viewer3D({
             aplicarParedes,
             marcar
           });
-          // Arranque en la sala con más obras mirando al rótulo "Vislumbres".
-          const inicio = obj.localToWorld(new THREE.Vector3(-3.6, 0, -1.0));
+          // Arranque en el pasillo, frente al rótulo "Vislumbres" (coordenadas del glb).
+          const inicio = obj.localToWorld(new THREE.Vector3(0.1, 0, 0.25));
           const rotulo = buscar(obj, "Text.003");
           const rumbo = rotulo
             ? new THREE.Box3().setFromObject(rotulo).getCenter(new THREE.Vector3())
