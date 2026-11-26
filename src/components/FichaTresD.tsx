@@ -13,7 +13,9 @@ export default function FichaTresD({
   titulo,
   recorrer,
   mirar,
-  fichas
+  fichas,
+  marca,
+  ayuda
 }: {
   modelo: string;
   formato: "obj" | "stl" | "glb";
@@ -21,6 +23,8 @@ export default function FichaTresD({
   recorrer?: boolean;
   mirar?: string;
   fichas?: Record<string, FichaObraDatos>;
+  marca?: string;
+  ayuda?: string;
 }) {
   const t = useTranslations("ficha");
   // shortcut: el ancho se lee al cargar; girar el teléfono no cambia el modo hasta recargar.
@@ -95,6 +99,19 @@ export default function FichaTresD({
         aviso={t("modeloPendiente")}
       />
       <FichaObra ficha={nodo && fichas ? (fichas[nodo] ?? null) : null} respaldo={ultima} />
+      {marca ? (
+        <span className="visor-marca" aria-hidden="true">
+          {marca}
+        </span>
+      ) : null}
+      {ayuda ? (
+        <div className="visor-ayuda">
+          <button type="button" className="visor-ayuda-boton" aria-label="Información">
+            i
+          </button>
+          <p className="visor-ayuda-texto">{ayuda}</p>
+        </div>
+      ) : null}
       <button
         type="button"
         className="visor-pantalla"

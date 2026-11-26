@@ -43,10 +43,9 @@ export default async function DemoPili({ params }: { params: Promise<{ locale: s
           recorrer
           mirar="Plane.004"
           fichas={FICHAS}
+          marca="Demo"
+          ayuda="Demo de la ficha al enmarcar: haz clic en una obra. Al soltarla se desvanece; si dejas el puntero encima, se queda."
         />
-        <div className="ficha-3d-info">
-          <p>Demo de la ficha al enmarcar: haz clic en una obra. Al soltarla se desvanece; si dejas el puntero encima, se queda.</p>
-        </div>
       </div>
     </section>
   );

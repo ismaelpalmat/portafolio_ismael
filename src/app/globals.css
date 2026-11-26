@@ -222,6 +222,14 @@ main:has(.ficha-3d) .ficha-3d { flex: 1 1 auto; min-height: 0; display: flex; fl
 .visor-caja:fullscreen { position: fixed; inset: 0; width: 100vw; height: 100vh; background: #0a0a0f; }
 .visor-caja:fullscreen > .visor { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; aspect-ratio: auto; }
 .visor-caja-fija { position: fixed; inset: 0; z-index: 50; width: 100vw; height: 100vh; background: #0a0a0f; }
+.visor-marca { position: absolute; right: 1rem; bottom: 1rem; z-index: 4; font-family: var(--font-titulo); font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(242, 244, 248, 0.35); pointer-events: none; }
+[data-tema="claro"] .visor-marca { color: rgba(10, 10, 15, 0.35); }
+.visor-ayuda { position: absolute; top: 1rem; left: 1rem; z-index: 6; }
+.visor-ayuda-boton { width: 2rem; height: 2rem; border: 0; border-radius: 50%; background: rgba(10, 10, 15, 0.55); color: #f2f4f8; font-family: var(--font-titulo); font-size: 0.95rem; font-style: italic; cursor: help; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+[data-tema="claro"] .visor-ayuda-boton { background: rgba(255, 255, 255, 0.8); color: #0a0a0f; }
+.visor-ayuda-texto { position: absolute; top: 2.5rem; left: 0; width: min(20rem, 70vw); padding: 0.7rem 0.8rem; border-radius: 8px; background: rgba(10, 10, 15, 0.82); color: #f2f4f8; font-size: 0.82rem; line-height: 1.35; opacity: 0; transition: opacity 200ms ease; pointer-events: none; }
+[data-tema="claro"] .visor-ayuda-texto { background: rgba(255, 255, 255, 0.92); color: #0a0a0f; }
+.visor-ayuda:hover .visor-ayuda-texto, .visor-ayuda:focus-within .visor-ayuda-texto { opacity: 1; }
 .ficha-3d-info { position: absolute; top: 1rem; left: 1rem; max-width: min(22rem, 60%); padding: 0.9rem 1rem; border-radius: 8px; background: rgba(10, 10, 15, 0.55); color: #f2f4f8; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); pointer-events: none; }
 [data-tema="claro"] .ficha-3d-info { background: rgba(255, 255, 255, 0.72); color: #0a0a0f; }
 .ficha-3d-info-ocultar { animation: ficha-3d-info-fuera 600ms ease 3s forwards; }
